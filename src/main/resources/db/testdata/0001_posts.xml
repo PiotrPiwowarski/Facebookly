@@ -1,0 +1,35 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.10.xsd">
+
+    <changeSet id="addPosts" author="TwojeImię">
+        <insert tableName="posts">
+            <column name="content" value="To jest pierwszy post."/>
+        </insert>
+        <insert tableName="posts">
+            <column name="content" value="Jaki piękny dzień!"/>
+        </insert>
+        <insert tableName="posts">
+            <column name="content" value="To jest kolejny post."/>
+        </insert>
+        <insert tableName="posts">
+            <column name="content" value="Czy ktoś ma pytania?"/>
+        </insert>
+        <insert tableName="posts">
+            <column name="content" value="Zabawa twa w najlepsze"/>
+        </insert>
+        <insert tableName="posts">
+            <column name="content" value="Pomału kończę na dziś pracę z projektem"/>
+        </insert>
+        <insert tableName="posts">
+            <column name="content" value="Idę pojeździć na rowerze"/>
+        </insert>
+        <insert tableName="posts">
+            <column name="content" value="Niech ktoś poda przepis na zupę grzybową"/>
+        </insert>
+        <insert tableName="posts">
+            <column name="content" value="Kto wygra wybory Tusk czy Kaczyński?"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>

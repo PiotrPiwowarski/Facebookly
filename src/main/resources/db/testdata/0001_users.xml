@@ -1,0 +1,64 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.10.xsd">
+
+    <changeSet id="addUsers" author="TwojeImię">
+        <insert tableName="users">
+            <column name="first_name" value="admin"/>
+            <column name="last_name" value="admin"/>
+            <column name="email" value="admin@example.com"/>
+            <column name="login" value="admin"/>
+            <column name="password" value="admin"/>
+        </insert>
+        <insert tableName="users">
+            <column name="first_name" value="John"/>
+            <column name="last_name" value="Doe"/>
+            <column name="email" value="john.doe@example.com"/>
+            <column name="login" value="johndoe"/>
+            <column name="password" value="password1345662GDHc?"/>
+        </insert>
+        <insert tableName="users">
+            <column name="first_name" value="Jane"/>
+            <column name="last_name" value="Smith"/>
+            <column name="email" value="jane.smith@example.com"/>
+            <column name="login" value="janesmith"/>
+            <column name="password" value="sadjfl*858Kg"/>
+        </insert>
+        <insert tableName="users">
+            <column name="first_name" value="Kamil"/>
+            <column name="last_name" value="Mosurek"/>
+            <column name="email" value="kamil@mosurek.com"/>
+            <column name="login" value="kamilo123"/>
+            <column name="password" value="passowrd65876dfsgG"/>
+        </insert>
+        <insert tableName="users">
+            <column name="first_name" value="Pablo"/>
+            <column name="last_name" value="Chuano"/>
+            <column name="email" value="gamin@gmial.com"/>
+            <column name="login" value="pabChuano"/>
+            <column name="password" value="haslo(*^8765SG"/>
+        </insert>
+        <insert tableName="users">
+            <column name="first_name" value="Jean"/>
+            <column name="last_name" value="Deutch"/>
+            <column name="email" value="intier@wp.pl"/>
+            <column name="login" value="jean73445"/>
+            <column name="password" value="admin123DBD!"/>
+        </insert>
+        <insert tableName="users">
+            <column name="first_name" value="Maria"/>
+            <column name="last_name" value="Gut"/>
+            <column name="email" value="peter.xx@gmail.com"/>
+            <column name="login" value="fdlkjhgklsjhdf"/>
+            <column name="password" value="hosdg(*698dg*#"/>
+        </insert>
+        <insert tableName="users">
+            <column name="first_name" value="Cristine"/>
+            <column name="last_name" value="Noworyta"/>
+            <column name="email" value="elo.elo@interia.com"/>
+            <column name="login" value="christineNoworyta%%%"/>
+            <column name="password" value="bacda234!4ff"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>
