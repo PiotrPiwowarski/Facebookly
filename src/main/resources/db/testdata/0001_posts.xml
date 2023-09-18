@@ -2,7 +2,7 @@
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.10.xsd">
 
-    <changeSet id="addPosts" author="TwojeImię">
+    <changeSet id="1" author="Piotr Piwowarski">
         <insert tableName="posts">
             <column name="content" value="To jest pierwszy post."/>
         </insert>
