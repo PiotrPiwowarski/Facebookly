@@ -1,7 +1,6 @@
 package pl.piwowarski.facebookly.service.mapper;
 
 import org.springframework.stereotype.Service;
-import pl.piwowarski.facebookly.model.dto.CreatePostDto;
 import pl.piwowarski.facebookly.model.dto.CreateUserDto;
 import pl.piwowarski.facebookly.model.entity.User;
 

@@ -5,10 +5,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import pl.piwowarski.facebookly.model.dto.CreatePostDto;
-import pl.piwowarski.facebookly.model.entity.Post;
 import pl.piwowarski.facebookly.service.PostService;
 
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @AllArgsConstructor
@@ -21,14 +21,25 @@ public class PostController {
         return ResponseEntity.ok(postService.findPostById(id));
     }
 
+    @GetMapping("/")
+    public ResponseEntity<List<CreatePostDto>> getAllPosts(){
+        return ResponseEntity.ok(postService.findAllPosts());
+    }
+
     @PostMapping("/")
     public ResponseEntity<CreatePostDto> addPost(@RequestBody CreatePostDto createPostDto){
-        CreatePostDto post = postService.addPost(createPostDto);
+        CreatePostDto post = postService.savePost(createPostDto);
         URI uri = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("posts/" + post.getId().toString())
                 .buildAndExpand()
                 .toUri();
         return ResponseEntity.created(uri).build();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deletePostById(@PathVariable Long id){
+        postService.deletePost(id);
+        return ResponseEntity.noContent().build();
     }
 }

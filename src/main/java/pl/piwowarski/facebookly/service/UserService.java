@@ -8,6 +8,8 @@ import pl.piwowarski.facebookly.exception.NoUserWithSuchId;
 import pl.piwowarski.facebookly.repository.UserRepository;
 import pl.piwowarski.facebookly.service.mapper.UserMapper;
 
+import java.util.List;
+
 @Service
 @AllArgsConstructor
 public class UserService {
@@ -22,9 +24,21 @@ public class UserService {
         return userMapper.unmap(foundUser);
     }
 
-    public CreateUserDto addUser(CreateUserDto createUserDto) {
+    public List<CreateUserDto> findAllUsers() {
+        return userRepository
+                .findAll()
+                .stream()
+                .map(userMapper::unmap)
+                .toList();
+    }
+
+    public CreateUserDto saveUser(CreateUserDto createUserDto) {
         User user = userMapper.map(createUserDto);
         User savedUser = userRepository.save(user);
         return userMapper.unmap(savedUser);
+    }
+
+    public void deleteUser(Long id) {
+        userRepository.deleteById(id);
     }
 }
