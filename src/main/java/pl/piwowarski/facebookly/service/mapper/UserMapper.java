@@ -1,32 +1,32 @@
 package pl.piwowarski.facebookly.service.mapper;
 
 import org.springframework.stereotype.Service;
-import pl.piwowarski.facebookly.model.dto.CreateUserDto;
+import pl.piwowarski.facebookly.model.dto.UserDto;
 import pl.piwowarski.facebookly.model.entity.User;
 
 @Service
-public class UserMapper implements Mapper<User, CreateUserDto> {
+public class UserMapper implements Mapper<User, UserDto> {
 
     @Override
-    public User map(CreateUserDto createUserDto) {
+    public User map(UserDto userDto) {
         User user = new User();
-        user.setFirstName(createUserDto.getFirstName());
-        user.setLastName(createUserDto.getLastName());
-        user.setEmail(createUserDto.getEmail());
-        user.setLogin(createUserDto.getLogin());
-        user.setPassword(createUserDto.getPassword());
+        user.setFirstName(userDto.getFirstName());
+        user.setLastName(userDto.getLastName());
+        user.setEmail(userDto.getEmail());
+        user.setLogin(userDto.getLogin());
+        user.setPassword(userDto.getPassword());
         return user;
     }
 
     @Override
-    public CreateUserDto unmap(User user) {
-        CreateUserDto createUserDto = new CreateUserDto();
-        createUserDto.setId(user.getId());
-        createUserDto.setFirstName(user.getFirstName());
-        createUserDto.setLastName(user.getLastName());
-        createUserDto.setEmail(user.getEmail());
-        createUserDto.setLogin(user.getLogin());
-        createUserDto.setPassword(user.getPassword());
-        return createUserDto;
+    public UserDto unmap(User user) {
+        UserDto userDto = new UserDto();
+        userDto.setId(user.getId());
+        userDto.setFirstName(user.getFirstName());
+        userDto.setLastName(user.getLastName());
+        userDto.setEmail(user.getEmail());
+        userDto.setLogin(user.getLogin());
+        userDto.setPassword(user.getPassword());
+        return userDto;
     }
 }

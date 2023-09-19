@@ -3,32 +3,34 @@ package pl.piwowarski.facebookly.service.mapper;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.piwowarski.facebookly.exception.NoUserWithSuchId;
-import pl.piwowarski.facebookly.model.dto.CreatePostDto;
+import pl.piwowarski.facebookly.model.dto.PostDto;
 import pl.piwowarski.facebookly.model.entity.Post;
 import pl.piwowarski.facebookly.repository.UserRepository;
 
 @Service
 @AllArgsConstructor
-public class PostMapper implements Mapper<Post, CreatePostDto>{
+public class PostMapper implements Mapper<Post, PostDto>{
 
     private UserRepository userRepository;
 
     @Override
-    public Post map(CreatePostDto createPostDto) {
+    public Post map(PostDto postDto) {
         Post post = new Post();
-        post.setContent(createPostDto.getContent());
+        post.setContent(postDto.getContent());
+        post.setCreated(postDto.getCreated());
         post.setUser(userRepository
-                .findById(createPostDto.getUserId())
-                .orElseThrow(() -> new NoUserWithSuchId("Brak użytkowników o podanym id")));
+                .findById(postDto.getUserId())
+                .orElseThrow(() -> new NoUserWithSuchId(NoUserWithSuchId.MESSAGE)));
         return post;
     }
 
     @Override
-    public CreatePostDto unmap(Post post) {
-        CreatePostDto createPostDto = new CreatePostDto();
-        createPostDto.setId(post.getId());
-        createPostDto.setContent(post.getContent());
-        createPostDto.setUserId(post.getUser().getId());
-        return createPostDto;
+    public PostDto unmap(Post post) {
+        PostDto postDto = new PostDto();
+        postDto.setId(post.getId());
+        postDto.setContent(post.getContent());
+        postDto.setCreated(post.getCreated());
+        postDto.setUserId(post.getUser().getId());
+        return postDto;
     }
 }

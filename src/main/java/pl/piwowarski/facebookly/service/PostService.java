@@ -2,7 +2,7 @@ package pl.piwowarski.facebookly.service;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import pl.piwowarski.facebookly.model.dto.CreatePostDto;
+import pl.piwowarski.facebookly.model.dto.PostDto;
 import pl.piwowarski.facebookly.model.entity.Post;
 import pl.piwowarski.facebookly.exception.NoPostWithSuchId;
 import pl.piwowarski.facebookly.repository.PostRepository;
@@ -16,14 +16,14 @@ public class PostService {
     private final PostRepository postRepository;
     private final PostMapper postMapper;
 
-    public CreatePostDto findPostById(Long id) {
+    public PostDto findPostById(Long id) {
         Post foundPost = postRepository
                 .findById(id)
                 .orElseThrow(() -> new NoPostWithSuchId("Brak postów o podanym id"));
         return postMapper.unmap(foundPost);
     }
 
-    public List<CreatePostDto> findAllPosts() {
+    public List<PostDto> findAllPosts() {
         return postRepository
                 .findAll()
                 .stream()
@@ -31,9 +31,8 @@ public class PostService {
                 .toList();
     }
 
-    public CreatePostDto savePost(CreatePostDto createPostDto) {
-        Post post = postMapper.map(createPostDto);
-        post.setContent(createPostDto.getContent());
+    public PostDto savePost(PostDto postDto) {
+        Post post = postMapper.map(postDto);
         Post savedPost = postRepository.save(post);
         return postMapper.unmap(savedPost);
     }

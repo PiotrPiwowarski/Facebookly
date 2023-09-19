@@ -8,5 +8,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Getter
 public class NoPostWithSuchId extends RuntimeException{
+    public static final String MESSAGE = "Brak postów o podanym id";
     private String message;
 }

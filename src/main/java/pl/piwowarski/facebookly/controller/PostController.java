@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import pl.piwowarski.facebookly.model.dto.CreatePostDto;
+import pl.piwowarski.facebookly.model.dto.PostDto;
 import pl.piwowarski.facebookly.service.PostService;
 
 import java.net.URI;
@@ -14,21 +14,22 @@ import java.util.List;
 @AllArgsConstructor
 @RequestMapping("/posts")
 public class PostController {
+
     private final PostService postService;
 
-    @GetMapping("/{id}")
-    public ResponseEntity<CreatePostDto> getPostById(@PathVariable long id){
-        return ResponseEntity.ok(postService.findPostById(id));
+    @GetMapping("/{postId}")
+    public ResponseEntity<PostDto> getPostById(@PathVariable long postId){
+        return ResponseEntity.ok(postService.findPostById(postId));
     }
 
     @GetMapping("/")
-    public ResponseEntity<List<CreatePostDto>> getAllPosts(){
+    public ResponseEntity<List<PostDto>> getAllPosts(){
         return ResponseEntity.ok(postService.findAllPosts());
     }
 
     @PostMapping("/")
-    public ResponseEntity<CreatePostDto> addPost(@RequestBody CreatePostDto createPostDto){
-        CreatePostDto post = postService.savePost(createPostDto);
+    public ResponseEntity<?> addPost(@RequestBody PostDto postDto){
+        PostDto post = postService.savePost(postDto);
         URI uri = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("posts/" + post.getId().toString())
@@ -37,9 +38,9 @@ public class PostController {
         return ResponseEntity.created(uri).build();
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> deletePostById(@PathVariable Long id){
-        postService.deletePost(id);
+    @DeleteMapping("/{postId}")
+    public ResponseEntity<?> deletePostById(@PathVariable Long postId){
+        postService.deletePost(postId);
         return ResponseEntity.noContent().build();
     }
 }

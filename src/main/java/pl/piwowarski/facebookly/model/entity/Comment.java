@@ -7,17 +7,15 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
-import static jakarta.persistence.FetchType.EAGER;
 import static jakarta.persistence.GenerationType.IDENTITY;
 
-@Table(name = "POSTS")
+@Table(name = "COMMENTS")
 @Entity
 @NoArgsConstructor
 @Getter
 @Setter
-public class Post {
+public class Comment {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
@@ -25,8 +23,8 @@ public class Post {
     private String content;
     @NotNull
     private LocalDateTime created;
-    @ManyToOne(fetch = EAGER)
+    @ManyToOne
+    private Post post;
+    @ManyToOne
     private User user;
-    @OneToMany(mappedBy = "post")
-    private List<Comment> comments;
 }

@@ -8,5 +8,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Getter
 public class NoUserWithSuchId extends RuntimeException{
+    public static final String MESSAGE = "Brak użytkowników o podanym id";
     private String message;
 }

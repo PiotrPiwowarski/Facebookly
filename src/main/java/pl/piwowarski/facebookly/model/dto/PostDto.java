@@ -1,21 +1,23 @@
 package pl.piwowarski.facebookly.model.dto;
 
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Null;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@AllArgsConstructor
+import java.time.LocalDateTime;
+
 @NoArgsConstructor
 @Getter
 @Setter
-public class CreateUserDto {
+public class PostDto {
     @Null
     private Long id;
-    private String firstName;
-    private String lastName;
-    private String email;
-    private String login;
-    private String password;
+    @NotNull
+    private String content;
+    @NotNull
+    private LocalDateTime created;
+    @NotNull
+    private Long userId;
 }

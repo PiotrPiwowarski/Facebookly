@@ -1,4 +1,4 @@
-package pl.piwowarski.facebookly.controller.exceptionHandler;
+package pl.piwowarski.facebookly.exceptionHandler;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
