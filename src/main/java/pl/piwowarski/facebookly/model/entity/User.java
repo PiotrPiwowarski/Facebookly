@@ -6,10 +6,12 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.objenesis.instantiator.basic.DelegatingToExoticInstantiator;
 import pl.piwowarski.facebookly.model.enums.Gender;
 
 import java.util.List;
 
+import static jakarta.persistence.CascadeType.*;
 import static jakarta.persistence.FetchType.LAZY;
 import static jakarta.persistence.GenerationType.IDENTITY;
 
@@ -27,6 +29,7 @@ public class User {
     @NotNull
     private String lastName;
     @NotNull
+    @Enumerated(EnumType.STRING)
     private Gender gender;
     @NotNull
     @Email
@@ -35,8 +38,13 @@ public class User {
     private String login;
     @NotNull
     private String password;
-    @OneToMany(mappedBy = "user", fetch = LAZY)
+    @OneToMany(mappedBy = "user", fetch = LAZY, cascade = REMOVE)
     private List<Post> posts;
-    @ManyToMany(fetch = LAZY)
+    @ManyToMany(fetch = LAZY, cascade = REMOVE)
+    @JoinTable(
+            name = "USER_FRIENDS",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "friend_id")
+    )
     private List<User> friends;
 }

@@ -22,4 +22,6 @@ public class CommentDto {
     private Long userId;
     @NotNull
     private Long postId;
+    private Long likes;
+    private Long dislikes;
 }

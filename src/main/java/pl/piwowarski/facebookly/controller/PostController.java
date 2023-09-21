@@ -22,13 +22,18 @@ public class PostController {
         return ResponseEntity.ok(postService.findPostById(postId));
     }
 
-    @GetMapping("/")
+    @GetMapping
     public ResponseEntity<List<PostDto>> getAllPosts(){
         return ResponseEntity.ok(postService.findAllPosts());
     }
 
-    @PostMapping("/")
-    public ResponseEntity<?> addPost(@RequestBody PostDto postDto){
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<PostDto>> getAllPostsByUserId(@PathVariable Long userId){
+        return ResponseEntity.ok(postService.findAllPostsByUserId(userId));
+    }
+
+    @PostMapping
+    public ResponseEntity<Void> addPost(@RequestBody PostDto postDto){
         PostDto post = postService.savePost(postDto);
         URI uri = ServletUriComponentsBuilder
                 .fromCurrentRequest()
@@ -38,8 +43,20 @@ public class PostController {
         return ResponseEntity.created(uri).build();
     }
 
+    @PatchMapping("/{postId}/like")
+    public ResponseEntity<Void> addLike(@PathVariable Long postId){
+        postService.addLike(postId);
+        return ResponseEntity.ok().build();
+    }
+
+    @PatchMapping("/{postId}/dislike")
+    public ResponseEntity<Void> addDislike(@PathVariable Long postId){
+        postService.addDislike(postId);
+        return ResponseEntity.ok().build();
+    }
+
     @DeleteMapping("/{postId}")
-    public ResponseEntity<?> deletePostById(@PathVariable Long postId){
+    public ResponseEntity<Void> deletePostById(@PathVariable Long postId){
         postService.deletePost(postId);
         return ResponseEntity.noContent().build();
     }

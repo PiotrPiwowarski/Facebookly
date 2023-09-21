@@ -2,12 +2,16 @@ package pl.piwowarski.facebookly.model.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Null;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.time.LocalDateTime;
 
+import static jakarta.persistence.CascadeType.ALL;
+import static jakarta.persistence.CascadeType.REMOVE;
 import static jakarta.persistence.GenerationType.IDENTITY;
 
 @Table(name = "COMMENTS")
@@ -27,4 +31,6 @@ public class Comment {
     private Post post;
     @ManyToOne
     private User user;
+    private Long likes;
+    private Long dislikes;
 }

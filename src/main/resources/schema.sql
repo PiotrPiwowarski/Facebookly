@@ -2,7 +2,7 @@ CREATE TABLE USERS (
 	id bigint auto_increment primary key,
 	first_name varchar(255) not null,
 	last_name varchar(255) not null,
-	gender varchar(255) not null,
+	gender ENUM('Male', 'Female') not null,
 	email varchar(255) not null,
 	login varchar(255) not null,
 	password varchar(255) not null
@@ -12,7 +12,9 @@ CREATE TABLE POSTS (
     id bigint auto_increment primary key,
     content varchar(600) not null,
     created timestamp not null,
-    user_id bigint not null
+    user_id bigint not null,
+    likes bigint default 0,
+    dislikes bigint default 0
 );
 
 CREATE TABLE COMMENTS (
@@ -20,17 +22,15 @@ CREATE TABLE COMMENTS (
     content varchar(400) not null,
     created timestamp not null,
     user_id bigint not null,
-    post_id bigint not null
+    post_id bigint not null,
+    likes bigint default 0,
+    dislikes bigint default 0
 );
 
 CREATE TABLE USER_FRIENDS (
     user_id bigint not null,
     friend_id bigint not null
 );
-
-ALTER TABLE USERS
-    ADD CONSTRAINT users_gender_check
-	CHECK (gender IN ('Male', 'Female'));
 
 ALTER TABLE POSTS
     ADD CONSTRAINT posts_user_id_foreign_key

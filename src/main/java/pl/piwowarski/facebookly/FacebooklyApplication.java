@@ -9,5 +9,4 @@ public class FacebooklyApplication {
     public static void main(String[] args) {
         SpringApplication.run(FacebooklyApplication.class, args);
     }
-
 }

@@ -21,6 +21,8 @@ public class PostMapper implements Mapper<Post, PostDto>{
         post.setUser(userRepository
                 .findById(postDto.getUserId())
                 .orElseThrow(() -> new NoUserWithSuchId(NoUserWithSuchId.MESSAGE)));
+        post.setLikes(0L);
+        post.setDislikes(0L);
         return post;
     }
 
@@ -31,6 +33,8 @@ public class PostMapper implements Mapper<Post, PostDto>{
         postDto.setContent(post.getContent());
         postDto.setCreated(post.getCreated());
         postDto.setUserId(post.getUser().getId());
+        postDto.setLikes(post.getLikes());
+        postDto.setDislikes(post.getDislikes());
         return postDto;
     }
 }

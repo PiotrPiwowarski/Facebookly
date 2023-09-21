@@ -22,13 +22,13 @@ public class UserController {
         return ResponseEntity.ok(userService.findUserById(id));
     }
 
-    @GetMapping("/")
+    @GetMapping
     public ResponseEntity<List<UserDto>> getAllPosts(){
         return ResponseEntity.ok(userService.findAllUsers());
     }
 
-    @PostMapping("/")
-    public ResponseEntity<?> addUser(@RequestBody UserDto userDto){
+    @PostMapping
+    public ResponseEntity<Void> addUser(@RequestBody UserDto userDto){
         UserDto user = userService.saveUser(userDto);
         URI uri = ServletUriComponentsBuilder
                 .fromCurrentRequest()
@@ -39,7 +39,7 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteUserById(@PathVariable Long id){
+    public ResponseEntity<Void> deleteUserById(@PathVariable Long id){
         userService.deleteUser(id);
         return ResponseEntity.noContent().build();
     }

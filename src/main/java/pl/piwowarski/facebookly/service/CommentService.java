@@ -2,6 +2,8 @@ package pl.piwowarski.facebookly.service;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import pl.piwowarski.facebookly.exception.NoCommentWithSuchId;
 import pl.piwowarski.facebookly.model.dto.CommentDto;
 import pl.piwowarski.facebookly.model.entity.Comment;
 import pl.piwowarski.facebookly.repository.CommentRepository;
@@ -32,5 +34,25 @@ public class CommentService {
 
     public void deleteById(Long commentId) {
         commentRepository.deleteById(commentId);
+    }
+
+    @Transactional
+    public void addLike(Long commentId) {
+        Comment comment = findCommentById(commentId);
+        comment.setLikes(comment.getLikes() + 1);
+    }
+
+    @Transactional
+    public void addDislike(Long commentId) {
+        Comment comment = findCommentById(commentId);
+        comment.setDislikes(comment.getDislikes() + 1);
+    }
+
+    private Comment findCommentById(Long commentId){
+        return commentRepository
+                .findById(commentId)
+                .orElseThrow(
+                        () -> new NoCommentWithSuchId(NoCommentWithSuchId.MESSAGE)
+                );
     }
 }

@@ -12,6 +12,7 @@ public class UserMapper implements Mapper<User, UserDto> {
         User user = new User();
         user.setFirstName(userDto.getFirstName());
         user.setLastName(userDto.getLastName());
+        user.setGender(userDto.getGender());
         user.setEmail(userDto.getEmail());
         user.setLogin(userDto.getLogin());
         user.setPassword(userDto.getPassword());
@@ -22,6 +23,7 @@ public class UserMapper implements Mapper<User, UserDto> {
     public UserDto unmap(User user) {
         UserDto userDto = new UserDto();
         userDto.setId(user.getId());
+        userDto.setGender(user.getGender());
         userDto.setFirstName(user.getFirstName());
         userDto.setLastName(user.getLastName());
         userDto.setEmail(user.getEmail());
