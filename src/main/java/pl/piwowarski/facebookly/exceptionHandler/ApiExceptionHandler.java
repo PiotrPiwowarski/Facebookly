@@ -3,7 +3,6 @@ package pl.piwowarski.facebookly.exceptionHandler;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import pl.piwowarski.facebookly.exception.*;
@@ -41,15 +40,9 @@ public class ApiExceptionHandler {
         return new ResponseEntity<>(tryingToAddYourselfAsAFriend.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(HttpMessageNotReadableException.class)
-    public ResponseEntity<String> handle(HttpMessageNotReadableException httpMessageNotReadableException){
-        return new ResponseEntity<>(httpMessageNotReadableException.getMessage(), HttpStatus.BAD_REQUEST);
-    }
-
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<String> handle(ConstraintViolationException constraintViolationException){
-        return new ResponseEntity<>(constraintViolationException.getMessage(), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(constraintViolationException.getConstraintViolations().toString(),
+                HttpStatus.BAD_REQUEST);
     }
-
-
 }

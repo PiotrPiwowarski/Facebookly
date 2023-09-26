@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.objenesis.instantiator.basic.DelegatingToExoticInstantiator;
 import pl.piwowarski.facebookly.model.enums.Gender;
+import pl.piwowarski.facebookly.validator.Password;
 
 import java.util.List;
 
@@ -38,6 +39,7 @@ public class User {
     @NotNull
     private String login;
     @NotNull
+    @Password
     private String password;
     @OneToMany(mappedBy = "user", fetch = LAZY, cascade = REMOVE)
     private List<Post> posts;
