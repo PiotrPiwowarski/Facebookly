@@ -1,14 +1,18 @@
 package pl.piwowarski.facebookly.service;
 
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import pl.piwowarski.facebookly.exception.PostContentIsNull;
 import pl.piwowarski.facebookly.model.dto.PostDto;
 import pl.piwowarski.facebookly.model.entity.Post;
 import pl.piwowarski.facebookly.exception.NoPostWithSuchId;
 import pl.piwowarski.facebookly.repository.PostRepository;
 import pl.piwowarski.facebookly.service.mapper.PostMapper;
 
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -29,6 +33,20 @@ public class PostService {
                 .findAll()
                 .stream()
                 .map(postMapper::unmap)
+                .sorted(Comparator
+                        .comparing(PostDto::getCreated)
+                        .reversed())
+                .toList();
+    }
+
+    public List<PostDto> findAllPosts(Integer pageNumber, Integer pageSize) {
+        return postRepository
+                .findAll(PageRequest
+                        .of(pageNumber, pageSize)
+                        .withSort(Sort.by("created")
+                                .reverse()))
+                .stream()
+                .map(postMapper::unmap)
                 .toList();
     }
 
@@ -42,10 +60,25 @@ public class PostService {
         postRepository.deleteById(id);
     }
 
-    public List<PostDto> findAllPostsByUserId(Long userId) {
+    public List<PostDto> findAllUserPosts(Long userId, Integer pageNumber, Integer pageSize) {
         return postRepository
                 .findAllByUserId(userId)
                 .stream()
+                .sorted(Comparator
+                        .comparing(Post::getCreated)
+                        .reversed())
+                .map(postMapper::unmap)
+                .toList()
+                .subList(pageNumber, pageSize + pageNumber);
+    }
+
+    public List<PostDto> findAllUserPosts(Long userId) {
+        return postRepository
+                .findAllByUserId(userId)
+                .stream()
+                .sorted(Comparator
+                        .comparing(Post::getCreated)
+                        .reversed())
                 .map(postMapper::unmap)
                 .toList();
     }
@@ -69,5 +102,20 @@ public class PostService {
                 .orElseThrow(
                         () -> new NoPostWithSuchId(NoPostWithSuchId.MESSAGE)
                 );
+    }
+
+    @Transactional
+    public PostDto updatePost(Long postId, PostDto postDto) {
+        Post post = findById(postId);
+        if(post.getContent() == null){
+            throw new PostContentIsNull(PostContentIsNull.MESSAGE);
+        }
+        post.setContent(postDto.getContent());
+        return postMapper.unmap(post);
+    }
+
+    public void deleteByUserId(Long userId) {
+        List<Post> posts = postRepository.findAllByUserId(userId);
+        postRepository.deleteAll(posts);
     }
 }

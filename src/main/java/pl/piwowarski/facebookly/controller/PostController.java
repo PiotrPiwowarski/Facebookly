@@ -18,8 +18,13 @@ public class PostController {
     private final PostService postService;
 
     @GetMapping("/{postId}")
-    public ResponseEntity<PostDto> getPostById(@PathVariable long postId){
+    public ResponseEntity<PostDto> getPost(@PathVariable long postId){
         return ResponseEntity.ok(postService.findPostById(postId));
+    }
+
+    @GetMapping("/{offset}/{pageSize}")
+    public ResponseEntity<List<PostDto>> getAllPosts(@PathVariable Integer offset, @PathVariable Integer pageSize){
+        return ResponseEntity.ok(postService.findAllPosts(offset, pageSize));
     }
 
     @GetMapping
@@ -27,9 +32,16 @@ public class PostController {
         return ResponseEntity.ok(postService.findAllPosts());
     }
 
+    @GetMapping("/user/{userId}/{offset}/{pageSize}")
+    public ResponseEntity<List<PostDto>> getAllUserPosts(@PathVariable Long userId,
+                                                             @PathVariable Integer offset,
+                                                             @PathVariable Integer pageSize){
+        return ResponseEntity.ok(postService.findAllUserPosts(userId, offset, pageSize));
+    }
+
     @GetMapping("/user/{userId}")
-    public ResponseEntity<List<PostDto>> getAllPostsByUserId(@PathVariable Long userId){
-        return ResponseEntity.ok(postService.findAllPostsByUserId(userId));
+    public ResponseEntity<List<PostDto>> getAllUserPosts(@PathVariable Long userId){
+        return ResponseEntity.ok(postService.findAllUserPosts(userId));
     }
 
     @PostMapping
@@ -55,9 +67,21 @@ public class PostController {
         return ResponseEntity.ok().build();
     }
 
+    @PutMapping("/{postId}")
+    public ResponseEntity<PostDto> updatePost(@PathVariable Long postId, @RequestBody PostDto postDto){
+        PostDto post = postService.updatePost(postId, postDto);
+        return ResponseEntity.ok(post);
+    }
+
     @DeleteMapping("/{postId}")
-    public ResponseEntity<Void> deletePostById(@PathVariable Long postId){
+    public ResponseEntity<Void> deletePost(@PathVariable Long postId){
         postService.deletePost(postId);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/{userId}")
+    public ResponseEntity<Void> deleteAllUserPosts(@PathVariable Long userId){
+        postService.deleteByUserId(userId);
         return ResponseEntity.noContent().build();
     }
 }

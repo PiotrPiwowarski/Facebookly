@@ -19,7 +19,7 @@ CREATE TABLE POSTS (
 
 CREATE TABLE COMMENTS (
     id bigint auto_increment primary key,
-    content varchar(400) not null,
+    content varchar(600) not null,
     created timestamp not null,
     user_id bigint not null,
     post_id bigint not null,
@@ -28,6 +28,7 @@ CREATE TABLE COMMENTS (
 );
 
 CREATE TABLE USER_FRIENDS (
+    id bigint auto_increment primary key,
     user_id bigint not null,
     friend_id bigint not null
 );

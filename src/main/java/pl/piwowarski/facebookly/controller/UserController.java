@@ -18,13 +18,24 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserDto> getUserById(@PathVariable long id){
+    public ResponseEntity<UserDto> getUser(@PathVariable Long id){
         return ResponseEntity.ok(userService.findUserById(id));
     }
 
     @GetMapping
-    public ResponseEntity<List<UserDto>> getAllPosts(){
+    public ResponseEntity<List<UserDto>> getAllUsers(){
         return ResponseEntity.ok(userService.findAllUsers());
+    }
+
+    @GetMapping("/{pageNumber}/{pageSize}")
+    public ResponseEntity<List<UserDto>> getAllUsers(@PathVariable Integer pageNumber,
+                                                     @PathVariable Integer pageSize){
+        return ResponseEntity.ok(userService.findAllUsers(pageNumber, pageSize));
+    }
+
+    @GetMapping("/{userId}/friends")
+    public ResponseEntity<List<UserDto>> getUserFriends(@PathVariable Long userId){
+        return ResponseEntity.ok(userService.findUserFriends(userId));
     }
 
     @PostMapping
@@ -38,9 +49,27 @@ public class UserController {
         return ResponseEntity.created(uri).build();
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteUserById(@PathVariable Long id){
-        userService.deleteUser(id);
+    @PostMapping("/{userId}/friends/{friendId}")
+    public ResponseEntity<Void> addFriend(@PathVariable Long userId, @PathVariable Long friendId){
+        userService.addFriend(userId, friendId);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/{userId}")
+    public ResponseEntity<UserDto> updateUser(@PathVariable Long userId, @RequestBody UserDto userDto){
+        UserDto user = userService.updateUser(userId, userDto);
+        return ResponseEntity.ok(user);
+    }
+
+    @DeleteMapping("/{userId}")
+    public ResponseEntity<Void> deleteUser(@PathVariable Long userId){
+        userService.deleteUser(userId);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/{userId}/friends/{friendId}")
+    public ResponseEntity<Void> deleteFriend(@PathVariable Long userId, @PathVariable Long friendId){
+        userService.deleteFriend(userId, friendId);
         return ResponseEntity.noContent().build();
     }
 }

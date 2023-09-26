@@ -18,8 +18,15 @@ public class CommentController {
     private CommentService commentService;
 
     @GetMapping("/{postId}")
-    public ResponseEntity<List<CommentDto>> getAllCommentsByPostId(@PathVariable Long postId){
+    public ResponseEntity<List<CommentDto>> getAllComments(@PathVariable Long postId){
         return ResponseEntity.ok(commentService.findAllCommentsByPostId(postId));
+    }
+
+    @GetMapping("/{postId}/{offset}/{pageSize}")
+    public ResponseEntity<List<CommentDto>> getAllComments(@PathVariable Long postId,
+                                                           @PathVariable Integer offset,
+                                                           @PathVariable Integer pageSize){
+        return ResponseEntity.ok(commentService.findAllCommentsByPostId(postId, offset, pageSize));
     }
 
     @PostMapping
@@ -45,9 +52,21 @@ public class CommentController {
         return ResponseEntity.ok().build();
     }
 
+    @PutMapping("/{commentId}")
+    public ResponseEntity<CommentDto> updateComment(@PathVariable Long commentId, @RequestBody CommentDto commentDto){
+        CommentDto comment = commentService.updateComment(commentId, commentDto);
+        return ResponseEntity.ok(comment);
+    }
+
     @DeleteMapping("/{commentId}")
     public ResponseEntity<Void> deleteComment(@PathVariable Long commentId){
         commentService.deleteById(commentId);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/post/{postId}")
+    public ResponseEntity<Void> deleteAllPostComments(@PathVariable Long postId){
+        commentService.deleteAllPostComments(postId);
         return ResponseEntity.noContent().build();
     }
 }
