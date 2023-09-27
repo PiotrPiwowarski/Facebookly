@@ -14,8 +14,9 @@ import java.time.LocalDateTime;
 public class PostDto {
     @Null
     private Long id;
-    @NotNull
     private String content;
+    private String imagePath;
+    private byte[] image;
     @NotNull
     private LocalDateTime created;
     @NotNull

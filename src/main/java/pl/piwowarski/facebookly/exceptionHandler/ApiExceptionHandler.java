@@ -45,4 +45,9 @@ public class ApiExceptionHandler {
         return new ResponseEntity<>(constraintViolationException.getConstraintViolations().toString(),
                 HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(PictureSavingProcessException.class)
+    public ResponseEntity<String> handle(PictureSavingProcessException pictureSavingProcessException){
+        return new ResponseEntity<>(pictureSavingProcessException.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 }

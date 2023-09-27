@@ -2,7 +2,7 @@ package pl.piwowarski.facebookly.model.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Null;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,12 +19,13 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 @NoArgsConstructor
 @Getter
 @Setter
+@EqualsAndHashCode
 public class Post {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
-    @NotNull
     private String content;
+    private byte[] picture;
     @NotNull
     private LocalDateTime created;
     @ManyToOne(fetch = EAGER)

@@ -10,7 +10,8 @@ CREATE TABLE USERS (
 
 CREATE TABLE POSTS (
     id bigint auto_increment primary key,
-    content varchar(600) not null,
+    content varchar(600),
+    image BLOB,
     created timestamp not null,
     user_id bigint not null,
     likes bigint default 0,

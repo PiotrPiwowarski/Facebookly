@@ -3,17 +3,16 @@ package pl.piwowarski.facebookly.model.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.objenesis.instantiator.basic.DelegatingToExoticInstantiator;
 import pl.piwowarski.facebookly.model.enums.Gender;
 import pl.piwowarski.facebookly.validator.Password;
 
 import java.util.List;
 
 import static jakarta.persistence.CascadeType.*;
-import static jakarta.persistence.FetchType.EAGER;
 import static jakarta.persistence.FetchType.LAZY;
 import static jakarta.persistence.GenerationType.IDENTITY;
 
@@ -22,6 +21,7 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 @NoArgsConstructor
 @Getter
 @Setter
+@EqualsAndHashCode
 public class User {
     @Id
     @GeneratedValue(strategy = IDENTITY)

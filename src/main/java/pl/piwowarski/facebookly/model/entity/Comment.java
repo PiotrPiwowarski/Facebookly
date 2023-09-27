@@ -2,16 +2,13 @@ package pl.piwowarski.facebookly.model.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Null;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.beans.factory.annotation.Value;
 
 import java.time.LocalDateTime;
 
-import static jakarta.persistence.CascadeType.ALL;
-import static jakarta.persistence.CascadeType.REMOVE;
 import static jakarta.persistence.GenerationType.IDENTITY;
 
 @Table(name = "COMMENTS")
@@ -19,6 +16,7 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 @NoArgsConstructor
 @Getter
 @Setter
+@EqualsAndHashCode
 public class Comment {
     @Id
     @GeneratedValue(strategy = IDENTITY)
