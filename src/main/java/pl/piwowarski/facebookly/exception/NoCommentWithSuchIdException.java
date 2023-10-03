@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class PostContentIsNull extends RuntimeException{
-    public static final String MESSAGE = "Brak możliwości aktualizacji postu, content == null";
+public class NoCommentWithSuchIdException extends RuntimeException {
+    public static final String MESSAGE = "Brak komentarzy o podanym id";
     private String message;
 }

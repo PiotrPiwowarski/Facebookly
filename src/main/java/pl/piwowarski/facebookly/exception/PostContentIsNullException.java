@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class NoPostWithSuchId extends RuntimeException{
-    public static final String MESSAGE = "Brak postów o podanym id";
+public class PostContentIsNullException extends RuntimeException{
+    public static final String MESSAGE = "Brak możliwości aktualizacji postu, content == null";
     private String message;
 }

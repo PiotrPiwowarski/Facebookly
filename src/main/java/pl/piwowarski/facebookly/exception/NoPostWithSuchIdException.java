@@ -4,10 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Getter
-public class CommentContentIsNull extends RuntimeException{
-    public static final String MESSAGE = "Brak możliwości aktualizacji komentarza, content == null";
+public class NoPostWithSuchIdException extends RuntimeException{
+    public static final String MESSAGE = "Brak postów o podanym id";
     private String message;
 }

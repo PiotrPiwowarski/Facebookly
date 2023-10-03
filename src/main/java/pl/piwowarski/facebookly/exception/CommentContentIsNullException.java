@@ -4,10 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
-public class TryingToAddYourselfAsAFriend extends RuntimeException {
-    public static final String MESSAGE = "Brak możliwości dodania samego siebie do znajomych";
+public class CommentContentIsNullException extends RuntimeException{
+    public static final String MESSAGE = "Brak możliwości aktualizacji komentarza, content == null";
     private String message;
 }

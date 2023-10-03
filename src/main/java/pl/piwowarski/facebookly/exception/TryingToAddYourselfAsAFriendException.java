@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class NoCommentWithSuchId extends RuntimeException {
-    public static final String MESSAGE = "Brak komentarzy o podanym id";
+public class TryingToAddYourselfAsAFriendException extends RuntimeException {
+    public static final String MESSAGE = "Brak możliwości dodania samego siebie do znajomych";
     private String message;
 }

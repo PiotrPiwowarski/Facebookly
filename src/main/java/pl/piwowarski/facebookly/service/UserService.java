@@ -4,10 +4,10 @@ import lombok.AllArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import pl.piwowarski.facebookly.exception.TryingToAddYourselfAsAFriend;
+import pl.piwowarski.facebookly.exception.TryingToAddYourselfAsAFriendException;
 import pl.piwowarski.facebookly.model.dto.UserDto;
 import pl.piwowarski.facebookly.model.entity.User;
-import pl.piwowarski.facebookly.exception.NoUserWithSuchId;
+import pl.piwowarski.facebookly.exception.NoUserWithSuchIdException;
 import pl.piwowarski.facebookly.repository.UserRepository;
 import pl.piwowarski.facebookly.service.mapper.UserMapper;
 
@@ -30,7 +30,7 @@ public class UserService {
     private User findById(Long userId){
         return userRepository
                 .findById(userId)
-                .orElseThrow(() -> new NoUserWithSuchId(NoUserWithSuchId.MESSAGE));
+                .orElseThrow(() -> new NoUserWithSuchIdException(NoUserWithSuchIdException.MESSAGE));
     }
 
     public List<UserDto> findAllUsers() {
@@ -107,7 +107,7 @@ public class UserService {
     @Transactional
     public void addFriend(Long userId, Long friendId) {
         if(userId.equals(friendId)){
-            throw new TryingToAddYourselfAsAFriend(TryingToAddYourselfAsAFriend.MESSAGE);
+            throw new TryingToAddYourselfAsAFriendException(TryingToAddYourselfAsAFriendException.MESSAGE);
         }
         addToFriend(userId, friendId);
         addToFriend(friendId, userId);

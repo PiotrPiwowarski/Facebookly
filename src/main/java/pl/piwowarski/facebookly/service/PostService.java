@@ -5,10 +5,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import pl.piwowarski.facebookly.exception.PostContentIsNull;
+import pl.piwowarski.facebookly.exception.PostContentIsNullException;
 import pl.piwowarski.facebookly.model.dto.PostDto;
 import pl.piwowarski.facebookly.model.entity.Post;
-import pl.piwowarski.facebookly.exception.NoPostWithSuchId;
+import pl.piwowarski.facebookly.exception.NoPostWithSuchIdException;
 import pl.piwowarski.facebookly.repository.PostRepository;
 import pl.piwowarski.facebookly.service.mapper.PostMapper;
 
@@ -24,7 +24,7 @@ public class PostService {
     public PostDto findPostById(Long postId) {
         Post foundPost = postRepository
                 .findById(postId)
-                .orElseThrow(() -> new NoPostWithSuchId("Brak postów o podanym id"));
+                .orElseThrow(() -> new NoPostWithSuchIdException("Brak postów o podanym id"));
         return postMapper.unmap(foundPost);
     }
 
@@ -100,7 +100,7 @@ public class PostService {
         return postRepository
                 .findById(postId)
                 .orElseThrow(
-                        () -> new NoPostWithSuchId(NoPostWithSuchId.MESSAGE)
+                        () -> new NoPostWithSuchIdException(NoPostWithSuchIdException.MESSAGE)
                 );
     }
 
@@ -108,7 +108,7 @@ public class PostService {
     public PostDto updatePost(Long postId, PostDto postDto) {
         Post post = findById(postId);
         if(post.getContent() == null){
-            throw new PostContentIsNull(PostContentIsNull.MESSAGE);
+            throw new PostContentIsNullException(PostContentIsNullException.MESSAGE);
         }
         post.setContent(postDto.getContent());
         return postMapper.unmap(post);

@@ -4,8 +4,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import pl.piwowarski.facebookly.exception.CommentContentIsNull;
-import pl.piwowarski.facebookly.exception.NoCommentWithSuchId;
+import pl.piwowarski.facebookly.exception.CommentContentIsNullException;
+import pl.piwowarski.facebookly.exception.NoCommentWithSuchIdException;
 import pl.piwowarski.facebookly.model.dto.CommentDto;
 import pl.piwowarski.facebookly.model.entity.Comment;
 import pl.piwowarski.facebookly.repository.CommentRepository;
@@ -69,7 +69,7 @@ public class CommentService {
         return commentRepository
                 .findById(commentId)
                 .orElseThrow(
-                        () -> new NoCommentWithSuchId(NoCommentWithSuchId.MESSAGE)
+                        () -> new NoCommentWithSuchIdException(NoCommentWithSuchIdException.MESSAGE)
                 );
     }
 
@@ -77,7 +77,7 @@ public class CommentService {
     public CommentDto updateComment(Long commentId, CommentDto commentDto) {
         Comment comment = findCommentById(commentId);
         if(commentDto.getContent() == null){
-            throw new CommentContentIsNull(CommentContentIsNull.MESSAGE);
+            throw new CommentContentIsNullException(CommentContentIsNullException.MESSAGE);
         }
         comment.setContent(commentDto.getContent());
         return commentMapper.unmap(comment);

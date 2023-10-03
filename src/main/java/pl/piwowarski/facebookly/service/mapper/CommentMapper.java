@@ -2,8 +2,8 @@ package pl.piwowarski.facebookly.service.mapper;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import pl.piwowarski.facebookly.exception.NoPostWithSuchId;
-import pl.piwowarski.facebookly.exception.NoUserWithSuchId;
+import pl.piwowarski.facebookly.exception.NoPostWithSuchIdException;
+import pl.piwowarski.facebookly.exception.NoUserWithSuchIdException;
 import pl.piwowarski.facebookly.model.dto.CommentDto;
 import pl.piwowarski.facebookly.model.entity.Comment;
 import pl.piwowarski.facebookly.repository.PostRepository;
@@ -25,11 +25,11 @@ public class CommentMapper implements Mapper<Comment, CommentDto>{
         comment.setDislikes(0L);
         comment.setUser(userRepository
                 .findById(commentDto.getUserId())
-                .orElseThrow(() -> new NoUserWithSuchId(NoUserWithSuchId.MESSAGE))
+                .orElseThrow(() -> new NoUserWithSuchIdException(NoUserWithSuchIdException.MESSAGE))
         );
         comment.setPost(postRepository
                 .findById(commentDto.getPostId())
-                .orElseThrow(() -> new NoPostWithSuchId(NoPostWithSuchId.MESSAGE))
+                .orElseThrow(() -> new NoPostWithSuchIdException(NoPostWithSuchIdException.MESSAGE))
         );
         return comment;
     }
