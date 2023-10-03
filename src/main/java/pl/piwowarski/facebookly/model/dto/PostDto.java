@@ -2,21 +2,20 @@ package pl.piwowarski.facebookly.model.dto;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Null;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
+@Data
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
 public class PostDto {
     @Null
     private Long id;
     private String content;
-    private String imagePath;
-    private byte[] image;
+    private String picturePath;
+    private byte[] picture;
     @NotNull
     private LocalDateTime created;
     @NotNull

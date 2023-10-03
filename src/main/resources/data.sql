@@ -1,19 +1,19 @@
-insert into USERS (first_name, last_name, gender, email, login, password) values ('Vilhelmina', 'Fabb', 'Female', 'vfabb0@lulu.com', 'vfabb0', 'wB7"Ev\>Gs06g');
-insert into USERS (first_name, last_name, gender, email, login, password) values ('Stephi', 'Doe', 'Female', 'sdoe1@blogger.com', 'sdoe1', 'wC1+`R3sS0K<s');
-insert into USERS (first_name, last_name, gender, email, login, password) values ('Karena', 'Shales', 'Female', 'kshales2@wix.com', 'kshales2', 'fQ3''YM#WlD)wE');
-insert into USERS (first_name, last_name, gender, email, login, password) values ('Ezechiel', 'Blabie', 'Male', 'eblabie3@tumblr.com', 'eblabie3', 'bS4"5~8/MT&');
-insert into USERS (first_name, last_name, gender, email, login, password) values ('Sarena', 'Richemond', 'Female', 'srichemond4@psu.edu', 'srichemond4', 'bB7>6x<$nfjlC<');
-insert into USERS (first_name, last_name, gender, email, login, password) values ('Rhianon', 'Letch', 'Female', 'rletch5@google.ru', 'rletch5', 'oV7/t''D""2');
-insert into USERS (first_name, last_name, gender, email, login, password) values ('Blondie', 'Lean', 'Female', 'blean6@joomla.org', 'blean6', 'kD7)<7b?f>');
-insert into USERS (first_name, last_name, gender, email, login, password) values ('Ernst', 'Skerm', 'Male', 'eskerm7@msu.edu', 'eskerm7', 'dY5(Ja,l><K7Q>B');
-insert into USERS (first_name, last_name, gender, email, login, password) values ('Eddie', 'Rudsdell', 'Female', 'erudsdell8@ustream.tv', 'erudsdell8', 'aS0{uliWv.?');
-insert into USERS (first_name, last_name, gender, email, login, password) values ('Meredith', 'Greenard', 'Female', 'mgreenard9@prlog.org', 'mgreenard9', 'kB5{%}l=*.y~.X_');
+insert into USERS (first_name, last_name, gender, email, login, password, role) values ('Vilhelmina', 'Fabb', 'Female', 'vfabb0@lulu.com', 'vfabb0', 'wB7"Ev\>Gs06g', 'USER');
+insert into USERS (first_name, last_name, gender, email, login, password, role) values ('Stephi', 'Doe', 'Female', 'sdoe1@blogger.com', 'sdoe1', 'wC1+`R3sS0K<s', 'USER');
+insert into USERS (first_name, last_name, gender, email, login, password, role) values ('Karena', 'Shales', 'Female', 'kshales2@wix.com', 'kshales2', 'fQ3''YM#WlD)wE', 'USER');
+insert into USERS (first_name, last_name, gender, email, login, password, role) values ('Ezechiel', 'Blabie', 'Male', 'eblabie3@tumblr.com', 'eblabie3', 'bS4"5~8/MT&', 'USER');
+insert into USERS (first_name, last_name, gender, email, login, password, role) values ('Sarena', 'Richemond', 'Female', 'srichemond4@psu.edu', 'srichemond4', 'bB7>6x<$nfjlC<', 'USER');
+insert into USERS (first_name, last_name, gender, email, login, password, role) values ('Rhianon', 'Letch', 'Female', 'rletch5@google.ru', 'rletch5', 'oV7/t''D""2', 'USER');
+insert into USERS (first_name, last_name, gender, email, login, password, role) values ('Blondie', 'Lean', 'Female', 'blean6@joomla.org', 'blean6', 'kD7)<7b?f>', 'USER');
+insert into USERS (first_name, last_name, gender, email, login, password, role) values ('Ernst', 'Skerm', 'Male', 'eskerm7@msu.edu', 'eskerm7', 'dY5(Ja,l><K7Q>B', 'USER');
+insert into USERS (first_name, last_name, gender, email, login, password, role) values ('Eddie', 'Rudsdell', 'Female', 'erudsdell8@ustream.tv', 'erudsdell8', 'aS0{uliWv.?', 'USER');
+insert into USERS (first_name, last_name, gender, email, login, password, role) values ('Meredith', 'Greenard', 'Female', 'mgreenard9@prlog.org', 'mgreenard9', 'kB5{%}l=*.y~.X_', 'USER');
 
 
 
 
 
-insert into POSTS (content, created, image, user_id) values ('Praesent blandit. Nam nulla. Integer pede justo, lacinia eget, tincidunt eget, tempus vel, pede. Morbi porttitor lorem id ligula. Suspendisse ornare consequat lectus. In est risus, auctor sed, tristique in, tempus sit amet, sem.', '2023-02-09 00:19:23', '/Users/piotrpiwowarski/Desktop', 10);
+insert into POSTS (content, created, user_id) values ('Praesent blandit. Nam nulla. Integer pede justo, lacinia eget, tincidunt eget, tempus vel, pede. Morbi porttitor lorem id ligula. Suspendisse ornare consequat lectus. In est risus, auctor sed, tristique in, tempus sit amet, sem.', '2023-02-09 00:19:23', 10);
 insert into POSTS (content, created, user_id) values ('In hac habitasse platea dictumst. Etiam faucibus cursus urna. Ut tellus. Nulla ut erat id mauris vulputate elementum. Nullam varius. Nulla facilisi. Cras non velit nec nisi vulputate nonummy.', '2023-08-18 07:06:46', 10);
 insert into POSTS (content, created, user_id) values ('Nulla tempus. Vivamus in felis eu sapien cursus vestibulum. Proin eu mi. Nulla ac enim.', '2023-05-31 06:33:35', 3);
 insert into POSTS (content, created, user_id) values ('Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Etiam vel augue. Vestibulum rutrum rutrum neque. Aenean auctor gravida sem. Praesent id massa id nisl venenatis lacinia. Aenean sit amet justo. Morbi ut odio. Cras mi pede, malesuada in, imperdiet et, commodo vulputate, justo. In blandit ultrices enim. Lorem ipsum dolor sit amet, consectetuer adipiscing elit.', '2023-08-02 11:30:48', 2);

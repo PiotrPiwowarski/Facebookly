@@ -1,11 +1,15 @@
 package pl.piwowarski.facebookly.service.mapper;
 
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.piwowarski.facebookly.model.dto.UserDto;
 import pl.piwowarski.facebookly.model.entity.User;
+import pl.piwowarski.facebookly.model.enums.Role;
 
 @Service
+@AllArgsConstructor
 public class UserMapper implements Mapper<User, UserDto> {
+
 
     @Override
     public User map(UserDto userDto) {
@@ -16,6 +20,7 @@ public class UserMapper implements Mapper<User, UserDto> {
         user.setEmail(userDto.getEmail());
         user.setLogin(userDto.getLogin());
         user.setPassword(userDto.getPassword());
+        user.setRole(Role.USER);
         return user;
     }
 

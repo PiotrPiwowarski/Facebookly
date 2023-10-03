@@ -19,7 +19,7 @@ public class PostMapper implements Mapper<Post, PostDto>{
     public Post map(PostDto postDto) {
         Post post = new Post();
         post.setContent(postDto.getContent());
-        post.setPicture(pictureManager.fromPathToBytesArray(postDto.getImagePath()));
+        post.setPicture(pictureManager.fromPathToBytesArray(postDto.getPicturePath()));
         post.setCreated(postDto.getCreated());
         post.setUser(userRepository
                 .findById(postDto.getUserId())
@@ -34,7 +34,7 @@ public class PostMapper implements Mapper<Post, PostDto>{
         PostDto postDto = new PostDto();
         postDto.setId(post.getId());
         postDto.setContent(post.getContent());
-        postDto.setImage(post.getPicture());
+        postDto.setPicture(post.getPicture());
         postDto.setCreated(post.getCreated());
         postDto.setUserId(post.getUser().getId());
         postDto.setLikes(post.getLikes());

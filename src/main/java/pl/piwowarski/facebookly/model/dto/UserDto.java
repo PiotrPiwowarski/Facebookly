@@ -1,14 +1,13 @@
 package pl.piwowarski.facebookly.model.dto;
 
 import jakarta.validation.constraints.Null;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import pl.piwowarski.facebookly.model.enums.Gender;
 
+@Data
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
 public class UserDto {
     @Null
     private Long id;

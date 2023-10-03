@@ -2,10 +2,7 @@ package pl.piwowarski.facebookly.model.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -13,10 +10,10 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 
 @Table(name = "COMMENTS")
 @Entity
+@Data
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
-@EqualsAndHashCode
 public class Comment {
     @Id
     @GeneratedValue(strategy = IDENTITY)

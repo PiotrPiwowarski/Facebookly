@@ -3,25 +3,25 @@ package pl.piwowarski.facebookly.model.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+
 import pl.piwowarski.facebookly.model.enums.Gender;
+import pl.piwowarski.facebookly.model.enums.Role;
 import pl.piwowarski.facebookly.validator.Password;
 
 import java.util.List;
 
 import static jakarta.persistence.CascadeType.*;
+import static jakarta.persistence.EnumType.STRING;
 import static jakarta.persistence.FetchType.LAZY;
 import static jakarta.persistence.GenerationType.IDENTITY;
 
 @Table(name = "USERS")
 @Entity
+@Data
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
-@EqualsAndHashCode
 public class User {
     @Id
     @GeneratedValue(strategy = IDENTITY)
@@ -31,7 +31,7 @@ public class User {
     @NotNull
     private String lastName;
     @NotNull
-    @Enumerated(EnumType.STRING)
+    @Enumerated(STRING)
     private Gender gender;
     @NotNull
     @Email
@@ -50,4 +50,6 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "friend_id")
     )
     private List<User> friends;
+    @Enumerated(STRING)
+    private Role role;
 }

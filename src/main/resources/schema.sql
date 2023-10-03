@@ -5,13 +5,14 @@ CREATE TABLE USERS (
 	gender ENUM('Male', 'Female') not null,
 	email varchar(255) not null,
 	login varchar(255) not null,
-	password varchar(255) not null
+	password varchar(255) not null,
+	role enum('ADMIN', 'USER') not null
 );
 
 CREATE TABLE POSTS (
     id bigint auto_increment primary key,
     content varchar(600),
-    image BLOB,
+    picture BLOB,
     created timestamp not null,
     user_id bigint not null,
     likes bigint default 0,
