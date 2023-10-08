@@ -1,4 +1,4 @@
-package pl.piwowarski.facebookly.service;
+package pl.piwowarski.facebookly.service.entityService;
 
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.PageRequest;
@@ -21,6 +21,7 @@ public class UserService {
     private final PostService postService;
     private final CommentService commentService;
     private final UserMapper userMapper;
+    private final EmailManager emailManager;
 
     public UserDto findUserById(Long userId){
         User foundUser = findById(userId);
@@ -51,6 +52,7 @@ public class UserService {
     public UserDto saveUser(UserDto userDto) {
         User user = userMapper.map(userDto);
         User savedUser = userRepository.save(user);
+        emailManager.sendEmail(user.getEmail(), EmailManager.SUBJECT, EmailManager.TEXT);
         return userMapper.unmap(savedUser);
     }
 

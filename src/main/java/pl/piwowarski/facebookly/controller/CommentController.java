@@ -5,7 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import pl.piwowarski.facebookly.model.dto.CommentDto;
-import pl.piwowarski.facebookly.service.CommentService;
+import pl.piwowarski.facebookly.service.entityService.CommentService;
 
 import java.net.URI;
 import java.util.List;

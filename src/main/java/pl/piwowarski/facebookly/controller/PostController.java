@@ -5,7 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import pl.piwowarski.facebookly.model.dto.PostDto;
-import pl.piwowarski.facebookly.service.PostService;
+import pl.piwowarski.facebookly.service.entityService.PostService;
 
 import java.net.URI;
 import java.util.List;

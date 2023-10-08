@@ -5,7 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import pl.piwowarski.facebookly.model.dto.UserDto;
-import pl.piwowarski.facebookly.service.UserService;
+import pl.piwowarski.facebookly.service.entityService.UserService;
 
 import java.net.URI;
 import java.util.List;
@@ -16,6 +16,11 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
+
+    @PostMapping("/authenticate")
+    public String authenticate(){
+        return "";
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<UserDto> getUser(@PathVariable Long id){

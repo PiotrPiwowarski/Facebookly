@@ -1,4 +1,4 @@
-package pl.piwowarski.facebookly.service;
+package pl.piwowarski.facebookly.service.entityService;
 
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.PageRequest;
