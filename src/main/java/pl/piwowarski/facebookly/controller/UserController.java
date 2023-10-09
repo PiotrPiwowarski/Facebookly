@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import pl.piwowarski.facebookly.model.dto.CredentialsDto;
+import pl.piwowarski.facebookly.model.dto.LogDataDto;
 import pl.piwowarski.facebookly.model.dto.UserDto;
 import pl.piwowarski.facebookly.service.entityService.UserService;
 
@@ -17,9 +19,15 @@ public class UserController {
 
     private final UserService userService;
 
-    @PostMapping("/authenticate")
-    public String authenticate(){
-        return "";
+    @PostMapping("/authentication")
+    public ResponseEntity<LogDataDto> authenticate(@RequestBody CredentialsDto credentialsDto){
+        return ResponseEntity.ok(userService.authenticate(credentialsDto));
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<Void> logout(@RequestBody LogDataDto logDataDto){
+        userService.logout(logDataDto);
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/{id}")

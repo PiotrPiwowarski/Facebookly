@@ -5,6 +5,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.piwowarski.facebookly.exception.TryingToAddYourselfAsAFriendException;
+import pl.piwowarski.facebookly.exception.UserNotLoggedInException;
+import pl.piwowarski.facebookly.model.dto.CredentialsDto;
+import pl.piwowarski.facebookly.model.dto.LogDataDto;
 import pl.piwowarski.facebookly.model.dto.UserDto;
 import pl.piwowarski.facebookly.model.entity.User;
 import pl.piwowarski.facebookly.exception.NoUserWithSuchIdException;
@@ -18,10 +21,10 @@ import java.util.List;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final SessionService sessionService;
     private final PostService postService;
     private final CommentService commentService;
     private final UserMapper userMapper;
-    private final EmailManager emailManager;
 
     public UserDto findUserById(Long userId){
         User foundUser = findById(userId);
@@ -52,7 +55,6 @@ public class UserService {
     public UserDto saveUser(UserDto userDto) {
         User user = userMapper.map(userDto);
         User savedUser = userRepository.save(user);
-        emailManager.sendEmail(user.getEmail(), EmailManager.SUBJECT, EmailManager.TEXT);
         return userMapper.unmap(savedUser);
     }
 
@@ -121,5 +123,27 @@ public class UserService {
         List<User> friends = user.getFriends();
         friends.add(friend);
         user.setFriends(friends);
+    }
+
+    public LogDataDto authenticate(CredentialsDto credentialsDto) {
+        String email = credentialsDto.getEmail();
+        String password = credentialsDto.getPassword();
+        return sessionService.login(email, password);
+    }
+
+    public void verifySession(LogDataDto logDataDto){
+        User user = findById(logDataDto.getUserId());
+        if(!user.getLogged()){
+            throw new UserNotLoggedInException(UserNotLoggedInException.MESSAGE);
+        }
+        sessionService.verifySession(logDataDto.getToken());
+    }
+
+    @Transactional
+    public void logout(LogDataDto logDataDto) {
+        User user = findById(logDataDto.getUserId());
+        user.setLogged(false);
+        String token = logDataDto.getToken();
+        sessionService.logout(token);
     }
 }

@@ -6,7 +6,8 @@ CREATE TABLE USERS (
 	email varchar(255) not null,
 	login varchar(255) not null,
 	password varchar(255) not null,
-	role enum('ADMIN', 'USER') not null
+	role enum('ADMIN', 'USER') not null,
+    logged boolean not null default false
 );
 
 CREATE TABLE POSTS (
@@ -33,6 +34,13 @@ CREATE TABLE USER_FRIENDS (
     id bigint auto_increment primary key,
     user_id bigint not null,
     friend_id bigint not null
+);
+
+CREATE TABLE SESSIONS (
+	id bigint auto_increment primary key,
+	user_id bigint not null references USERS(id),
+	token varchar(255) not null,
+	until timestamp not null
 );
 
 ALTER TABLE POSTS

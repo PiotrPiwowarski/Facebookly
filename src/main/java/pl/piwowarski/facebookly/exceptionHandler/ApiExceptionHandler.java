@@ -50,4 +50,24 @@ public class ApiExceptionHandler {
     public ResponseEntity<String> handle(PictureSavingProcessException pictureSavingProcessException){
         return new ResponseEntity<>(pictureSavingProcessException.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
+    @ExceptionHandler(WrongEmailException.class)
+    public ResponseEntity<String> handle(WrongEmailException wrongEmailException){
+        return new ResponseEntity<>(wrongEmailException.getMessage(), HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(WrongPasswordException.class)
+    public ResponseEntity<String> handle(WrongPasswordException wrongPasswordException){
+        return new ResponseEntity<>(wrongPasswordException.getMessage(), HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(ExpiredSessionException.class)
+    public ResponseEntity<String> handle(ExpiredSessionException expiredSessionException){
+        return new ResponseEntity<>(expiredSessionException.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(UserNotLoggedInException.class)
+    public ResponseEntity<String> handle(UserNotLoggedInException userNotLoggedInException){
+        return new ResponseEntity<>(userNotLoggedInException.getMessage(), HttpStatus.UNAUTHORIZED);
+    }
 }
