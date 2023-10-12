@@ -1,4 +1,4 @@
-package pl.piwowarski.facebookly.service.mapper;
+package pl.piwowarski.facebookly.service.mapper.reverseMap;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -9,7 +9,7 @@ import pl.piwowarski.facebookly.service.manager.PasswordManager;
 
 @Service
 @AllArgsConstructor
-public class UserMapper implements Mapper<User, UserDto> {
+public class UserReverseMapper implements ReverseMapper<UserDto, User>{
 
     private final PasswordManager passwordManager;
 
@@ -24,18 +24,5 @@ public class UserMapper implements Mapper<User, UserDto> {
         user.setPassword(passwordManager.passwordEncryption(userDto.getPassword()));
         user.setRole(Role.USER);
         return user;
-    }
-
-    @Override
-    public UserDto unmap(User user) {
-        UserDto userDto = new UserDto();
-        userDto.setId(user.getId());
-        userDto.setGender(user.getGender());
-        userDto.setFirstName(user.getFirstName());
-        userDto.setLastName(user.getLastName());
-        userDto.setEmail(user.getEmail());
-        userDto.setLogin(user.getLogin());
-        userDto.setPassword(user.getPassword());
-        return userDto;
     }
 }

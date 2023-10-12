@@ -1,4 +1,4 @@
-package pl.piwowarski.facebookly.service.mapper;
+package pl.piwowarski.facebookly.service.mapper.reverseMap;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -11,7 +11,7 @@ import pl.piwowarski.facebookly.repository.UserRepository;
 
 @Service
 @AllArgsConstructor
-public class CommentMapper implements Mapper<Comment, CommentDto>{
+public class CommentReverseMapper implements ReverseMapper<CommentDto, Comment>{
 
     private final UserRepository userRepository;
     private final PostRepository postRepository;
@@ -32,18 +32,5 @@ public class CommentMapper implements Mapper<Comment, CommentDto>{
                 .orElseThrow(() -> new NoPostWithSuchIdException(NoPostWithSuchIdException.MESSAGE))
         );
         return comment;
-    }
-
-    @Override
-    public CommentDto unmap(Comment comment) {
-        CommentDto commentDto = new CommentDto();
-        commentDto.setId(comment.getId());
-        commentDto.setContent(comment.getContent());
-        commentDto.setCreated(comment.getCreated());
-        commentDto.setUserId(comment.getUser().getId());
-        commentDto.setPostId(comment.getPost().getId());
-        commentDto.setLikes(comment.getLikes());
-        commentDto.setDislikes(comment.getDislikes());
-        return commentDto;
     }
 }

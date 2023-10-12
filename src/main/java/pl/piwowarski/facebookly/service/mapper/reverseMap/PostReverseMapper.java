@@ -1,4 +1,4 @@
-package pl.piwowarski.facebookly.service.mapper;
+package pl.piwowarski.facebookly.service.mapper.reverseMap;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -10,7 +10,7 @@ import pl.piwowarski.facebookly.service.manager.PictureManager;
 
 @Service
 @AllArgsConstructor
-public class PostMapper implements Mapper<Post, PostDto>{
+public class PostReverseMapper implements ReverseMapper<PostDto, Post>{
 
     private UserRepository userRepository;
     private PictureManager pictureManager;
@@ -27,18 +27,5 @@ public class PostMapper implements Mapper<Post, PostDto>{
         post.setLikes(0L);
         post.setDislikes(0L);
         return post;
-    }
-
-    @Override
-    public PostDto unmap(Post post) {
-        PostDto postDto = new PostDto();
-        postDto.setId(post.getId());
-        postDto.setContent(post.getContent());
-        postDto.setPicture(post.getPicture());
-        postDto.setCreated(post.getCreated());
-        postDto.setUserId(post.getUser().getId());
-        postDto.setLikes(post.getLikes());
-        postDto.setDislikes(post.getDislikes());
-        return postDto;
     }
 }

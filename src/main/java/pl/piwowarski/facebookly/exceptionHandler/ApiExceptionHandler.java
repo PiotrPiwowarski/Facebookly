@@ -70,4 +70,14 @@ public class ApiExceptionHandler {
     public ResponseEntity<String> handle(UserNotLoggedInException userNotLoggedInException){
         return new ResponseEntity<>(userNotLoggedInException.getMessage(), HttpStatus.UNAUTHORIZED);
     }
+
+    @ExceptionHandler(TokenIsNullException.class)
+    public ResponseEntity<String> handle(TokenIsNullException tokenIsNullException){
+        return new ResponseEntity<>(tokenIsNullException.getMessage(), HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(UserIdIsNullException.class)
+    public ResponseEntity<String> handle(UserIdIsNullException userIsNullException){
+        return new ResponseEntity<>(userIsNullException.getMessage(), HttpStatus.UNAUTHORIZED);
+    }
 }

@@ -8,8 +8,10 @@ import pl.piwowarski.facebookly.exception.CommentContentIsNullException;
 import pl.piwowarski.facebookly.exception.NoCommentWithSuchIdException;
 import pl.piwowarski.facebookly.model.dto.CommentDto;
 import pl.piwowarski.facebookly.model.entity.Comment;
+import pl.piwowarski.facebookly.model.entity.User;
 import pl.piwowarski.facebookly.repository.CommentRepository;
-import pl.piwowarski.facebookly.service.mapper.CommentMapper;
+import pl.piwowarski.facebookly.service.mapper.map.CommentMapper;
+import pl.piwowarski.facebookly.service.mapper.reverseMap.CommentReverseMapper;
 
 import java.util.Comparator;
 import java.util.List;
@@ -20,12 +22,13 @@ public class CommentService {
 
     private final CommentRepository commentRepository;
     private final CommentMapper commentMapper;
+    private final CommentReverseMapper commentReverseMapper;
 
     public List<CommentDto> findAllCommentsByPostId(Long postId){
         return commentRepository
                 .findAllByPostId(postId)
                 .stream()
-                .map(commentMapper::unmap)
+                .map(commentMapper::map)
                 .sorted(Comparator
                         .comparing(CommentDto::getCreated)
                         .reversed())
@@ -36,7 +39,7 @@ public class CommentService {
         return commentRepository
                 .findAllByPostId(postId, PageRequest.of(pageNumber, pageSize))
                 .stream()
-                .map(commentMapper::unmap)
+                .map(commentMapper::map)
                 .sorted(Comparator
                         .comparing(CommentDto::getCreated)
                         .reversed())
@@ -44,9 +47,9 @@ public class CommentService {
     }
 
     public CommentDto saveComment(CommentDto commentDto) {
-        Comment comment = commentMapper.map(commentDto);
+        Comment comment = commentReverseMapper.map(commentDto);
         Comment savedComment = commentRepository.save(comment);
-        return commentMapper.unmap(savedComment);
+        return commentMapper.map(savedComment);
     }
 
     public void deleteById(Long commentId) {
@@ -74,13 +77,13 @@ public class CommentService {
     }
 
     @Transactional
-    public CommentDto updateComment(Long commentId, CommentDto commentDto) {
-        Comment comment = findCommentById(commentId);
+    public CommentDto updateComment(CommentDto commentDto) {
+        Comment comment = findCommentById(commentDto.getId());
         if(commentDto.getContent() == null){
             throw new CommentContentIsNullException(CommentContentIsNullException.MESSAGE);
         }
         comment.setContent(commentDto.getContent());
-        return commentMapper.unmap(comment);
+        return commentMapper.map(comment);
     }
 
     public void deleteByUserId(Long userId) {

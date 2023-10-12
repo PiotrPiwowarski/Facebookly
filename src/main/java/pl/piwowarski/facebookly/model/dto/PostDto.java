@@ -20,6 +20,7 @@ public class PostDto {
     private LocalDateTime created;
     @NotNull
     private Long userId;
+    private String token;
     private Long likes;
     private Long dislikes;
 }

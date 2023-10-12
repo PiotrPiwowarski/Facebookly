@@ -1,11 +1,12 @@
-package pl.piwowarski.facebookly.service.mapper;
+package pl.piwowarski.facebookly.service.mapper.map;
 
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import pl.piwowarski.facebookly.exception.WrongEmailException;
 import pl.piwowarski.facebookly.exception.WrongPasswordException;
-import pl.piwowarski.facebookly.model.dto.LogDataDto;
+import pl.piwowarski.facebookly.model.dto.CredentialsDto;
+import pl.piwowarski.facebookly.model.dto.SessionDto;
 import pl.piwowarski.facebookly.model.entity.Session;
 import pl.piwowarski.facebookly.model.entity.User;
 import pl.piwowarski.facebookly.repository.SessionRepository;
@@ -17,7 +18,7 @@ import java.util.UUID;
 
 @Service
 @AllArgsConstructor
-public class CredentialsMapper {
+public class SessionMapper implements Mapper<CredentialsDto, SessionDto>{
 
     private final UserRepository userRepository;
     private final SessionRepository sessionRepository;
@@ -25,11 +26,12 @@ public class CredentialsMapper {
 
     private static final Long EXPIRATION_TIME = 10L;
 
-    public LogDataDto map(String email, String password){
-        User user = userFinder(email, password);
+    @Override
+    public SessionDto map(CredentialsDto credentialsDto) {
+        User user = userFinder(credentialsDto.getEmail(), credentialsDto.getPassword());
         Session session = createSession(user);
         Session savedToken = sessionRepository.save(session);
-        return new LogDataDto(savedToken.getUser().getId(), savedToken.getToken());
+        return new SessionDto(savedToken.getUser().getId(), savedToken.getToken());
     }
 
     private Session createSession(User user){

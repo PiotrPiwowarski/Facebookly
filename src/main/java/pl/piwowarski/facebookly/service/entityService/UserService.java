@@ -4,15 +4,14 @@ import lombok.AllArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import pl.piwowarski.facebookly.exception.TryingToAddYourselfAsAFriendException;
-import pl.piwowarski.facebookly.exception.UserNotLoggedInException;
+import pl.piwowarski.facebookly.exception.*;
 import pl.piwowarski.facebookly.model.dto.CredentialsDto;
-import pl.piwowarski.facebookly.model.dto.LogDataDto;
+import pl.piwowarski.facebookly.model.dto.SessionDto;
 import pl.piwowarski.facebookly.model.dto.UserDto;
 import pl.piwowarski.facebookly.model.entity.User;
-import pl.piwowarski.facebookly.exception.NoUserWithSuchIdException;
 import pl.piwowarski.facebookly.repository.UserRepository;
-import pl.piwowarski.facebookly.service.mapper.UserMapper;
+import pl.piwowarski.facebookly.service.mapper.map.UserMapper;
+import pl.piwowarski.facebookly.service.mapper.reverseMap.UserReverseMapper;
 
 import java.util.List;
 
@@ -25,10 +24,13 @@ public class UserService {
     private final PostService postService;
     private final CommentService commentService;
     private final UserMapper userMapper;
+    private final UserReverseMapper userReverseMapper;
+
+
 
     public UserDto findUserById(Long userId){
         User foundUser = findById(userId);
-        return userMapper.unmap(foundUser);
+        return userMapper.map(foundUser);
     }
 
     private User findById(Long userId){
@@ -41,21 +43,21 @@ public class UserService {
         return userRepository
                 .findAll()
                 .stream()
-                .map(userMapper::unmap)
+                .map(userMapper::map)
                 .toList();
     }
 
     public List<UserDto> findAllUsers(Integer pageNumber, Integer pageSize){
         return userRepository
                 .findAll(PageRequest.of(pageNumber, pageSize))
-                .stream().map(userMapper::unmap)
+                .stream().map(userMapper::map)
                 .toList();
     }
 
     public UserDto saveUser(UserDto userDto) {
-        User user = userMapper.map(userDto);
+        User user = userReverseMapper.map(userDto);
         User savedUser = userRepository.save(user);
-        return userMapper.unmap(savedUser);
+        return userMapper.map(savedUser);
     }
 
     @Transactional
@@ -68,8 +70,8 @@ public class UserService {
     }
 
     @Transactional
-    public UserDto updateUser(Long userId, UserDto userDto){
-        User user = findById(userId);
+    public UserDto updateUser(UserDto userDto){
+        User user = findById(userDto.getId());
         if(userDto.getFirstName() != null){
             user.setFirstName(userDto.getFirstName());
         }
@@ -88,12 +90,12 @@ public class UserService {
         if(userDto.getPassword() != null){
 			user.setPassword(userDto.getPassword());
         }
-        return userMapper.unmap(user);
+        return userMapper.map(user);
     }
 
     public List<UserDto> findUserFriends(Long userId) {
         User user = findById(userId);
-        return user.getFriends().stream().map(userMapper::unmap).toList();
+        return user.getFriends().stream().map(userMapper::map).toList();
     }
 
     @Transactional
@@ -125,25 +127,31 @@ public class UserService {
         user.setFriends(friends);
     }
 
-    public LogDataDto authenticate(CredentialsDto credentialsDto) {
-        String email = credentialsDto.getEmail();
-        String password = credentialsDto.getPassword();
-        return sessionService.login(email, password);
-    }
-
-    public void verifySession(LogDataDto logDataDto){
-        User user = findById(logDataDto.getUserId());
-        if(!user.getLogged()){
-            throw new UserNotLoggedInException(UserNotLoggedInException.MESSAGE);
-        }
-        sessionService.verifySession(logDataDto.getToken());
+    public SessionDto authenticate(CredentialsDto credentialsDto) {
+        return sessionService.authenticate(credentialsDto);
     }
 
     @Transactional
-    public void logout(LogDataDto logDataDto) {
-        User user = findById(logDataDto.getUserId());
+    public void logout(SessionDto sessionDto) {
+        User user = findById(sessionDto.getUserId());
         user.setLogged(false);
-        String token = logDataDto.getToken();
+        String token = sessionDto.getToken();
         sessionService.logout(token);
+    }
+
+    public void verifyUserSession(SessionDto sessionDto){
+        User user = findById(sessionDto.getUserId());
+        if(!user.getLogged()) {
+            throw new UserNotLoggedInException(UserNotLoggedInException.MESSAGE);
+        }
+        sessionService.verifySession(sessionDto.getToken(), sessionDto.getUserId());
+    }
+
+    public void verifyUserSession(String token, Long userId){
+        User user = findById(userId);
+        if(!user.getLogged()) {
+            throw new UserNotLoggedInException(UserNotLoggedInException.MESSAGE);
+        }
+        sessionService.verifySession(token, userId);
     }
 }
