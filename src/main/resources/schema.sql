@@ -2,7 +2,7 @@ CREATE TABLE USERS (
 	id bigint auto_increment primary key,
 	first_name varchar(255) not null,
 	last_name varchar(255) not null,
-	gender ENUM('Male', 'Female') not null,
+	gender ENUM('MALE', 'FEMALE') not null,
 	email varchar(255) not null,
 	login varchar(255) not null,
 	password varchar(255) not null,
