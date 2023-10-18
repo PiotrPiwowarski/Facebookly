@@ -10,7 +10,7 @@ import pl.piwowarski.facebookly.model.dto.CredentialsDto;
 import pl.piwowarski.facebookly.model.dto.SessionDto;
 import pl.piwowarski.facebookly.model.entity.Session;
 import pl.piwowarski.facebookly.repository.SessionRepository;
-import pl.piwowarski.facebookly.service.mapper.map.SessionMapper;
+import pl.piwowarski.facebookly.service.mapper.map.impl.SessionMapper;
 
 import java.time.LocalDateTime;
 

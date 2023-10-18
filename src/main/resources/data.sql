@@ -1,13 +1,14 @@
-insert into USERS (first_name, last_name, gender, email, login, password, role) values ('Vilhelmina', 'Fabb', 'FEMALE', 'vfabb0@lulu.com', 'vfabb0', 'wB7Ev\>Gs06g', 'USER');
-insert into USERS (first_name, last_name, gender, email, login, password, role) values ('Stephi', 'Doe', 'FEMALE', 'sdoe1@blogger.com', 'sdoe1', 'wC1+R3sS0K<s', 'USER');
-insert into USERS (first_name, last_name, gender, email, login, password, role) values ('Karena', 'Shales', 'FEMALE', 'kshales2@wix.com', 'kshales2', 'fQ3YM#WlD)wE', 'USER');
-insert into USERS (first_name, last_name, gender, email, login, password, role) values ('Ezechiel', 'Blabie', 'MALE', 'eblabie3@tumblr.com', 'eblabie3', 'bS45~8/MghT&', 'USER');
-insert into USERS (first_name, last_name, gender, email, login, password, role) values ('Sarena', 'Richemond', 'FEMALE', 'srichemond4@psu.edu', 'srichemond4', 'bB7>6x<$nfjlC<', 'USER');
-insert into USERS (first_name, last_name, gender, email, login, password, role) values ('Rhianon', 'Letch', 'FEMALE', 'rletch5@google.ru', 'rletch5', 'oV7/D2345fg2', 'USER');
-insert into USERS (first_name, last_name, gender, email, login, password, role) values ('Blondie', 'Lean', 'FEMALE', 'blean6@joomla.org', 'blean6', 'kD7)dfgh<7b?f>', 'USER');
-insert into USERS (first_name, last_name, gender, email, login, password, role) values ('Ernst', 'Skerm', 'MALE', 'eskerm7@msu.edu', 'eskerm7', 'dY5(Ja,l><hdf34K7Q>B', 'USER');
-insert into USERS (first_name, last_name, gender, email, login, password, role) values ('Eddie', 'Rudsdell', 'FEMALE', 'erudsdell8@ustream.tv', 'erudsdell8', 'aS0{uliWv.?', 'USER');
-insert into USERS (first_name, last_name, gender, email, login, password, role) values ('Meredith', 'Greenard', 'FEMALE', 'mgreenard9@prlog.org', 'mgreenard9', 'kB5{%}l=*.y~.X_', 'USER');
+insert into USERS (first_name, last_name, gender, email, password, role) values ('Admin', 'Admin', 'MALE', 'admin@gmail.com', '$2a$10$uSQI5uTyFKD5s6f6UO3Y2OR5uaoCXP6SFX79QTSReK.mrdZqG59te', 'ADMIN'); /*password: admin*/
+insert into USERS (first_name, last_name, gender, email, password, role) values ('Vilhelmina', 'Fabb', 'FEMALE', 'vfabb0@lulu.com', '$2a$10$TlSYUKIHHrmy0cGUIvzYneZGooDQbZMPNYXKLsKrnSuDwesKEVYUS', 'USER'); /*password: lkfjgo98675*/
+insert into USERS (first_name, last_name, gender, email, password, role) values ('Stephi', 'Doe', 'FEMALE', 'sdoe1@blogger.com', '$2a$10$/4Aa5EbLpLkdv6jTRxJGfuVESZujfnCLwf3hWMk5LuSg1hDsNMvoi', 'USER'); /*password: iwhjeoiKJG569*/
+insert into USERS (first_name, last_name, gender, email, password, role) values ('Karena', 'Shales', 'FEMALE', 'kshales2@wix.com', '$2a$10$9yFVrCB4CJyDpi6Y3t.tgOAQzQ5xHhR7P9R/O2XTekg7BnwBq5FWe', 'USER'); /*password: GHog986*%&*/
+insert into USERS (first_name, last_name, gender, email, password, role) values ('Ezechiel', 'Blabie', 'MALE', 'eblabie3@tumblr.com', '$2a$10$qNolPO28eC5AN9gpU129mOg4fq0fcnkKQMjfTD2VetcoSNe5qxiyG', 'USER'); /*password: psoin%*6fo*/
+insert into USERS (first_name, last_name, gender, email, password, role) values ('Sarena', 'Richemond', 'FEMALE', 'srichemond4@psu.edu', '$2a$10$qMo0WyXROTFoTF4pwdL0ZOn4trnpfG5J3ZMAcYv1UXyCfQLtk3LUm', 'USER'); /*password: iwhodi%&$&764*/
+insert into USERS (first_name, last_name, gender, email, password, role) values ('Rhianon', 'Letch', 'FEMALE', 'rletch5@google.ru', '$2a$10$yZryC7PaPqNQTiWWFdfjDuZHvwUmVQipXyMt58jwJNj8v3dqi8Tzq', 'USER'); /*password: HPgiusuej*/
+insert into USERS (first_name, last_name, gender, email, password, role) values ('Blondie', 'Lean', 'FEMALE', 'blean6@joomla.org', '$2a$10$cVav4H7x3MwG902krjJIBuefU6fZFlsWNUAi.Es0pO1UDAdByQz4S', 'USER'); /*password: 985784*&%*/
+insert into USERS (first_name, last_name, gender, email, password, role) values ('Ernst', 'Skerm', 'MALE', 'eskerm7@msu.edu', '$2a$10$6N8jLA.6kWO5TnxiTqg.MOnznyp9BzEd8Lsowz5fddQ3gfON.wHUK', 'USER'); /*password: kjdfhg&%$*/
+insert into USERS (first_name, last_name, gender, email, password, role) values ('Eddie', 'Rudsdell', 'FEMALE', 'erudsdell8@ustream.tv', '$2a$10$dHdDoa/FlabgvERYxI1hvOUGAEpCt9APHDFaUJAid2s/M9mFlfPgq', 'USER'); /*password: abecadlo*/
+insert into USERS (first_name, last_name, gender, email, password, role) values ('Meredith', 'Greenard', 'FEMALE', 'mgreenard9@prlog.org', '$2a$10$qojqcsZlHwX.T40KXnZHx.XG4QGkLXOwyMs5zz.OP3k6tmzcDHraG', 'USER'); /*password: bubuxddd123*/
 
 
 

@@ -4,7 +4,6 @@ CREATE TABLE USERS (
 	last_name varchar(255) not null,
 	gender ENUM('MALE', 'FEMALE') not null,
 	email varchar(255) not null,
-	login varchar(255) not null,
 	password varchar(255) not null,
 	role enum('ADMIN', 'USER') not null,
     logged boolean not null default false

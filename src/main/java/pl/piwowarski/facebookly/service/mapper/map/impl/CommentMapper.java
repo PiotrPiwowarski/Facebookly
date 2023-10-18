@@ -1,8 +1,9 @@
-package pl.piwowarski.facebookly.service.mapper.map;
+package pl.piwowarski.facebookly.service.mapper.map.impl;
 
 import org.springframework.stereotype.Service;
 import pl.piwowarski.facebookly.model.dto.CommentDto;
 import pl.piwowarski.facebookly.model.entity.Comment;
+import pl.piwowarski.facebookly.service.mapper.map.Mapper;
 
 @Service
 public class CommentMapper implements Mapper<Comment, CommentDto> {

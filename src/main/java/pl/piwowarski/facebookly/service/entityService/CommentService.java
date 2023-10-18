@@ -8,10 +8,9 @@ import pl.piwowarski.facebookly.exception.CommentContentIsNullException;
 import pl.piwowarski.facebookly.exception.NoCommentWithSuchIdException;
 import pl.piwowarski.facebookly.model.dto.CommentDto;
 import pl.piwowarski.facebookly.model.entity.Comment;
-import pl.piwowarski.facebookly.model.entity.User;
 import pl.piwowarski.facebookly.repository.CommentRepository;
-import pl.piwowarski.facebookly.service.mapper.map.CommentMapper;
-import pl.piwowarski.facebookly.service.mapper.reverseMap.CommentReverseMapper;
+import pl.piwowarski.facebookly.service.mapper.map.impl.CommentMapper;
+import pl.piwowarski.facebookly.service.mapper.reverseMap.impl.CommentReverseMapper;
 
 import java.util.Comparator;
 import java.util.List;

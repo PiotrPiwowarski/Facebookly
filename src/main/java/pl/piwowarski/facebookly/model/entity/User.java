@@ -7,7 +7,6 @@ import lombok.*;
 
 import pl.piwowarski.facebookly.model.enums.Gender;
 import pl.piwowarski.facebookly.model.enums.Role;
-import pl.piwowarski.facebookly.validator.Password;
 
 import java.util.List;
 
@@ -16,7 +15,7 @@ import static jakarta.persistence.EnumType.STRING;
 import static jakarta.persistence.FetchType.LAZY;
 import static jakarta.persistence.GenerationType.IDENTITY;
 
-@Table(name = "USERS")
+@Table(name = "users")
 @Entity
 @Data
 @Builder
@@ -37,15 +36,12 @@ public class User {
     @Email
     private String email;
     @NotNull
-    private String login;
-    @NotNull
-    @Password
     private String password;
     @OneToMany(mappedBy = "user", fetch = LAZY, cascade = REMOVE)
     private List<Post> posts;
     @ManyToMany(fetch = LAZY, cascade = REMOVE)
     @JoinTable(
-            name = "USER_FRIENDS",
+            name = "user_friends",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "friend_id")
     )

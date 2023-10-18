@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
 
-@Table(name = "COMMENTS")
+@Table(name = "comments")
 @Entity
 @Data
 @Builder

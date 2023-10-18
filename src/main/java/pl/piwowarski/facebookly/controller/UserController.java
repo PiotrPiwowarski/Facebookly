@@ -7,7 +7,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import pl.piwowarski.facebookly.model.dto.CredentialsDto;
 import pl.piwowarski.facebookly.model.dto.SessionDto;
 import pl.piwowarski.facebookly.model.dto.UserDto;
-import pl.piwowarski.facebookly.service.entityService.SessionService;
 import pl.piwowarski.facebookly.service.entityService.UserService;
 
 import java.net.URI;
@@ -50,6 +49,14 @@ public class UserController {
                                                      @RequestBody SessionDto sessionDto){
         userService.verifyUserSession(sessionDto);
         return ResponseEntity.ok(userService.findAllUsers(pageNumber, pageSize));
+    }
+
+    @GetMapping("/friends/{pageNumber}/{pageSize}")
+    public ResponseEntity<List<UserDto>> getUserFriends(@PathVariable Integer pageNumber,
+                                                        @PathVariable Integer pageSize,
+                                                        @RequestBody SessionDto sessionDto){
+        userService.verifyUserSession(sessionDto);
+        return ResponseEntity.ok(userService.findUserFriends(sessionDto.getUserId(), pageNumber, pageSize));
     }
 
     @GetMapping("/friends")

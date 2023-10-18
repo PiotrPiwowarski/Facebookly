@@ -10,8 +10,9 @@ import pl.piwowarski.facebookly.model.dto.SessionDto;
 import pl.piwowarski.facebookly.model.dto.UserDto;
 import pl.piwowarski.facebookly.model.entity.User;
 import pl.piwowarski.facebookly.repository.UserRepository;
-import pl.piwowarski.facebookly.service.mapper.map.UserMapper;
-import pl.piwowarski.facebookly.service.mapper.reverseMap.UserReverseMapper;
+import pl.piwowarski.facebookly.service.mapper.map.impl.UserMapper;
+import pl.piwowarski.facebookly.service.mapper.reverseMap.impl.UserReverseMapper;
+import pl.piwowarski.facebookly.service.validator.impl.PasswordValidator;
 
 import java.util.List;
 
@@ -25,6 +26,7 @@ public class UserService {
     private final CommentService commentService;
     private final UserMapper userMapper;
     private final UserReverseMapper userReverseMapper;
+    private final PasswordValidator passwordValidator;
 
 
 
@@ -55,6 +57,7 @@ public class UserService {
     }
 
     public UserDto saveUser(UserDto userDto) {
+        passwordValidator.validate(userDto.getPassword());
         User user = userReverseMapper.map(userDto);
         User savedUser = userRepository.save(user);
         return userMapper.map(savedUser);
@@ -84,18 +87,29 @@ public class UserService {
         if(userDto.getEmail() != null){
 			user.setEmail(userDto.getEmail());
         }
-        if(userDto.getLogin() != null){
-			user.setLogin(userDto.getLogin());
-        }
         if(userDto.getPassword() != null){
 			user.setPassword(userDto.getPassword());
         }
         return userMapper.map(user);
     }
 
+    public List<UserDto> findUserFriends(Long userId, Integer pageNumber, Integer pageSize) {
+        User user = findById(userId);
+        return user
+                .getFriends()
+                .stream()
+                .map(userMapper::map)
+                .toList()
+                .subList(pageNumber * pageSize, (pageNumber * pageSize) + pageSize);
+    }
+
     public List<UserDto> findUserFriends(Long userId) {
         User user = findById(userId);
-        return user.getFriends().stream().map(userMapper::map).toList();
+        return user
+                .getFriends()
+                .stream()
+                .map(userMapper::map)
+                .toList();
     }
 
     @Transactional

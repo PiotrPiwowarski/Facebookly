@@ -1,7 +1,11 @@
 package pl.piwowarski.facebookly.model.dto;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import pl.piwowarski.facebookly.model.enums.Gender;
 
 @Data
@@ -14,8 +18,9 @@ public class UserDto {
     private String firstName;
     private String lastName;
     private Gender gender;
+    @Email
     private String email;
-    private String login;
     private String password;
+    @NotNull
     private String token;
 }

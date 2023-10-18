@@ -1,4 +1,4 @@
-package pl.piwowarski.facebookly.service.mapper.reverseMap;
+package pl.piwowarski.facebookly.service.mapper.reverseMap.impl;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -8,10 +8,11 @@ import pl.piwowarski.facebookly.model.dto.CommentDto;
 import pl.piwowarski.facebookly.model.entity.Comment;
 import pl.piwowarski.facebookly.repository.PostRepository;
 import pl.piwowarski.facebookly.repository.UserRepository;
+import pl.piwowarski.facebookly.service.mapper.reverseMap.ReverseMapper;
 
 @Service
 @AllArgsConstructor
-public class CommentReverseMapper implements ReverseMapper<CommentDto, Comment>{
+public class CommentReverseMapper implements ReverseMapper<CommentDto, Comment> {
 
     private final UserRepository userRepository;
     private final PostRepository postRepository;

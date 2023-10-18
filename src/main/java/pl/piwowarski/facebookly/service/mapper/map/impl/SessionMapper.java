@@ -1,4 +1,4 @@
-package pl.piwowarski.facebookly.service.mapper.map;
+package pl.piwowarski.facebookly.service.mapper.map.impl;
 
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -11,6 +11,7 @@ import pl.piwowarski.facebookly.model.entity.Session;
 import pl.piwowarski.facebookly.model.entity.User;
 import pl.piwowarski.facebookly.repository.SessionRepository;
 import pl.piwowarski.facebookly.repository.UserRepository;
+import pl.piwowarski.facebookly.service.mapper.map.Mapper;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -18,7 +19,7 @@ import java.util.UUID;
 
 @Service
 @AllArgsConstructor
-public class SessionMapper implements Mapper<CredentialsDto, SessionDto>{
+public class SessionMapper implements Mapper<CredentialsDto, SessionDto> {
 
     private final UserRepository userRepository;
     private final SessionRepository sessionRepository;

@@ -10,8 +10,8 @@ import pl.piwowarski.facebookly.model.dto.PostDto;
 import pl.piwowarski.facebookly.model.entity.Post;
 import pl.piwowarski.facebookly.exception.NoPostWithSuchIdException;
 import pl.piwowarski.facebookly.repository.PostRepository;
-import pl.piwowarski.facebookly.service.mapper.map.PostMapper;
-import pl.piwowarski.facebookly.service.mapper.reverseMap.PostReverseMapper;
+import pl.piwowarski.facebookly.service.mapper.map.impl.PostMapper;
+import pl.piwowarski.facebookly.service.mapper.reverseMap.impl.PostReverseMapper;
 
 import java.util.Comparator;
 import java.util.List;
