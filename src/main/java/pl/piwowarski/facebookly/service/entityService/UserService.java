@@ -9,12 +9,14 @@ import pl.piwowarski.facebookly.model.dto.CredentialsDto;
 import pl.piwowarski.facebookly.model.dto.SessionDto;
 import pl.piwowarski.facebookly.model.dto.UserDto;
 import pl.piwowarski.facebookly.model.entity.User;
+import pl.piwowarski.facebookly.model.enums.Role;
 import pl.piwowarski.facebookly.repository.UserRepository;
 import pl.piwowarski.facebookly.service.mapper.map.impl.UserMapper;
 import pl.piwowarski.facebookly.service.mapper.reverseMap.impl.UserReverseMapper;
 import pl.piwowarski.facebookly.service.validator.impl.PasswordValidator;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 @AllArgsConstructor
@@ -153,15 +155,16 @@ public class UserService {
         sessionService.logout(token);
     }
 
-    public void verifyUserSession(SessionDto sessionDto){
+    public void authorizeAndAuthenticate(SessionDto sessionDto, Set<Role> authorizedRoles){
         User user = findById(sessionDto.getUserId());
         if(!user.getLogged()) {
             throw new UserNotLoggedInException(UserNotLoggedInException.MESSAGE);
         }
+        sessionService.verifyRole(sessionDto.getRole(), authorizedRoles);
         sessionService.verifySession(sessionDto.getToken(), sessionDto.getUserId());
     }
 
-    public void verifyUserSession(String token, Long userId){
+    public void authorizeAndAuthenticate(String token, Long userId, Set<Role> authorizedRoles){
         User user = findById(userId);
         if(!user.getLogged()) {
             throw new UserNotLoggedInException(UserNotLoggedInException.MESSAGE);

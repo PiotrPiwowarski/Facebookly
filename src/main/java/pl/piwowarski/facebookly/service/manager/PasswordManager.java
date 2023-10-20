@@ -13,4 +13,8 @@ public class PasswordManager {
     public String passwordEncryption(String password){
         return bCryptPasswordEncoder.encode(password);
     }
+
+    public boolean passwordMatches(String rawPassword, String encodedPassword){
+        return bCryptPasswordEncoder.matches(rawPassword, encodedPassword);
+    }
 }

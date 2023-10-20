@@ -42,7 +42,8 @@ public class ApiExceptionHandler {
 
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<String> handle(ConstraintViolationException constraintViolationException){
-        return new ResponseEntity<>(constraintViolationException.getConstraintViolations().toString(), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(constraintViolationException.getConstraintViolations().toString(),
+                HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(PictureSavingProcessException.class)
@@ -83,6 +84,16 @@ public class ApiExceptionHandler {
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<String> handle(IllegalArgumentException illegalArgumentException){
         return new ResponseEntity<>(illegalArgumentException.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<String> handle(AccessDeniedException accessDeniedException){
+        return new ResponseEntity<>(accessDeniedException.getMessage(), HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(AuthorizationException.class)
+    public ResponseEntity<String> handle(AuthorizationException authorizationException){
+        return new ResponseEntity<>(authorizationException.getMessage(), HttpStatus.UNAUTHORIZED);
     }
 
     @ExceptionHandler(Exception.class)

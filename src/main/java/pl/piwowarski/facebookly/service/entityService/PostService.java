@@ -5,21 +5,29 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import pl.piwowarski.facebookly.exception.AccessDeniedException;
+import pl.piwowarski.facebookly.exception.NoUserWithSuchIdException;
 import pl.piwowarski.facebookly.exception.PostContentIsNullException;
 import pl.piwowarski.facebookly.model.dto.PostDto;
 import pl.piwowarski.facebookly.model.entity.Post;
 import pl.piwowarski.facebookly.exception.NoPostWithSuchIdException;
+import pl.piwowarski.facebookly.model.entity.User;
+import pl.piwowarski.facebookly.model.enums.Role;
 import pl.piwowarski.facebookly.repository.PostRepository;
+import pl.piwowarski.facebookly.repository.UserRepository;
 import pl.piwowarski.facebookly.service.mapper.map.impl.PostMapper;
 import pl.piwowarski.facebookly.service.mapper.reverseMap.impl.PostReverseMapper;
 
 import java.util.Comparator;
 import java.util.List;
 
+import static pl.piwowarski.facebookly.model.enums.Role.USER;
+
 @Service
 @AllArgsConstructor
 public class PostService {
     private final PostRepository postRepository;
+    private final UserRepository userRepository;
     private final PostMapper postMapper;
     private final PostReverseMapper postReverseMapper;
 
@@ -58,8 +66,14 @@ public class PostService {
         return postMapper.map(savedPost);
     }
 
-    public void deletePost(Long id) {
-        postRepository.deleteById(id);
+    public void deletePost(Long postId, Long userId, Role role) {
+        Post post = postRepository
+                .findById(postId)
+                .orElseThrow(() -> new NoPostWithSuchIdException(NoPostWithSuchIdException.MESSAGE));
+        if(!post.getUser().getId().equals(userId) && role == USER){
+            throw new AccessDeniedException(AccessDeniedException.MESSAGE);
+        }
+        postRepository.deleteById(postId);
     }
 
     public List<PostDto> findAllUserPosts(Long userId, Integer pageNumber, Integer pageSize) {
