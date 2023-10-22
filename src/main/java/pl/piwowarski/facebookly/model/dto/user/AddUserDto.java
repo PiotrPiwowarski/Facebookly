@@ -1,5 +1,6 @@
-package pl.piwowarski.facebookly.model.dto;
+package pl.piwowarski.facebookly.model.dto.user;
 
+import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -8,19 +9,24 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import pl.piwowarski.facebookly.model.enums.Gender;
 
-@Data
+
+import static jakarta.persistence.EnumType.STRING;
+
 @Builder
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserDto {
+public class AddUserDto{
     @NotNull
-    private Long id;
     private String firstName;
+    @NotNull
     private String lastName;
+    @NotNull
+    @Enumerated(STRING)
     private Gender gender;
+    @NotNull
     @Email
     private String email;
-    private String password;
     @NotNull
-    private String token;
+    private String password;
 }

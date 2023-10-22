@@ -8,7 +8,7 @@ import pl.piwowarski.facebookly.exception.AccessDeniedException;
 import pl.piwowarski.facebookly.exception.CommentContentIsNullException;
 import pl.piwowarski.facebookly.exception.NoCommentWithSuchIdException;
 import pl.piwowarski.facebookly.exception.NoPostWithSuchIdException;
-import pl.piwowarski.facebookly.model.dto.CommentDto;
+import pl.piwowarski.facebookly.model.dto.comment.CommentDto;
 import pl.piwowarski.facebookly.model.entity.Comment;
 import pl.piwowarski.facebookly.model.entity.Post;
 import pl.piwowarski.facebookly.model.enums.Role;

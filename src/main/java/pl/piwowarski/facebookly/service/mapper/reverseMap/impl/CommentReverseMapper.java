@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.piwowarski.facebookly.exception.NoPostWithSuchIdException;
 import pl.piwowarski.facebookly.exception.NoUserWithSuchIdException;
-import pl.piwowarski.facebookly.model.dto.CommentDto;
+import pl.piwowarski.facebookly.model.dto.comment.CommentDto;
 import pl.piwowarski.facebookly.model.entity.Comment;
 import pl.piwowarski.facebookly.repository.PostRepository;
 import pl.piwowarski.facebookly.repository.UserRepository;

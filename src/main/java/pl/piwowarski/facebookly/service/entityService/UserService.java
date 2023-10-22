@@ -5,18 +5,18 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.piwowarski.facebookly.exception.*;
-import pl.piwowarski.facebookly.model.dto.CredentialsDto;
-import pl.piwowarski.facebookly.model.dto.SessionDto;
-import pl.piwowarski.facebookly.model.dto.UserDto;
+import pl.piwowarski.facebookly.model.dto.user.AddUserDto;
+import pl.piwowarski.facebookly.model.dto.credentials.CredentialsDto;
+import pl.piwowarski.facebookly.model.dto.session.SessionDto;
+import pl.piwowarski.facebookly.model.dto.user.UserDto;
 import pl.piwowarski.facebookly.model.entity.User;
 import pl.piwowarski.facebookly.model.enums.Role;
 import pl.piwowarski.facebookly.repository.UserRepository;
 import pl.piwowarski.facebookly.service.mapper.map.impl.UserMapper;
-import pl.piwowarski.facebookly.service.mapper.reverseMap.impl.UserReverseMapper;
+import pl.piwowarski.facebookly.service.mapper.reverseMap.impl.AddUserReverseMapper;
 import pl.piwowarski.facebookly.service.validator.impl.PasswordValidator;
 
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 @AllArgsConstructor
@@ -27,7 +27,7 @@ public class UserService {
     private final PostService postService;
     private final CommentService commentService;
     private final UserMapper userMapper;
-    private final UserReverseMapper userReverseMapper;
+    private final AddUserReverseMapper addUserReverseMapper;
     private final PasswordValidator passwordValidator;
 
 
@@ -58,19 +58,20 @@ public class UserService {
                 .toList();
     }
 
-    public UserDto saveUser(UserDto userDto) {
-        passwordValidator.validate(userDto.getPassword());
-        User user = userReverseMapper.map(userDto);
+    public UserDto saveUser(AddUserDto addUserDto) {
+        passwordValidator.validate(addUserDto.getPassword());
+        User user = addUserReverseMapper.map(addUserDto);
         User savedUser = userRepository.save(user);
         return userMapper.map(savedUser);
     }
 
     @Transactional
-    public void deleteUser(Long id) {
+    public void deleteUser(Long id, String token) {
         User user = findById(id);
         commentService.deleteByUserId(id);
         postService.deleteByUserId(id);
         user.getFriends().forEach(u -> deleteFriend(u.getId(), user.getId()));
+        sessionService.logout(token);
         userRepository.deleteById(id);
     }
 
@@ -96,13 +97,7 @@ public class UserService {
     }
 
     public List<UserDto> findUserFriends(Long userId, Integer pageNumber, Integer pageSize) {
-        User user = findById(userId);
-        return user
-                .getFriends()
-                .stream()
-                .map(userMapper::map)
-                .toList()
-                .subList(pageNumber * pageSize, (pageNumber * pageSize) + pageSize);
+        return userRepository.findFriendsById(userId, PageRequest.of(pageNumber, pageSize)).stream().map(userMapper::map).toList();
     }
 
     public List<UserDto> findUserFriends(Long userId) {
@@ -137,6 +132,9 @@ public class UserService {
 
     private void addToFriend(Long userId, Long friendId){
         User user = findById(userId);
+        if(user.getFriends().stream().anyMatch(friend -> friend.getId().equals(friendId))){
+            throw new ThisUserAlreadyExistOnUserFriendsListException(ThisUserAlreadyExistOnUserFriendsListException.MESSAGE);
+        }
         User friend = findById(friendId);
         List<User> friends = user.getFriends();
         friends.add(friend);
@@ -160,7 +158,10 @@ public class UserService {
         if(!user.getLogged()) {
             throw new UserNotLoggedInException(UserNotLoggedInException.MESSAGE);
         }
-        sessionService.verifyRole(sessionDto.getRole(), authorizedRoles);
+        if(!sessionDto.getRole().equals(user.getRole())){
+            throw new RolesConflictException(RolesConflictException.MESSAGE);
+        }
+        sessionService.verifyRole(user.getRole(), authorizedRoles);
         sessionService.verifySession(sessionDto.getToken(), sessionDto.getUserId());
     }
 
@@ -169,6 +170,7 @@ public class UserService {
         if(!user.getLogged()) {
             throw new UserNotLoggedInException(UserNotLoggedInException.MESSAGE);
         }
+        sessionService.verifyRole(user.getRole(), authorizedRoles);
         sessionService.verifySession(token, userId);
     }
 }

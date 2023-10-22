@@ -4,8 +4,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.piwowarski.facebookly.exception.WrongEmailException;
 import pl.piwowarski.facebookly.exception.WrongPasswordException;
-import pl.piwowarski.facebookly.model.dto.CredentialsDto;
-import pl.piwowarski.facebookly.model.dto.SessionDto;
+import pl.piwowarski.facebookly.model.dto.credentials.CredentialsDto;
+import pl.piwowarski.facebookly.model.dto.session.SessionDto;
 import pl.piwowarski.facebookly.model.entity.Session;
 import pl.piwowarski.facebookly.model.entity.User;
 import pl.piwowarski.facebookly.repository.SessionRepository;
@@ -15,8 +15,6 @@ import pl.piwowarski.facebookly.service.mapper.map.Mapper;
 import pl.piwowarski.facebookly.service.mapper.reverseMap.impl.SessionReverseMapper;
 
 import java.util.Optional;
-
-import static pl.piwowarski.facebookly.model.enums.Role.USER;
 
 @Service
 @AllArgsConstructor

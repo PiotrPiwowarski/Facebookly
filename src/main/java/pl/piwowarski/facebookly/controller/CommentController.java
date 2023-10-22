@@ -4,8 +4,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import pl.piwowarski.facebookly.model.dto.CommentDto;
-import pl.piwowarski.facebookly.model.dto.SessionDto;
+import pl.piwowarski.facebookly.model.dto.comment.CommentDto;
+import pl.piwowarski.facebookly.model.dto.session.SessionDto;
 import pl.piwowarski.facebookly.model.enums.Role;
 import pl.piwowarski.facebookly.service.entityService.CommentService;
 import pl.piwowarski.facebookly.service.entityService.UserService;
@@ -26,7 +26,8 @@ public class CommentController {
     private UserService userService;
 
     @GetMapping("/{postId}")
-    public ResponseEntity<List<CommentDto>> getAllComments(@PathVariable Long postId, @RequestBody SessionDto sessionDto){
+    public ResponseEntity<List<CommentDto>> getAllComments(@PathVariable Long postId,
+                                                           @RequestBody SessionDto sessionDto){
         final Set<Role> authorizedRoles = Set.of(USER, ADMIN);
         userService.authorizeAndAuthenticate(sessionDto, authorizedRoles);
         return ResponseEntity.ok(commentService.findAllCommentsByPostId(postId));
@@ -43,7 +44,8 @@ public class CommentController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> addComment(@RequestBody CommentDto commentDto, @RequestBody SessionDto sessionDto){
+    public ResponseEntity<Void> addComment(@RequestBody CommentDto commentDto,
+                                           @RequestBody SessionDto sessionDto){
         final Set<Role> authorizedRoles = Set.of(USER, ADMIN);
         userService.authorizeAndAuthenticate(sessionDto, authorizedRoles);
         CommentDto comment = commentService.saveComment(commentDto);
@@ -56,7 +58,8 @@ public class CommentController {
     }
 
     @PatchMapping("/{commentId}/like")
-    public ResponseEntity<Void> addLike(@PathVariable Long commentId, @RequestBody SessionDto sessionDto){
+    public ResponseEntity<Void> addLike(@PathVariable Long commentId,
+                                        @RequestBody SessionDto sessionDto){
         final Set<Role> authorizedRoles = Set.of(USER, ADMIN);
         userService.authorizeAndAuthenticate(sessionDto, authorizedRoles);
         commentService.addLike(commentId);
@@ -64,7 +67,8 @@ public class CommentController {
     }
 
     @PatchMapping("/{commentId}/dislike")
-    public ResponseEntity<Void> addDislike(@PathVariable Long commentId, @RequestBody SessionDto sessionDto){
+    public ResponseEntity<Void> addDislike(@PathVariable Long commentId,
+                                           @RequestBody SessionDto sessionDto){
         final Set<Role> authorizedRoles = Set.of(USER, ADMIN);
         userService.authorizeAndAuthenticate(sessionDto, authorizedRoles);
         commentService.addDislike(commentId);
@@ -80,7 +84,8 @@ public class CommentController {
     }
 
     @DeleteMapping("/{commentId}")
-    public ResponseEntity<Void> deleteComment(@PathVariable Long commentId, @RequestBody SessionDto sessionDto) {
+    public ResponseEntity<Void> deleteComment(@PathVariable Long commentId,
+                                              @RequestBody SessionDto sessionDto) {
         final Set<Role> authorizedRoles = Set.of(USER, ADMIN);
         userService.authorizeAndAuthenticate(sessionDto, authorizedRoles);
         commentService.deleteById(commentId, sessionDto.getUserId(), sessionDto.getRole());
@@ -88,7 +93,8 @@ public class CommentController {
     }
 
     @DeleteMapping("/post/{postId}")
-    public ResponseEntity<Void> deleteAllPostComments(@PathVariable Long postId, @RequestBody SessionDto sessionDto){
+    public ResponseEntity<Void> deleteAllPostComments(@PathVariable Long postId,
+                                                      @RequestBody SessionDto sessionDto){
         final Set<Role> authorizedRoles = Set.of(ADMIN);
         userService.authorizeAndAuthenticate(sessionDto, authorizedRoles);
         commentService.deleteAllPostComments(postId, sessionDto.getUserId(), sessionDto.getRole());

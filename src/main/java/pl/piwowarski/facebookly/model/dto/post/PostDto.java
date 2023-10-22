@@ -1,4 +1,4 @@
-package pl.piwowarski.facebookly.model.dto;
+package pl.piwowarski.facebookly.model.dto.post;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Null;

@@ -1,4 +1,4 @@
-package pl.piwowarski.facebookly.model.dto;
+package pl.piwowarski.facebookly.model.dto.credentials;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;

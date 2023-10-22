@@ -1,4 +1,4 @@
-package pl.piwowarski.facebookly.model.dto;
+package pl.piwowarski.facebookly.model.dto.session;
 
 import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotNull;

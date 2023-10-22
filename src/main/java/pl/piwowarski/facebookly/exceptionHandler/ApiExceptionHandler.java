@@ -96,6 +96,17 @@ public class ApiExceptionHandler {
         return new ResponseEntity<>(authorizationException.getMessage(), HttpStatus.UNAUTHORIZED);
     }
 
+    @ExceptionHandler(RolesConflictException.class)
+    public ResponseEntity<String> handle(RolesConflictException rolesConflictException){
+        return new ResponseEntity<>(rolesConflictException.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(ThisUserAlreadyExistOnUserFriendsListException.class)
+    public ResponseEntity<String> handle(
+            ThisUserAlreadyExistOnUserFriendsListException thisUserAlreadyExistOnUserFriendsListException){
+        return new ResponseEntity<>(thisUserAlreadyExistOnUserFriendsListException.getMessage(), HttpStatus.CONFLICT);
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<String> handle(Exception exception){
         return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);

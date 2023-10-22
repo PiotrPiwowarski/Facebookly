@@ -3,7 +3,7 @@ package pl.piwowarski.facebookly.service.mapper.reverseMap.impl;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.piwowarski.facebookly.exception.NoUserWithSuchIdException;
-import pl.piwowarski.facebookly.model.dto.PostDto;
+import pl.piwowarski.facebookly.model.dto.post.PostDto;
 import pl.piwowarski.facebookly.model.entity.Post;
 import pl.piwowarski.facebookly.repository.UserRepository;
 import pl.piwowarski.facebookly.service.manager.PictureManager;

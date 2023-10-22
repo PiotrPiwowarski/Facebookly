@@ -4,8 +4,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import pl.piwowarski.facebookly.model.dto.PostDto;
-import pl.piwowarski.facebookly.model.dto.SessionDto;
+import pl.piwowarski.facebookly.model.dto.post.PostDto;
+import pl.piwowarski.facebookly.model.dto.session.SessionDto;
 import pl.piwowarski.facebookly.model.enums.Role;
 import pl.piwowarski.facebookly.service.entityService.PostService;
 import pl.piwowarski.facebookly.service.entityService.UserService;
@@ -79,7 +79,8 @@ public class PostController {
     }
 
     @PatchMapping("/{postId}/like")
-    public ResponseEntity<Void> addLike(@PathVariable Long postId, @RequestBody SessionDto sessionDto){
+    public ResponseEntity<Void> addLike(@PathVariable Long postId,
+                                        @RequestBody SessionDto sessionDto){
         final Set<Role> authorizedRoles = Set.of(USER, ADMIN);
         userService.authorizeAndAuthenticate(sessionDto, authorizedRoles);
         postService.addLike(postId);
@@ -87,7 +88,8 @@ public class PostController {
     }
 
     @PatchMapping("/{postId}/dislike")
-    public ResponseEntity<Void> addDislike(@PathVariable Long postId, @RequestBody SessionDto sessionDto){
+    public ResponseEntity<Void> addDislike(@PathVariable Long postId,
+                                           @RequestBody SessionDto sessionDto){
         final Set<Role> authorizedRoles = Set.of(USER, ADMIN);
         userService.authorizeAndAuthenticate(sessionDto, authorizedRoles);
         postService.addDislike(postId);
@@ -95,7 +97,8 @@ public class PostController {
     }
 
     @PutMapping("/{postId}")
-    public ResponseEntity<PostDto> updatePost(@PathVariable Long postId, @RequestBody PostDto postDto){
+    public ResponseEntity<PostDto> updatePost(@PathVariable Long postId,
+                                              @RequestBody PostDto postDto){
         final Set<Role> authorizedRoles = Set.of(USER, ADMIN);
         userService.authorizeAndAuthenticate(postDto.getToken(), postDto.getUserId(), authorizedRoles);
         PostDto post = postService.updatePost(postId, postDto);
@@ -103,7 +106,8 @@ public class PostController {
     }
 
     @DeleteMapping("/{postId}")
-    public ResponseEntity<Void> deletePost(@PathVariable Long postId, @RequestBody SessionDto sessionDto){
+    public ResponseEntity<Void> deletePost(@PathVariable Long postId,
+                                           @RequestBody SessionDto sessionDto){
         final Set<Role> authorizedRoles = Set.of(USER, ADMIN);
         userService.authorizeAndAuthenticate(sessionDto, authorizedRoles);
         postService.deletePost(postId, sessionDto.getUserId(), sessionDto.getRole());
