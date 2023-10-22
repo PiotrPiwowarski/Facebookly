@@ -1,7 +1,10 @@
 package pl.piwowarski.facebookly.service.entityService;
 
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import pl.piwowarski.facebookly.exception.*;
 import pl.piwowarski.facebookly.model.dto.credentials.CredentialsDto;
 import pl.piwowarski.facebookly.model.dto.session.SessionDto;
@@ -14,11 +17,13 @@ import java.time.LocalDateTime;
 import java.util.Set;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class SessionService {
 
     private final SessionRepository sessionRepository;
     private final SessionMapper sessionMapper;
+    @Value("${facebookly.token.expirationTime}")
+    private Integer expirationTime;
 
     public SessionDto authenticate(CredentialsDto credentialsDto){
         return sessionMapper.map(credentialsDto);
@@ -37,6 +42,7 @@ public class SessionService {
         }
     }
 
+    @Transactional
     public void verifySession(String token, Long userId){
         if(userId == null){
             throw new UserIdIsNullException(UserIdIsNullException.MESSAGE);
@@ -51,6 +57,7 @@ public class SessionService {
         if(!userId.equals(session.getUser().getId())){
             throw new UserNotLoggedInException(UserNotLoggedInException.MESSAGE);
         }
+        session.setUntil(LocalDateTime.now().plusMinutes(expirationTime));
     }
 
     private void verifySessionTime(Session session) {
