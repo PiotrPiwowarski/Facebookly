@@ -29,6 +29,8 @@ public class Post {
     private User user;
     @OneToMany(mappedBy = "post", cascade = REMOVE)
     private List<Comment> comments;
-    private Long likes;
-    private Long dislikes;
+    @OneToMany(mappedBy = "post", cascade = REMOVE)
+    private List<PostLike> likes;
+    @OneToMany(mappedBy = "post", cascade = REMOVE)
+    private List<PostDislike> dislikes;
 }

@@ -5,7 +5,9 @@ import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
+import static jakarta.persistence.CascadeType.REMOVE;
 import static jakarta.persistence.GenerationType.IDENTITY;
 
 @Table(name = "comments")
@@ -26,6 +28,8 @@ public class Comment {
     private Post post;
     @ManyToOne
     private User user;
-    private Long likes;
-    private Long dislikes;
+    @OneToMany(mappedBy = "comment", cascade = REMOVE)
+    private List<CommentLike> likes;
+    @OneToMany(mappedBy = "comment", cascade = REMOVE)
+    private List<CommentDislike> dislikes;
 }
