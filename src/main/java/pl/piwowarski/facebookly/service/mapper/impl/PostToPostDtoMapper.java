@@ -7,14 +7,16 @@ import pl.piwowarski.facebookly.service.mapper.Mapper;
 
 @Service
 public class PostToPostDtoMapper implements Mapper<Post, PostDto> {
+
     @Override
     public PostDto map(Post post) {
-        PostDto postDto = new PostDto();
-        postDto.setId(post.getId());
-        postDto.setContent(post.getContent());
-        postDto.setPicture(post.getPicture());
-        postDto.setCreated(post.getCreated());
-        postDto.setUserId(post.getUser().getId());
-        return postDto;
+        return PostDto
+                .builder()
+                .id(post.getId())
+                .content(post.getContent())
+                .picture(post.getPicture())
+                .created(post.getCreated())
+                .userId(post.getUser().getId())
+                .build();
     }
 }

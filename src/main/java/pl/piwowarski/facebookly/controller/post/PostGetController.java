@@ -25,7 +25,6 @@ public class PostGetController {
 
     private final PostGetService postGetService;
     private final AuthenticationService authenticationService;
-    private final PostReactionServiceService postReactionService;
 
     @GetMapping("/{postId}")
     public ResponseEntity<PostDto> getPost(@PathVariable long postId,
@@ -65,21 +64,5 @@ public class PostGetController {
         final Set<Role> authorizedRoles = Set.of(USER, ADMIN);
         authenticationService.authorizeAndAuthenticate(sessionDto, authorizedRoles);
         return ResponseEntity.ok(postGetService.getAllUserPosts(sessionDto.getUserId()));
-    }
-
-    @GetMapping("/{postId}/likes")
-    public ResponseEntity<List<UserDto>> getAllPostLikes(@PathVariable Long postId,
-                                                         @RequestBody SessionDto sessionDto){
-        final Set<Role> authorizedRoles = Set.of(USER, ADMIN);
-        authenticationService.authorizeAndAuthenticate(sessionDto, authorizedRoles);
-        return new ResponseEntity<>(postReactionService.getAllDislikes(postId), HttpStatus.OK);
-    }
-
-    @GetMapping("/{postId}/dislikes")
-    public ResponseEntity<List<UserDto>> getAllPostDislikes(@PathVariable Long postId,
-                                                            @RequestBody SessionDto sessionDto){
-        final Set<Role> authorizedRoles = Set.of(USER, ADMIN);
-        authenticationService.authorizeAndAuthenticate(sessionDto, authorizedRoles);
-        return new ResponseEntity<>(postReactionService.getAllLikes(postId), HttpStatus.OK);
     }
 }

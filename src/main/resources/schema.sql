@@ -38,26 +38,16 @@ CREATE TABLE SESSIONS (
 	until timestamp not null
 );
 
-CREATE TABLE POST_LIKES(
+CREATE TABLE POST_REACTIONS(
     id bigint auto_increment primary key,
     user_id bigint references USERS(id),
-    post_id bigint references POSTS(id)
+    post_id bigint references POSTS(id),
+    reaction enum('LIKE', 'DISLIKE') not null
 );
 
-CREATE TABLE POST_DISLIKES(
+CREATE TABLE COMMENT_REACTIONS(
     id bigint auto_increment primary key,
     user_id bigint references USERS(id),
-    post_id bigint references POSTS(id)
-);
-
-CREATE TABLE COMMENT_LIKES(
-    id bigint auto_increment primary key,
-    user_id bigint references USERS(id),
-    comment_id bigint references COMMENTS(id)
-);
-
-CREATE TABLE COMMENT_DISLIKES(
-    id bigint auto_increment primary key,
-    user_id bigint references USERS(id),
-    comment_id bigint references COMMENTS(id)
+    comment_id bigint references COMMENTS(id),
+    reaction enum('LIKE', 'DISLIKE') not null
 );

@@ -7,14 +7,16 @@ import pl.piwowarski.facebookly.service.mapper.Mapper;
 
 @Service
 public class CommentToCommentDtoMapper implements Mapper<Comment, CommentDto> {
+
     @Override
     public CommentDto map(Comment comment) {
-        CommentDto commentDto = new CommentDto();
-        commentDto.setId(comment.getId());
-        commentDto.setContent(comment.getContent());
-        commentDto.setCreated(comment.getCreated());
-        commentDto.setUserId(comment.getUser().getId());
-        commentDto.setPostId(comment.getPost().getId());
-        return commentDto;
+        return CommentDto
+                .builder()
+                .id(comment.getId())
+                .content(comment.getContent())
+                .created(comment.getCreated())
+                .userId(comment.getUser().getId())
+                .postId(comment.getPost().getId())
+                .build();
     }
 }

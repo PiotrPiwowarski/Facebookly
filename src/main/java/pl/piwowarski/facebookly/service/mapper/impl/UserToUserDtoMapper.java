@@ -10,13 +10,13 @@ public class UserToUserDtoMapper implements Mapper<User, UserDto> {
 
     @Override
     public UserDto map(User user) {
-        UserDto userDto = new UserDto();
-        userDto.setId(user.getId());
-        userDto.setFirstName(user.getFirstName());
-        userDto.setLastName(user.getLastName());
-        userDto.setGender(user.getGender());
-        userDto.setEmail(user.getEmail());
-        userDto.setPassword(user.getPassword());
-        return userDto;
+        return UserDto
+                .builder()
+                .id(user.getId())
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
+                .gender(user.getGender())
+                .email(user.getEmail())
+                .build();
     }
 }

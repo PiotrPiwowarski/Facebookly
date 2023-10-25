@@ -17,10 +17,11 @@ public class UserToSessionMapper implements Mapper<User, Session> {
 
     @Override
     public Session map(User user) {
-        Session session = new Session();
-        session.setUser(user);
-        session.setToken(UUID.randomUUID().toString().replace("-", ""));
-        session.setUntil(LocalDateTime.now().plusMinutes(expirationTime));
-        return session;
+        return Session
+                .builder()
+                .user(user)
+                .token(UUID.randomUUID().toString().replace("-", ""))
+                .until(LocalDateTime.now().plusMinutes(expirationTime))
+                .build();
     }
 }

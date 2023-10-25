@@ -7,14 +7,16 @@ import pl.piwowarski.facebookly.service.mapper.Mapper;
 
 @Service
 public class UserDtoToAddUserDtoMapper implements Mapper<UserDto, AddUserDto> {
+
     @Override
     public AddUserDto map(UserDto userDto) {
-        AddUserDto addUserDto = new AddUserDto();
-        addUserDto.setFirstName(userDto.getFirstName());
-        addUserDto.setLastName(userDto.getLastName());
-        addUserDto.setGender(userDto.getGender());
-        addUserDto.setEmail(userDto.getEmail());
-        addUserDto.setPassword(userDto.getPassword());
-        return addUserDto;
+        return AddUserDto
+                .builder()
+                .firstName(userDto.getFirstName())
+                .lastName(userDto.getLastName())
+                .gender(userDto.getGender())
+                .email(userDto.getEmail())
+                .password(userDto.getPassword())
+                .build();
     }
 }

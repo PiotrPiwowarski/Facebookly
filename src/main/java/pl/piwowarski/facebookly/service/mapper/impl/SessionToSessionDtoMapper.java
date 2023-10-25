@@ -7,12 +7,14 @@ import pl.piwowarski.facebookly.service.mapper.Mapper;
 
 @Service
 public class SessionToSessionDtoMapper implements Mapper<Session, SessionDto> {
+
     @Override
     public SessionDto map(Session session) {
-        SessionDto sessionDto = new SessionDto();
-        sessionDto.setUserId(session.getId());
-        sessionDto.setToken(session.getToken());
-        sessionDto.setRole(session.getUser().getRole());
-        return sessionDto;
+        return SessionDto
+                .builder()
+                .userId(session.getUser().getId())
+                .token(session.getToken())
+                .role(session.getUser().getRole())
+                .build();
     }
 }

@@ -7,7 +7,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import pl.piwowarski.facebookly.model.dto.CommentDto;
 import pl.piwowarski.facebookly.model.dto.SessionDto;
 import pl.piwowarski.facebookly.model.enums.Role;
-import pl.piwowarski.facebookly.service.reaction.impl.CommentReactionServiceService;
 import pl.piwowarski.facebookly.service.authenticator.impl.AuthenticationService;
 import pl.piwowarski.facebookly.service.comment.impl.CommentAdditionService;
 
@@ -24,7 +23,6 @@ public class CommentAdditionController {
 
     private final CommentAdditionService commentAdditionService;
     private final AuthenticationService authenticationService;
-    private final CommentReactionServiceService commentReactionService;
 
     @PostMapping
     public ResponseEntity<Void> addComment(@RequestBody CommentDto commentDto,
@@ -38,23 +36,5 @@ public class CommentAdditionController {
                 .buildAndExpand()
                 .toUri();
         return ResponseEntity.created(uri).build();
-    }
-
-    @PostMapping("/{postId}/like")
-    public ResponseEntity<Void> addLike(@PathVariable Long postId,
-                                        @RequestBody SessionDto sessionDto){
-        final Set<Role> authorizedRoles = Set.of(USER, ADMIN);
-        authenticationService.authorizeAndAuthenticate(sessionDto, authorizedRoles);
-        commentReactionService.addLike(postId, sessionDto.getUserId());
-        return ResponseEntity.ok().build();
-    }
-
-    @PostMapping("/{postId}/dislike")
-    public ResponseEntity<Void> addDislike(@PathVariable Long postId,
-                                           @RequestBody SessionDto sessionDto){
-        final Set<Role> authorizedRoles = Set.of(USER, ADMIN);
-        authenticationService.authorizeAndAuthenticate(sessionDto, authorizedRoles);
-        commentReactionService.addDislike(postId, sessionDto.getUserId());
-        return ResponseEntity.ok().build();
     }
 }

@@ -5,21 +5,25 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import pl.piwowarski.facebookly.model.enums.Reaction;
 
+import static jakarta.persistence.EnumType.STRING;
 import static jakarta.persistence.GenerationType.IDENTITY;
 
-@Table(name = "post_dislikes")
+@Table(name = "comment_reactions")
 @Entity
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class PostDislike {
+public class CommentReaction {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
     @ManyToOne
     private User user;
     @ManyToOne
-    private Post post;
+    private Comment comment;
+    @Enumerated(STRING)
+    private Reaction reaction;
 }

@@ -1,13 +1,13 @@
 package pl.piwowarski.facebookly.service.reaction;
 
 import pl.piwowarski.facebookly.model.dto.UserDto;
+import pl.piwowarski.facebookly.model.enums.Reaction;
 
 import java.util.List;
 
-public interface ReactionService {
+public interface ReactionService<T> {
 
-    void addLike(Long structureId, Long userId);
-    void addDislike(Long structureId, Long userId);
-    List<UserDto> getAllLikes(Long userId);
-    List<UserDto> getAllDislikes(Long userId);
+    void addReaction(Long structureId, Long userId, Reaction reaction);
+    void deleteReaction(Long structureId, Long userId);
+    List<T> getAllReactions(Long userId, Reaction reaction);
 }

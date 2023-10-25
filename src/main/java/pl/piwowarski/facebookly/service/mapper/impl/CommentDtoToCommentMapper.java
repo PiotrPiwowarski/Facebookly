@@ -19,17 +19,16 @@ public class CommentDtoToCommentMapper implements Mapper<CommentDto, Comment> {
 
     @Override
     public Comment map(CommentDto commentDto) {
-        Comment comment = new Comment();
-        comment.setContent(commentDto.getContent());
-        comment.setCreated(commentDto.getCreated());
-        comment.setUser(userRepository
-                .findById(commentDto.getUserId())
-                .orElseThrow(() -> new NoUserWithSuchIdException(NoUserWithSuchIdException.MESSAGE))
-        );
-        comment.setPost(postRepository
-                .findById(commentDto.getPostId())
-                .orElseThrow(() -> new NoPostWithSuchIdException(NoPostWithSuchIdException.MESSAGE))
-        );
-        return comment;
+        return Comment
+                .builder()
+                .content(commentDto.getContent())
+                .created(commentDto.getCreated())
+                .user(userRepository
+                        .findById(commentDto.getUserId())
+                        .orElseThrow(() -> new NoUserWithSuchIdException(NoUserWithSuchIdException.MESSAGE)))
+                .post(postRepository
+                        .findById(commentDto.getPostId())
+                        .orElseThrow(() -> new NoPostWithSuchIdException(NoPostWithSuchIdException.MESSAGE)))
+                .build();
     }
 }
