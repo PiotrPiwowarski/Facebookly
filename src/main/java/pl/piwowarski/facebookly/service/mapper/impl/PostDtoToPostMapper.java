@@ -7,11 +7,11 @@ import pl.piwowarski.facebookly.model.dto.PostDto;
 import pl.piwowarski.facebookly.model.entity.Post;
 import pl.piwowarski.facebookly.repository.UserRepository;
 import pl.piwowarski.facebookly.service.manager.impl.PictureManager;
-import pl.piwowarski.facebookly.service.mapper.reverseMap.ReverseMapper;
+import pl.piwowarski.facebookly.service.mapper.Mapper;
 
 @Service
 @RequiredArgsConstructor
-public class PostDtoToPostMapper implements ReverseMapper<PostDto, Post> {
+public class PostDtoToPostMapper implements Mapper<PostDto, Post> {
 
     private final UserRepository userRepository;
     private final PictureManager pictureManager;

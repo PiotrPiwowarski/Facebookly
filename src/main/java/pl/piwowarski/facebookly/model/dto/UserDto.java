@@ -12,10 +12,10 @@ import pl.piwowarski.facebookly.model.enums.Gender;
 
 import static jakarta.persistence.EnumType.STRING;
 
-@Builder
 @Data
-@AllArgsConstructor
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 public class UserDto {
     @NotNull
     private Long id;

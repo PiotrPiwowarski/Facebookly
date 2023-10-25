@@ -1,10 +1,10 @@
-package pl.piwowarski.facebookly.service;
+package pl.piwowarski.facebookly.service.reaction;
 
 import pl.piwowarski.facebookly.model.dto.UserDto;
 
 import java.util.List;
 
-public interface Reaction {
+public interface ReactionService {
 
     void addLike(Long structureId, Long userId);
     void addDislike(Long structureId, Long userId);

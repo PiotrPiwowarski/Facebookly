@@ -5,11 +5,12 @@ import org.springframework.stereotype.Service;
 import pl.piwowarski.facebookly.model.dto.AddUserDto;
 import pl.piwowarski.facebookly.model.entity.User;
 import pl.piwowarski.facebookly.model.enums.Role;
-import pl.piwowarski.facebookly.service.mapper.reverseMap.ReverseMapper;
+import pl.piwowarski.facebookly.service.manager.impl.PasswordManager;
+import pl.piwowarski.facebookly.service.mapper.Mapper;
 
 @Service
 @RequiredArgsConstructor
-public class AddUserDtoToUserMapper implements ReverseMapper<AddUserDto, User> {
+public class AddUserDtoToUserMapper implements Mapper<AddUserDto, User> {
 
     private final PasswordManager passwordManager;
 

@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.piwowarski.facebookly.model.dto.CommentDto;
 import pl.piwowarski.facebookly.model.enums.Role;
-import pl.piwowarski.facebookly.service.CommentService;
-import pl.piwowarski.facebookly.service.UserService;
+import pl.piwowarski.facebookly.service.authenticator.impl.AuthenticationService;
+import pl.piwowarski.facebookly.service.comment.impl.CommentUpdateService;
 
 import java.util.Set;
 
@@ -21,14 +21,14 @@ import static pl.piwowarski.facebookly.model.enums.Role.USER;
 @RequiredArgsConstructor
 public class CommentUpdateController {
 
-    private final CommentService commentService;
-    private final UserService userService;
+    private final CommentUpdateService commentUpdateService;
+    private final AuthenticationService authenticationService;
 
     @PutMapping
     public ResponseEntity<CommentDto> updateComment(@RequestBody CommentDto commentDto){
         final Set<Role> authorizedRoles = Set.of(USER, ADMIN);
-        userService.authorizeAndAuthenticate(commentDto.getToken(), commentDto.getUserId(), authorizedRoles);
-        CommentDto comment = commentService.updateComment(commentDto);
+        authenticationService.authorizeAndAuthenticate(commentDto.getToken(), commentDto.getUserId(), authorizedRoles);
+        CommentDto comment = commentUpdateService.updateComment(commentDto);
         return ResponseEntity.ok(comment);
     }
 }

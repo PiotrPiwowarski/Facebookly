@@ -1,4 +1,4 @@
-package pl.piwowarski.facebookly.service.authenticator;
+package pl.piwowarski.facebookly.service.authenticator.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,31 +11,41 @@ import pl.piwowarski.facebookly.model.entity.Session;
 import pl.piwowarski.facebookly.model.entity.User;
 import pl.piwowarski.facebookly.model.enums.Role;
 import pl.piwowarski.facebookly.repository.SessionRepository;
-import pl.piwowarski.facebookly.service.mapper.impl.CredentialsDtoToSessionDtoMapper;
+import pl.piwowarski.facebookly.service.authenticator.AuthService;
+import pl.piwowarski.facebookly.service.manager.impl.PasswordManager;
+import pl.piwowarski.facebookly.service.mapper.impl.CredentialsDtoToSessionMapper;
 import pl.piwowarski.facebookly.service.mapper.impl.SessionToSessionDtoMapper;
-import pl.piwowarski.facebookly.service.user.GetUserService;
+import pl.piwowarski.facebookly.service.user.impl.UserGetService;
 
 import java.time.LocalDateTime;
 import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
-public class AuthenticationService {
+public class AuthenticationService implements AuthService {
 
     private final SessionRepository sessionRepository;
-    private final CredentialsDtoToSessionDtoMapper credentialsDtoToSessionDtoMapper;
+    private final CredentialsDtoToSessionMapper credentialsDtoToSessionMapper;
     private final SessionToSessionDtoMapper sessionToSessionDtoMapper;
-    private final GetUserService getUserService;
+    private final UserGetService userGetService;
+    private final PasswordManager passwordManager;
     @Value("${facebookly.token.expirationTime}")
     private Integer expirationTime;
 
+    @Transactional
     public SessionDto login(CredentialsDto credentialsDto){
-        return credentialsDtoToSessionDtoMapper.map(credentialsDto);
+        User user = userGetService.getUserByEmail(credentialsDto.getEmail());
+        if(!passwordManager.matches(credentialsDto.getPassword(), user.getPassword())){
+            throw new WrongPasswordException(WrongPasswordException.MESSAGE);
+        }
+        user.setLogged(true);
+        Session session = credentialsDtoToSessionMapper.map(credentialsDto);
+        return sessionToSessionDtoMapper.map(sessionRepository.save(session));
     }
 
     @Transactional
     public void logout(SessionDto sessionDto) {
-        User user = getUserService.getUserById(sessionDto.getUserId());
+        User user = userGetService.getUserById(sessionDto.getUserId());
         user.setLogged(false);
         String token = sessionDto.getToken();
         Session session = sessionRepository
@@ -50,7 +60,7 @@ public class AuthenticationService {
 
     @Transactional
     public void authorizeAndAuthenticate(SessionDto sessionDto, Set<Role> authorizedRoles){
-        User user = getUserService.getUserById(sessionDto.getUserId());
+        User user = userGetService.getUserById(sessionDto.getUserId());
         if(!user.getLogged()) {
             throw new UserNotLoggedInException(UserNotLoggedInException.MESSAGE);
         }
@@ -63,7 +73,7 @@ public class AuthenticationService {
 
     @Transactional
     public void authorizeAndAuthenticate(String token, Long userId, Set<Role> authorizedRoles){
-        User user = getUserService.getUserById(userId);
+        User user = userGetService.getUserById(userId);
         if(!user.getLogged()) {
             throw new UserNotLoggedInException(UserNotLoggedInException.MESSAGE);
         }

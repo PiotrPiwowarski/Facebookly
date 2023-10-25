@@ -4,13 +4,13 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import pl.piwowarski.facebookly.model.entity.Session;
 import pl.piwowarski.facebookly.model.entity.User;
-import pl.piwowarski.facebookly.service.mapper.reverseMap.ReverseMapper;
+import pl.piwowarski.facebookly.service.mapper.Mapper;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Service
-public class UserToSessionMapper implements ReverseMapper<User, Session> {
+public class UserToSessionMapper implements Mapper<User, Session> {
 
     @Value("${facebookly.token.expirationTime}")
     private Integer expirationTime;

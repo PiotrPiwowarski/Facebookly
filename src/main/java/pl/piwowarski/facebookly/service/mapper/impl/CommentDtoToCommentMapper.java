@@ -8,11 +8,11 @@ import pl.piwowarski.facebookly.model.dto.CommentDto;
 import pl.piwowarski.facebookly.model.entity.Comment;
 import pl.piwowarski.facebookly.repository.PostRepository;
 import pl.piwowarski.facebookly.repository.UserRepository;
-import pl.piwowarski.facebookly.service.mapper.reverseMap.ReverseMapper;
+import pl.piwowarski.facebookly.service.mapper.Mapper;
 
 @Service
 @RequiredArgsConstructor
-public class CommentDtoToCommentMapper implements ReverseMapper<CommentDto, Comment> {
+public class CommentDtoToCommentMapper implements Mapper<CommentDto, Comment> {
 
     private final UserRepository userRepository;
     private final PostRepository postRepository;

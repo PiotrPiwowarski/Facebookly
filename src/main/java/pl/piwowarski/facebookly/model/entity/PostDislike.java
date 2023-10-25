@@ -12,8 +12,8 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 @Entity
 @Data
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class PostDislike {
     @Id
     @GeneratedValue(strategy = IDENTITY)

@@ -8,10 +8,9 @@ import pl.piwowarski.facebookly.model.enums.Role;
 import static jakarta.persistence.EnumType.STRING;
 
 @Data
-@AllArgsConstructor
+@Builder
 @NoArgsConstructor
-@Getter
-@Setter
+@AllArgsConstructor
 public class SessionDto {
     @NotNull
     private Long userId;

@@ -9,8 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import pl.piwowarski.facebookly.model.dto.CredentialsDto;
 import pl.piwowarski.facebookly.model.dto.SessionDto;
 import pl.piwowarski.facebookly.model.enums.Role;
-import pl.piwowarski.facebookly.service.UserService;
-import pl.piwowarski.facebookly.service.authenticator.AuthenticationService;
+import pl.piwowarski.facebookly.service.authenticator.impl.AuthenticationService;
 
 import java.util.Set;
 
@@ -22,7 +21,6 @@ import static pl.piwowarski.facebookly.model.enums.Role.USER;
 @RequiredArgsConstructor
 public class AuthenticateController {
 
-    private final UserService userService;
     private final AuthenticationService authenticationService;
 
     @PostMapping("/login")
@@ -33,7 +31,7 @@ public class AuthenticateController {
     @PostMapping("/logout")
     public ResponseEntity<Void> logout(@RequestBody SessionDto sessionDto){
         final Set<Role> authorizedRoles = Set.of(USER, ADMIN);
-        userService.authorizeAndAuthenticate(sessionDto, authorizedRoles);
+        authenticationService.authorizeAndAuthenticate(sessionDto, authorizedRoles);
         authenticationService.logout(sessionDto);
         return ResponseEntity.noContent().build();
     }

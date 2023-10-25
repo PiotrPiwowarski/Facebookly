@@ -15,8 +15,8 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 @Table(name = "sessions")
 @Data
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class Session {
     @Id
     @GeneratedValue(strategy = IDENTITY)

@@ -13,6 +13,6 @@ public class SessionToSessionDtoMapper implements Mapper<Session, SessionDto> {
         sessionDto.setUserId(session.getId());
         sessionDto.setToken(session.getToken());
         sessionDto.setRole(session.getUser().getRole());
-        return null;
+        return sessionDto;
     }
 }

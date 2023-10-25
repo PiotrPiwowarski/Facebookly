@@ -1,4 +1,4 @@
-package pl.piwowarski.facebookly.service;
+package pl.piwowarski.facebookly.service.reaction.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -12,13 +12,14 @@ import pl.piwowarski.facebookly.repository.CommentLikeRepository;
 import pl.piwowarski.facebookly.repository.CommentRepository;
 import pl.piwowarski.facebookly.repository.UserRepository;
 import pl.piwowarski.facebookly.service.mapper.impl.UserToUserDtoMapper;
+import pl.piwowarski.facebookly.service.reaction.ReactionService;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class CommentLikesAndDislikesService implements Reaction{
+public class CommentReactionServiceService implements ReactionService {
 
     private final CommentLikeRepository commentLikeRepository;
     private final CommentDislikeRepository commentDislikeRepository;

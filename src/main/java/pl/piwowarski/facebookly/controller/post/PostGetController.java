@@ -8,8 +8,9 @@ import pl.piwowarski.facebookly.model.dto.PostDto;
 import pl.piwowarski.facebookly.model.dto.SessionDto;
 import pl.piwowarski.facebookly.model.dto.UserDto;
 import pl.piwowarski.facebookly.model.enums.Role;
-import pl.piwowarski.facebookly.service.PostService;
-import pl.piwowarski.facebookly.service.UserService;
+import pl.piwowarski.facebookly.service.reaction.impl.PostReactionServiceService;
+import pl.piwowarski.facebookly.service.authenticator.impl.AuthenticationService;
+import pl.piwowarski.facebookly.service.post.impl.PostGetService;
 
 import java.util.List;
 import java.util.Set;
@@ -22,22 +23,23 @@ import static pl.piwowarski.facebookly.model.enums.Role.USER;
 @RequiredArgsConstructor
 public class PostGetController {
 
-    private final PostService postService;
-    private final UserService userService;
+    private final PostGetService postGetService;
+    private final AuthenticationService authenticationService;
+    private final PostReactionServiceService postReactionService;
 
     @GetMapping("/{postId}")
     public ResponseEntity<PostDto> getPost(@PathVariable long postId,
                                            @RequestBody SessionDto sessionDto){
         final Set<Role> authorizedRoles = Set.of(USER, ADMIN);
-        userService.authorizeAndAuthenticate(sessionDto, authorizedRoles);
-        return ResponseEntity.ok(postService.findPostById(postId));
+        authenticationService.authorizeAndAuthenticate(sessionDto, authorizedRoles);
+        return ResponseEntity.ok(postGetService.getPostDtoById(postId));
     }
 
     @GetMapping
     public ResponseEntity<List<PostDto>> getAllPosts(@RequestBody SessionDto sessionDto){
         final Set<Role> authorizedRoles = Set.of(USER, ADMIN);
-        userService.authorizeAndAuthenticate(sessionDto, authorizedRoles);
-        return ResponseEntity.ok(postService.findAllPosts());
+        authenticationService.authorizeAndAuthenticate(sessionDto, authorizedRoles);
+        return ResponseEntity.ok(postGetService.getAllPosts());
     }
 
     @GetMapping("/{offset}/{pageSize}")
@@ -45,8 +47,8 @@ public class PostGetController {
                                                      @PathVariable Integer pageSize,
                                                      @RequestBody SessionDto sessionDto){
         final Set<Role> authorizedRoles = Set.of(USER, ADMIN);
-        userService.authorizeAndAuthenticate(sessionDto, authorizedRoles);
-        return ResponseEntity.ok(postService.findAllPosts(offset, pageSize));
+        authenticationService.authorizeAndAuthenticate(sessionDto, authorizedRoles);
+        return ResponseEntity.ok(postGetService.getPagedPosts(offset, pageSize));
     }
 
     @GetMapping("/user/{offset}/{pageSize}")
@@ -54,32 +56,30 @@ public class PostGetController {
                                                          @PathVariable Integer pageSize,
                                                          @RequestBody SessionDto sessionDto){
         final Set<Role> authorizedRoles = Set.of(USER, ADMIN);
-        userService.authorizeAndAuthenticate(sessionDto, authorizedRoles);
-        return ResponseEntity.ok(postService.findAllUserPosts(sessionDto.getUserId(), offset, pageSize));
+        authenticationService.authorizeAndAuthenticate(sessionDto, authorizedRoles);
+        return ResponseEntity.ok(postGetService.getPagedUserPosts(sessionDto.getUserId(), offset, pageSize));
     }
 
     @GetMapping("/user")
     public ResponseEntity<List<PostDto>> getAllUserPosts(@RequestBody SessionDto sessionDto){
         final Set<Role> authorizedRoles = Set.of(USER, ADMIN);
-        userService.authorizeAndAuthenticate(sessionDto, authorizedRoles);
-        return ResponseEntity.ok(postService.findAllUserPosts(sessionDto.getUserId()));
+        authenticationService.authorizeAndAuthenticate(sessionDto, authorizedRoles);
+        return ResponseEntity.ok(postGetService.getAllUserPosts(sessionDto.getUserId()));
     }
 
     @GetMapping("/{postId}/likes")
     public ResponseEntity<List<UserDto>> getAllPostLikes(@PathVariable Long postId,
                                                          @RequestBody SessionDto sessionDto){
         final Set<Role> authorizedRoles = Set.of(USER, ADMIN);
-        userService.authorizeAndAuthenticate(sessionDto, authorizedRoles);
-        postService.addLike(postId, sessionDto.getUserId());
-        return new ResponseEntity<>(postService.getAllDislikes(postId), HttpStatus.OK);
+        authenticationService.authorizeAndAuthenticate(sessionDto, authorizedRoles);
+        return new ResponseEntity<>(postReactionService.getAllDislikes(postId), HttpStatus.OK);
     }
 
     @GetMapping("/{postId}/dislikes")
     public ResponseEntity<List<UserDto>> getAllPostDislikes(@PathVariable Long postId,
                                                             @RequestBody SessionDto sessionDto){
         final Set<Role> authorizedRoles = Set.of(USER, ADMIN);
-        userService.authorizeAndAuthenticate(sessionDto, authorizedRoles);
-        postService.addDislike(postId, sessionDto.getUserId());
-        return new ResponseEntity<>(postService.getAllLikes(postId), HttpStatus.OK);
+        authenticationService.authorizeAndAuthenticate(sessionDto, authorizedRoles);
+        return new ResponseEntity<>(postReactionService.getAllLikes(postId), HttpStatus.OK);
     }
 }

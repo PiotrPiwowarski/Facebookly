@@ -8,8 +8,9 @@ import pl.piwowarski.facebookly.model.dto.CommentDto;
 import pl.piwowarski.facebookly.model.dto.SessionDto;
 import pl.piwowarski.facebookly.model.dto.UserDto;
 import pl.piwowarski.facebookly.model.enums.Role;
-import pl.piwowarski.facebookly.service.CommentService;
-import pl.piwowarski.facebookly.service.UserService;
+import pl.piwowarski.facebookly.service.reaction.impl.CommentReactionServiceService;
+import pl.piwowarski.facebookly.service.authenticator.impl.AuthenticationService;
+import pl.piwowarski.facebookly.service.comment.impl.CommentGetService;
 
 import java.util.List;
 import java.util.Set;
@@ -22,33 +23,32 @@ import static pl.piwowarski.facebookly.model.enums.Role.USER;
 @RequiredArgsConstructor
 public class CommentGetController {
 
-    private final CommentService commentService;
-    private final UserService userService;
+    private final CommentGetService commentGetService;
+    private final CommentReactionServiceService commentReactionService;
+    private final AuthenticationService authenticationService;
 
     @GetMapping("/{postId}/likes")
     public ResponseEntity<List<UserDto>> getAllCommentLikes(@PathVariable Long postId,
                                                             @RequestBody SessionDto sessionDto){
         final Set<Role> authorizedRoles = Set.of(USER, ADMIN);
-        userService.authorizeAndAuthenticate(sessionDto, authorizedRoles);
-        commentService.addLike(postId, sessionDto.getUserId());
-        return new ResponseEntity<>(commentService.getAllDislikes(postId), HttpStatus.OK);
+        authenticationService.authorizeAndAuthenticate(sessionDto, authorizedRoles);
+        return new ResponseEntity<>(commentReactionService.getAllDislikes(postId), HttpStatus.OK);
     }
 
     @GetMapping("/{postId}/dislikes")
     public ResponseEntity<List<UserDto>> getAllCommentDislikes(@PathVariable Long postId,
                                                                @RequestBody SessionDto sessionDto) {
         final Set<Role> authorizedRoles = Set.of(USER, ADMIN);
-        userService.authorizeAndAuthenticate(sessionDto, authorizedRoles);
-        commentService.addDislike(postId, sessionDto.getUserId());
-        return new ResponseEntity<>(commentService.getAllLikes(postId), HttpStatus.OK);
+        authenticationService.authorizeAndAuthenticate(sessionDto, authorizedRoles);
+        return new ResponseEntity<>(commentReactionService.getAllLikes(postId), HttpStatus.OK);
     }
 
     @GetMapping("/{postId}")
     public ResponseEntity<List<CommentDto>> getAllComments(@PathVariable Long postId,
                                                            @RequestBody SessionDto sessionDto){
         final Set<Role> authorizedRoles = Set.of(USER, ADMIN);
-        userService.authorizeAndAuthenticate(sessionDto, authorizedRoles);
-        return ResponseEntity.ok(commentService.findAllCommentsByPostId(postId));
+        authenticationService.authorizeAndAuthenticate(sessionDto, authorizedRoles);
+        return ResponseEntity.ok(commentGetService.getAllCommentsByPostId(postId));
     }
 
     @GetMapping("/{postId}/{offset}/{pageSize}")
@@ -57,7 +57,7 @@ public class CommentGetController {
                                                            @PathVariable Integer pageSize,
                                                            @RequestBody SessionDto sessionDto){
         final Set<Role> authorizedRoles = Set.of(USER, ADMIN);
-        userService.authorizeAndAuthenticate(sessionDto, authorizedRoles);
-        return ResponseEntity.ok(commentService.findAllCommentsByPostId(postId, offset, pageSize));
+        authenticationService.authorizeAndAuthenticate(sessionDto, authorizedRoles);
+        return ResponseEntity.ok(commentGetService.getAllPagedCommentsByPostId(postId, offset, pageSize));
     }
 }

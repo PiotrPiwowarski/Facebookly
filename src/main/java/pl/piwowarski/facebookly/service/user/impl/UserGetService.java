@@ -1,26 +1,24 @@
-package pl.piwowarski.facebookly.service.user;
+package pl.piwowarski.facebookly.service.user.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import pl.piwowarski.facebookly.exception.NoUserWithSuchIdException;
 import pl.piwowarski.facebookly.exception.WrongEmailException;
-import pl.piwowarski.facebookly.exception.WrongPasswordException;
 import pl.piwowarski.facebookly.model.dto.UserDto;
 import pl.piwowarski.facebookly.model.entity.User;
 import pl.piwowarski.facebookly.repository.UserRepository;
 import pl.piwowarski.facebookly.service.mapper.impl.UserToUserDtoMapper;
+import pl.piwowarski.facebookly.service.user.UserService;
 
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class GetUserService {
+public class UserGetService implements UserService {
 
     private final UserRepository userRepository;
     private final UserToUserDtoMapper userToUserDtoMapper;
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public UserDto getUserDtoById(Long userId){
         User foundUser = getUserById(userId);
@@ -33,15 +31,10 @@ public class GetUserService {
                 .orElseThrow(() -> new NoUserWithSuchIdException(NoUserWithSuchIdException.MESSAGE));
     }
 
-    public User getUserByEmailAndPassword(String email, String password){
-        User user = userRepository
+    public User getUserByEmail(String email){
+        return userRepository
                 .findByEmail(email)
                 .orElseThrow(() -> new WrongEmailException(WrongEmailException.MESSAGE));
-        if(!bCryptPasswordEncoder.matches(password, user.getPassword())){
-            throw new WrongPasswordException(WrongPasswordException.MESSAGE);
-        }
-        user.setLogged(true);
-        return user;
     }
 
     public List<UserDto> getAllUsers() {

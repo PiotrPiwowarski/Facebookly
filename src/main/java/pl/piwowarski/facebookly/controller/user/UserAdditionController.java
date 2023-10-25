@@ -8,7 +8,8 @@ import pl.piwowarski.facebookly.model.dto.AddUserDto;
 import pl.piwowarski.facebookly.model.dto.SessionDto;
 import pl.piwowarski.facebookly.model.dto.UserDto;
 import pl.piwowarski.facebookly.model.enums.Role;
-import pl.piwowarski.facebookly.service.UserService;
+import pl.piwowarski.facebookly.service.authenticator.impl.AuthenticationService;
+import pl.piwowarski.facebookly.service.user.impl.UserAdditionService;
 
 import java.net.URI;
 import java.util.Set;
@@ -21,11 +22,12 @@ import static pl.piwowarski.facebookly.model.enums.Role.USER;
 @RequiredArgsConstructor
 public class UserAdditionController {
 
-    private final UserService userService;
+    private final UserAdditionService userAdditionService;
+    private final AuthenticationService authenticationService;
 
     @PostMapping
     public ResponseEntity<Void> addUser(@RequestBody AddUserDto addUserDto){
-        UserDto user = userService.saveUser(addUserDto);
+        UserDto user = userAdditionService.addUser(addUserDto);
         URI uri = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("posts/" + user.getId().toString())
@@ -38,8 +40,8 @@ public class UserAdditionController {
     public ResponseEntity<Void> addFriend(@RequestBody SessionDto sessionDto,
                                           @PathVariable Long friendId){
         final Set<Role> authorizedRoles = Set.of(USER, ADMIN);
-        userService.authorizeAndAuthenticate(sessionDto, authorizedRoles);
-        userService.addFriend(sessionDto.getUserId(), friendId);
+        authenticationService.authorizeAndAuthenticate(sessionDto, authorizedRoles);
+        userAdditionService.addFriend(sessionDto.getUserId(), friendId);
         return ResponseEntity.noContent().build();
     }
 }
