@@ -2,10 +2,12 @@ package pl.piwowarski.facebookly.service.reaction.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import pl.piwowarski.facebookly.model.dto.UserReactionDto;
+import pl.piwowarski.facebookly.model.entity.CommentReaction;
 import pl.piwowarski.facebookly.model.entity.PostReaction;
 import pl.piwowarski.facebookly.model.enums.Reaction;
 import pl.piwowarski.facebookly.repository.PostReactionRepository;
-import pl.piwowarski.facebookly.service.mapper.impl.UserToUserDtoMapper;
+import pl.piwowarski.facebookly.service.mapper.impl.UserToUserReactionDtoMapper;
 import pl.piwowarski.facebookly.service.post.impl.PostGetService;
 import pl.piwowarski.facebookly.service.reaction.ReactionService;
 import pl.piwowarski.facebookly.service.user.impl.UserGetService;
@@ -15,9 +17,10 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class PostReactionServiceService implements ReactionService<PostReaction> {
+public class PostReactionServiceService implements ReactionService {
 
     private final PostReactionRepository postReactionRepository;
+    private final UserToUserReactionDtoMapper userToUserReactionDtoMapper;
     private final UserGetService userGetService;
     private final PostGetService postGetService;
 
@@ -25,17 +28,14 @@ public class PostReactionServiceService implements ReactionService<PostReaction>
     public void addReaction(Long postId, Long userId, Reaction reaction){
         Optional<PostReaction> postReactionOptional = postReactionRepository
                 .findByPostIdAndUserId(postId, userId);
-        if(postReactionOptional.isPresent()){
-            postReactionRepository.delete(postReactionOptional.get());
-        }else{
-            PostReaction postReaction = PostReaction
-                    .builder()
-                    .user(userGetService.getUserById(userId))
-                    .post(postGetService.getPostById(postId))
-                    .reaction(reaction)
-                    .build();
-            postReactionRepository.save(postReaction);
-        }
+        postReactionOptional.ifPresent(postReactionRepository::delete);
+        PostReaction postReaction = PostReaction
+                .builder()
+                .user(userGetService.getUserById(userId))
+                .post(postGetService.getPostById(postId))
+                .reaction(reaction)
+                .build();
+        postReactionRepository.save(postReaction);
     }
 
     @Override
@@ -46,11 +46,14 @@ public class PostReactionServiceService implements ReactionService<PostReaction>
     }
 
     @Override
-    public List<PostReaction> getAllReactions(Long postId, Reaction reaction) {
+    public List<UserReactionDto> getAllReactions(Long postId, Reaction reaction) {
         return postReactionRepository
                 .findAll()
                 .stream()
+                .filter(commentReaction -> commentReaction.getPost().getId().equals(postId))
                 .filter(postReaction -> postReaction.getReaction().equals(reaction))
+                .map(PostReaction::getUser)
+                .map(userToUserReactionDtoMapper::map)
                 .toList();
     }
 }

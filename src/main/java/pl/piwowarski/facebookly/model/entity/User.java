@@ -48,6 +48,5 @@ public class User {
     private List<User> friends;
     @Enumerated(STRING)
     private Role role;
-    @NotNull
-    private Boolean logged = false;
+    private Boolean logged;
 }

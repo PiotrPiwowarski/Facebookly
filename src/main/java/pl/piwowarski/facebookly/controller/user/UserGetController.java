@@ -38,28 +38,30 @@ public class UserGetController {
         return ResponseEntity.ok(userGetService.getAllUsers());
     }
 
-    @GetMapping("/{pageNumber}/{pageSize}")
-    public ResponseEntity<List<UserDto>> getAllUsers(@PathVariable Integer pageNumber,
-                                                     @PathVariable Integer pageSize,
-                                                     @RequestBody SessionDto sessionDto){
+    @GetMapping("/paged")
+    public ResponseEntity<List<UserDto>> getPagedUsers(@RequestParam Integer pageNumber,
+                                                       @RequestParam Integer pageSize,
+                                                       @RequestBody SessionDto sessionDto){
         final Set<Role> authorizedRoles = Set.of(USER, ADMIN);
         authenticationService.authorizeAndAuthenticate(sessionDto, authorizedRoles);
         return ResponseEntity.ok(userGetService.getPagedUsers(pageNumber, pageSize));
     }
 
-    @GetMapping("/friends")
-    public ResponseEntity<List<UserDto>> getUserFriends(@RequestBody SessionDto sessionDto){
-        final Set<Role> authorizedRoles = Set.of(USER, ADMIN);
-        authenticationService.authorizeAndAuthenticate(sessionDto, authorizedRoles);
-        return ResponseEntity.ok(userGetService.getUserFriends(sessionDto.getUserId()));
-    }
-
-    @GetMapping("/friends/{pageNumber}/{pageSize}")
-    public ResponseEntity<List<UserDto>> getUserFriends(@PathVariable Integer pageNumber,
-                                                        @PathVariable Integer pageSize,
+    @GetMapping("{userId}/friends")
+    public ResponseEntity<List<UserDto>> getUserFriends(@PathVariable Long userId,
                                                         @RequestBody SessionDto sessionDto){
         final Set<Role> authorizedRoles = Set.of(USER, ADMIN);
         authenticationService.authorizeAndAuthenticate(sessionDto, authorizedRoles);
-        return ResponseEntity.ok(userGetService.getPagedUserFriends(sessionDto.getUserId(), pageNumber, pageSize));
+        return ResponseEntity.ok(userGetService.getUserFriends(userId));
+    }
+
+    @GetMapping("{userId}/friends/paged")
+    public ResponseEntity<List<UserDto>> getPagedUserFriends(@PathVariable Long userId,
+                                                        @RequestParam Integer pageNumber,
+                                                        @RequestParam Integer pageSize,
+                                                        @RequestBody SessionDto sessionDto){
+        final Set<Role> authorizedRoles = Set.of(USER, ADMIN);
+        authenticationService.authorizeAndAuthenticate(sessionDto, authorizedRoles);
+        return ResponseEntity.ok(userGetService.getPagedUserFriends(userId, pageNumber, pageSize));
     }
 }

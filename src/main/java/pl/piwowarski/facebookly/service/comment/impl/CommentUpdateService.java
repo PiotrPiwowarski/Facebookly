@@ -3,6 +3,7 @@ package pl.piwowarski.facebookly.service.comment.impl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import pl.piwowarski.facebookly.exception.AuthorizationException;
 import pl.piwowarski.facebookly.exception.CommentContentIsNullException;
 import pl.piwowarski.facebookly.model.dto.CommentDto;
 import pl.piwowarski.facebookly.model.entity.Comment;
@@ -19,6 +20,9 @@ public class CommentUpdateService implements CommentService {
     @Transactional
     public CommentDto updateComment(CommentDto commentDto) {
         Comment comment = commentGetService.getCommentById(commentDto.getId());
+        if(!commentDto.getUserId().equals(comment.getUser().getId())){
+            throw new AuthorizationException();
+        }
         if(commentDto.getContent() == null){
             throw new CommentContentIsNullException();
         }

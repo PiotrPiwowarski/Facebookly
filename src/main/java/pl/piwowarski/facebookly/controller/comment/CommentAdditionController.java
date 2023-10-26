@@ -25,10 +25,9 @@ public class CommentAdditionController {
     private final AuthenticationService authenticationService;
 
     @PostMapping
-    public ResponseEntity<Void> addComment(@RequestBody CommentDto commentDto,
-                                           @RequestBody SessionDto sessionDto){
+    public ResponseEntity<Void> addComment(@RequestBody CommentDto commentDto){
         final Set<Role> authorizedRoles = Set.of(USER, ADMIN);
-        authenticationService.authorizeAndAuthenticate(sessionDto, authorizedRoles);
+        authenticationService.authorizeAndAuthenticate(commentDto.getToken(),commentDto.getUserId(), authorizedRoles);
         CommentDto comment = commentAdditionService.addComment(commentDto);
         URI uri = ServletUriComponentsBuilder
                 .fromCurrentRequest()

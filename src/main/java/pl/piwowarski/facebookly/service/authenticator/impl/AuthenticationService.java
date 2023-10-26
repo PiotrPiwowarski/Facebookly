@@ -18,6 +18,8 @@ import pl.piwowarski.facebookly.service.mapper.impl.SessionToSessionDtoMapper;
 import pl.piwowarski.facebookly.service.user.impl.UserGetService;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -38,6 +40,8 @@ public class AuthenticationService implements AuthService {
         if(!passwordManager.matches(credentialsDto.getPassword(), user.getPassword())){
             throw new WrongPasswordException();
         }
+        Optional<Session> optionalSession = sessionRepository.findByUserId(user.getId());
+        optionalSession.ifPresent(sessionRepository::delete);
         user.setLogged(true);
         Session session = credentialsDtoToSessionMapper.map(credentialsDto);
         return sessionToSessionDtoMapper.map(sessionRepository.save(session));

@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.piwowarski.facebookly.model.dto.SessionDto;
+import pl.piwowarski.facebookly.model.dto.UserReactionDto;
 import pl.piwowarski.facebookly.model.entity.CommentReaction;
 import pl.piwowarski.facebookly.model.enums.Role;
 import pl.piwowarski.facebookly.service.authenticator.impl.AuthenticationService;
@@ -54,7 +55,7 @@ public class CommentReactionController {
     }
 
     @GetMapping("/{postId}/likes")
-    public ResponseEntity<List<CommentReaction>> getAllCommentLikes(@PathVariable Long postId,
+    public ResponseEntity<List<UserReactionDto>> getAllCommentLikes(@PathVariable Long postId,
                                                                     @RequestBody SessionDto sessionDto){
         final Set<Role> authorizedRoles = Set.of(USER, ADMIN);
         authenticationService.authorizeAndAuthenticate(sessionDto, authorizedRoles);
@@ -62,7 +63,7 @@ public class CommentReactionController {
     }
 
     @GetMapping("/{postId}/dislikes")
-    public ResponseEntity<List<CommentReaction>> getAllCommentDislikes(@PathVariable Long postId,
+    public ResponseEntity<List<UserReactionDto>> getAllCommentDislikes(@PathVariable Long postId,
                                                                @RequestBody SessionDto sessionDto) {
         final Set<Role> authorizedRoles = Set.of(USER, ADMIN);
         authenticationService.authorizeAndAuthenticate(sessionDto, authorizedRoles);

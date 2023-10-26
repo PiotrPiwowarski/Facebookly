@@ -1,7 +1,6 @@
 package pl.piwowarski.facebookly.model.dto;
 
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Null;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -11,7 +10,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CommentDto {
-    @Null
     private Long id;
     @NotNull
     private String content;

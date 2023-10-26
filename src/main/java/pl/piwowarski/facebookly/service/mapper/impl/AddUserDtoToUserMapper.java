@@ -25,6 +25,7 @@ public class AddUserDtoToUserMapper implements Mapper<AddUserDto, User> {
                 .email(addUserDto.getEmail())
                 .password(passwordManager.passwordEncryption(addUserDto.getPassword()))
                 .role(USER)
+                .logged(false)
                 .build();
     }
 }
