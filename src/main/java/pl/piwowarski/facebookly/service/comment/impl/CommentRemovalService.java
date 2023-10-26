@@ -27,9 +27,9 @@ public class CommentRemovalService implements CommentService {
     public void deleteCommentById(Long commentId, Long userId, Role role) {
         Comment comment = commentRepository
                 .findById(commentId)
-                .orElseThrow(() -> new NoCommentWithSuchIdException(NoCommentWithSuchIdException.MESSAGE));
+                .orElseThrow(NoCommentWithSuchIdException::new);
         if(!comment.getUser().getId().equals(userId) && role != ADMIN){
-            throw new AccessDeniedException(AccessDeniedException.MESSAGE);
+            throw new AccessDeniedException();
         }
         commentRepository.deleteById(commentId);
     }
@@ -46,9 +46,9 @@ public class CommentRemovalService implements CommentService {
     public void deleteAllPostComments(Long postId, Long userId, Role role) {
         Post post = postRepository
                 .findById(postId)
-                .orElseThrow(() -> new NoPostWithSuchIdException(NoPostWithSuchIdException.MESSAGE));
+                .orElseThrow(NoPostWithSuchIdException::new);
         if(!post.getUser().getId().equals(userId) && role == USER){
-            throw new AccessDeniedException(AccessDeniedException.MESSAGE);
+            throw new AccessDeniedException();
         }
         List<Comment> comments = post.getComments();
         commentRepository.deleteAll(comments);

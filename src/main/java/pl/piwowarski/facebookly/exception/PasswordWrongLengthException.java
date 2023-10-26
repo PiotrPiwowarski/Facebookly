@@ -1,13 +1,13 @@
 package pl.piwowarski.facebookly.exception;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 
-@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 public class PasswordWrongLengthException extends RuntimeException{
-    public static final String MESSAGE = "Błędna długość hasła";
-    private String message;
+
+    @Value("${facebookly.exception.PasswordWrongLengthException.message-1}")
+    private String message1;
 }

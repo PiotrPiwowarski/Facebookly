@@ -1,13 +1,13 @@
 package pl.piwowarski.facebookly.exception;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 
-@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 public class WrongPasswordException extends RuntimeException{
-    public static final String MESSAGE = "Wprowadzono błędne hasło";
-    private String message;
+
+    @Value("${facebookly.exception.WrongPasswordException.message-1}")
+    private String message1;
 }

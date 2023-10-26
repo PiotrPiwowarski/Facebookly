@@ -21,10 +21,10 @@ public class PasswordValidator implements Validator<String> {
     @Override
     public void validate(String password) {
         if(!validateLength(password.length())){
-            throw new PasswordWrongLengthException(PasswordWrongLengthException.MESSAGE);
+            throw new PasswordWrongLengthException();
         }
         if(!validateSyntax(password)){
-            throw new PasswordWrongSyntaxException(PasswordWrongSyntaxException.MESSAGE);
+            throw new PasswordWrongSyntaxException();
         }
     }
 

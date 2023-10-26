@@ -101,10 +101,10 @@ public class ApiExceptionHandler {
         return new ResponseEntity<>(rolesConflictException.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(ThisUserAlreadyExistOnUserFriendsListException.class)
+    @ExceptionHandler(ThisUserAlreadyExistsOnUserFriendsListException.class)
     public ResponseEntity<String> handle(
-            ThisUserAlreadyExistOnUserFriendsListException thisUserAlreadyExistOnUserFriendsListException){
-        return new ResponseEntity<>(thisUserAlreadyExistOnUserFriendsListException.getMessage(), HttpStatus.CONFLICT);
+            ThisUserAlreadyExistsOnUserFriendsListException thisUserAlreadyExistsOnUserFriendsListException){
+        return new ResponseEntity<>(thisUserAlreadyExistsOnUserFriendsListException.getMessage(), HttpStatus.CONFLICT);
     }
 
     @ExceptionHandler(Exception.class)

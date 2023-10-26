@@ -24,14 +24,14 @@ public class PostGetService implements PostService {
     public PostDto getPostDtoById(Long postId) {
         Post foundPost = postRepository
                 .findById(postId)
-                .orElseThrow(() -> new NoPostWithSuchIdException(NoPostWithSuchIdException.MESSAGE));
+                .orElseThrow(NoPostWithSuchIdException::new);
         return postToPostDtoMapper.map(foundPost);
     }
 
     public Post getPostById(Long postId){
         return postRepository
                 .findById(postId)
-                .orElseThrow(() -> new NoPostWithSuchIdException(NoPostWithSuchIdException.MESSAGE));
+                .orElseThrow(NoPostWithSuchIdException::new);
     }
 
     public List<PostDto> getAllPosts() {

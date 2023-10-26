@@ -36,7 +36,7 @@ public class AuthenticationService implements AuthService {
     public SessionDto login(CredentialsDto credentialsDto){
         User user = userGetService.getUserByEmail(credentialsDto.getEmail());
         if(!passwordManager.matches(credentialsDto.getPassword(), user.getPassword())){
-            throw new WrongPasswordException(WrongPasswordException.MESSAGE);
+            throw new WrongPasswordException();
         }
         user.setLogged(true);
         Session session = credentialsDtoToSessionMapper.map(credentialsDto);
@@ -50,7 +50,7 @@ public class AuthenticationService implements AuthService {
         String token = sessionDto.getToken();
         Session session = sessionRepository
                 .findByToken(token)
-                .orElseThrow(() -> new ExpiredSessionException(ExpiredSessionException.MESSAGE_1));
+                .orElseThrow(NoActiveSessionForGivenTokenException::new);
         sessionRepository.delete(session);
     }
 
@@ -62,10 +62,10 @@ public class AuthenticationService implements AuthService {
     public void authorizeAndAuthenticate(SessionDto sessionDto, Set<Role> authorizedRoles){
         User user = userGetService.getUserById(sessionDto.getUserId());
         if(!user.getLogged()) {
-            throw new UserNotLoggedInException(UserNotLoggedInException.MESSAGE);
+            throw new UserNotLoggedInException();
         }
         if(!sessionDto.getRole().equals(user.getRole())){
-            throw new RolesConflictException(RolesConflictException.MESSAGE);
+            throw new RolesConflictException();
         }
         checkRole(user.getRole(), authorizedRoles);
         checkSession(sessionDto.getToken(), sessionDto.getUserId());
@@ -75,7 +75,7 @@ public class AuthenticationService implements AuthService {
     public void authorizeAndAuthenticate(String token, Long userId, Set<Role> authorizedRoles){
         User user = userGetService.getUserById(userId);
         if(!user.getLogged()) {
-            throw new UserNotLoggedInException(UserNotLoggedInException.MESSAGE);
+            throw new UserNotLoggedInException();
         }
         checkRole(user.getRole(), authorizedRoles);
         checkSession(token, userId);
@@ -83,27 +83,27 @@ public class AuthenticationService implements AuthService {
 
     public void checkRole(Role role, Set<Role> authorizedRoles){
         if(!authorizedRoles.contains(role)){
-            throw new AuthorizationException(AuthorizationException.MESSAGE);
+            throw new AuthorizationException();
         }
     }
 
     @Transactional
     public void checkSession(String token, Long userId){
         if(userId == null){
-            throw new UserIdIsNullException(UserIdIsNullException.MESSAGE);
+            throw new UserIdIsNullException();
         }
         if(token == null){
-            throw new TokenIsNullException(TokenIsNullException.MESSAGE);
+            throw new TokenIsNullException();
         }
         Session session = sessionRepository
                 .findByToken(token)
-                .orElseThrow(() -> new UserNotLoggedInException(UserNotLoggedInException.MESSAGE));
+                .orElseThrow(UserNotLoggedInException::new);
         if(session.getUntil().isBefore(LocalDateTime.now())){
             logout(sessionToSessionDtoMapper.map(session));
-            throw new ExpiredSessionException(ExpiredSessionException.MESSAGE_2);
+            throw new ExpiredSessionException();
         }
         if(!userId.equals(session.getUser().getId())){
-            throw new UserNotLoggedInException(UserNotLoggedInException.MESSAGE);
+            throw new UserNotLoggedInException();
         }
         session.setUntil(LocalDateTime.now().plusMinutes(expirationTime));
     }

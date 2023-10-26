@@ -21,7 +21,6 @@ public class CommentDto {
     private Long userId;
     @NotNull
     private Long postId;
+    @NotNull
     private String token;
-    private Long likes;
-    private Long dislikes;
 }

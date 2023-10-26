@@ -23,9 +23,7 @@ public class CommentGetService implements CommentService {
     public Comment getCommentById(Long commentId){
         return commentRepository
                 .findById(commentId)
-                .orElseThrow(
-                        () -> new NoCommentWithSuchIdException(NoCommentWithSuchIdException.MESSAGE)
-                );
+                .orElseThrow(NoCommentWithSuchIdException::new);
     }
 
     public List<CommentDto> getAllCommentsByPostId(Long postId){

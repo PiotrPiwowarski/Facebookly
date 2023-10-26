@@ -29,7 +29,5 @@ public class Comment {
     @ManyToOne
     private User user;
     @OneToMany(mappedBy = "comment", cascade = REMOVE)
-    private List<CommentLike> likes;
-    @OneToMany(mappedBy = "comment", cascade = REMOVE)
-    private List<CommentDislike> dislikes;
+    private List<CommentReaction> reactions;
 }

@@ -23,7 +23,7 @@ public class PostRemovalService implements PostService {
     public void deletePost(Long postId, Long userId, Role role) {
         Post post = postGetService.getPostById(postId);
         if(!post.getUser().getId().equals(userId) && role == USER){
-            throw new AccessDeniedException(AccessDeniedException.MESSAGE);
+            throw new AccessDeniedException();
         }
         postRepository.deleteById(postId);
     }
@@ -35,7 +35,7 @@ public class PostRemovalService implements PostService {
 
     public void deletePostByAdminId(Long ownerId, Role role) {
         if(!role.equals(ADMIN)){
-            throw new AccessDeniedException(AccessDeniedException.MESSAGE);
+            throw new AccessDeniedException();
         }
         List<Post> posts = postRepository.findAllByUserId(ownerId);
         postRepository.deleteAll(posts);

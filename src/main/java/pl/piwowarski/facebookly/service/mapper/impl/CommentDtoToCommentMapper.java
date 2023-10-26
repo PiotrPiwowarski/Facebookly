@@ -25,10 +25,10 @@ public class CommentDtoToCommentMapper implements Mapper<CommentDto, Comment> {
                 .created(commentDto.getCreated())
                 .user(userRepository
                         .findById(commentDto.getUserId())
-                        .orElseThrow(() -> new NoUserWithSuchIdException(NoUserWithSuchIdException.MESSAGE)))
+                        .orElseThrow(NoUserWithSuchIdException::new))
                 .post(postRepository
                         .findById(commentDto.getPostId())
-                        .orElseThrow(() -> new NoPostWithSuchIdException(NoPostWithSuchIdException.MESSAGE)))
+                        .orElseThrow(NoPostWithSuchIdException::new))
                 .build();
     }
 }

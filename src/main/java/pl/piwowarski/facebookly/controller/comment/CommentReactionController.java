@@ -19,7 +19,7 @@ import static pl.piwowarski.facebookly.model.enums.Role.ADMIN;
 import static pl.piwowarski.facebookly.model.enums.Role.USER;
 
 @RestController
-@RequestMapping("comments")
+@RequestMapping("comments/reactions")
 @RequiredArgsConstructor
 public class CommentReactionController {
 

@@ -3,7 +3,7 @@ package pl.piwowarski.facebookly.service.user.impl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import pl.piwowarski.facebookly.exception.ThisUserAlreadyExistOnUserFriendsListException;
+import pl.piwowarski.facebookly.exception.ThisUserAlreadyExistsOnUserFriendsListException;
 import pl.piwowarski.facebookly.exception.TryingToAddYourselfAsAFriendException;
 import pl.piwowarski.facebookly.model.dto.AddUserDto;
 import pl.piwowarski.facebookly.model.dto.UserDto;
@@ -36,7 +36,7 @@ public class UserAdditionService implements UserService {
     @Transactional
     public void addFriend(Long userId, Long friendId) {
         if(userId.equals(friendId)){
-            throw new TryingToAddYourselfAsAFriendException(TryingToAddYourselfAsAFriendException.MESSAGE);
+            throw new TryingToAddYourselfAsAFriendException();
         }
         addToFriend(userId, friendId);
         addToFriend(friendId, userId);
@@ -45,7 +45,7 @@ public class UserAdditionService implements UserService {
     private void addToFriend(Long userId, Long friendId){
         User user = userGetService.getUserById(userId);
         if(user.getFriends().stream().anyMatch(friend -> friend.getId().equals(friendId))){
-            throw new ThisUserAlreadyExistOnUserFriendsListException(ThisUserAlreadyExistOnUserFriendsListException.MESSAGE);
+            throw new ThisUserAlreadyExistsOnUserFriendsListException();
         }
         User friend = userGetService.getUserById(friendId);
         List<User> friends = user.getFriends();

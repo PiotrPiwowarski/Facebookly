@@ -30,7 +30,5 @@ public class Post {
     @OneToMany(mappedBy = "post", cascade = REMOVE)
     private List<Comment> comments;
     @OneToMany(mappedBy = "post", cascade = REMOVE)
-    private List<PostLike> likes;
-    @OneToMany(mappedBy = "post", cascade = REMOVE)
-    private List<PostDislike> dislikes;
+    private List<PostReaction> reactions;
 }

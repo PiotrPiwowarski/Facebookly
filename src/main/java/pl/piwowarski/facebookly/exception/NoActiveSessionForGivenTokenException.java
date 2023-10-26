@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Value;
 
 @NoArgsConstructor
 @Getter
-public class TokenIsNullException extends RuntimeException{
+public class NoActiveSessionForGivenTokenException extends RuntimeException {
 
-    @Value("${facebookly.exception.TokenIsNullException.message-1}")
+    @Value("${facebookly.exception.NoActiveSessionForGivenTokenException.message-1}")
     private String message1;
 }

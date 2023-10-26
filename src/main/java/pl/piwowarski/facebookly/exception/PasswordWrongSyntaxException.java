@@ -1,13 +1,13 @@
 package pl.piwowarski.facebookly.exception;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 
 @NoArgsConstructor
-@AllArgsConstructor
 @Getter
 public class PasswordWrongSyntaxException extends RuntimeException{
-    public static final String MESSAGE = "Niewłaściwa składnia hasła";
-    private String message;
+
+    @Value("${facebookly.exception.PasswordWrongSyntaxException.message-1}")
+    private String message1;
 }

@@ -28,13 +28,13 @@ public class UserGetService implements UserService {
     public User getUserById(Long userId){
         return userRepository
                 .findById(userId)
-                .orElseThrow(() -> new NoUserWithSuchIdException(NoUserWithSuchIdException.MESSAGE));
+                .orElseThrow(NoUserWithSuchIdException::new);
     }
 
     public User getUserByEmail(String email){
         return userRepository
                 .findByEmail(email)
-                .orElseThrow(() -> new WrongEmailException(WrongEmailException.MESSAGE));
+                .orElseThrow();
     }
 
     public List<UserDto> getAllUsers() {

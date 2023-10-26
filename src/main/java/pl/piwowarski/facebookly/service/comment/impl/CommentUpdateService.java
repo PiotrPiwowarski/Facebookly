@@ -20,7 +20,7 @@ public class CommentUpdateService implements CommentService {
     public CommentDto updateComment(CommentDto commentDto) {
         Comment comment = commentGetService.getCommentById(commentDto.getId());
         if(commentDto.getContent() == null){
-            throw new CommentContentIsNullException(CommentContentIsNullException.MESSAGE);
+            throw new CommentContentIsNullException();
         }
         comment.setContent(commentDto.getContent());
         return commentToCommentDtoMapper.map(comment);

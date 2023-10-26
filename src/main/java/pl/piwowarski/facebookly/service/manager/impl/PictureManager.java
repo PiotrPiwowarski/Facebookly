@@ -22,7 +22,7 @@ public class PictureManager implements Manager {
         }
         String formatRegex = ".*." + format;
         if(!imagePath.matches(formatRegex)){
-            throw new WrongPictureFormatException(WrongPictureFormatException.MESSAGE);
+            throw new WrongPictureFormatException();
         }
         try{
             BufferedImage bImage = ImageIO.read(new File(imagePath));
@@ -30,7 +30,7 @@ public class PictureManager implements Manager {
             ImageIO.write(bImage, format, bos);
             return bos.toByteArray();
         }catch(Exception e){
-            throw new PictureSavingProcessException(PictureSavingProcessException.MESSAGE);
+            throw new PictureSavingProcessException();
         }
     }
 }

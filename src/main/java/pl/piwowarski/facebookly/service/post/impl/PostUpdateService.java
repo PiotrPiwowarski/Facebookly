@@ -20,7 +20,7 @@ public class PostUpdateService implements PostService {
     public PostDto updatePost(Long postId, PostDto postDto) {
         Post post = postGetService.getPostById(postId);
         if(post.getContent() == null){
-            throw new PostContentIsNullException(PostContentIsNullException.MESSAGE);
+            throw new PostContentIsNullException();
         }
         post.setContent(postDto.getContent());
         return postToPostDtoMapper.map(post);

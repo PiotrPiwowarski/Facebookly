@@ -27,7 +27,7 @@ public class CommentGetController {
     private final AuthenticationService authenticationService;
 
     @GetMapping("/{postId}")
-    public ResponseEntity<List<CommentDto>> getAllComments(@PathVariable Long postId,
+    public ResponseEntity<List<CommentDto>> getAllPostComments(@PathVariable Long postId,
                                                            @RequestBody SessionDto sessionDto){
         final Set<Role> authorizedRoles = Set.of(USER, ADMIN);
         authenticationService.authorizeAndAuthenticate(sessionDto, authorizedRoles);
@@ -35,7 +35,7 @@ public class CommentGetController {
     }
 
     @GetMapping("/{postId}/{offset}/{pageSize}")
-    public ResponseEntity<List<CommentDto>> getAllComments(@PathVariable Long postId,
+    public ResponseEntity<List<CommentDto>> getPagedPostComments(@PathVariable Long postId,
                                                            @PathVariable Integer offset,
                                                            @PathVariable Integer pageSize,
                                                            @RequestBody SessionDto sessionDto){
