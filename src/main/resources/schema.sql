@@ -12,7 +12,7 @@ CREATE TABLE USERS (
 CREATE TABLE POSTS (
     id bigint auto_increment primary key,
     content varchar(600),
-    picture BLOB,
+    image BLOB,
     created timestamp not null,
     user_id bigint not null references USERS(id)
 );
@@ -35,7 +35,7 @@ CREATE TABLE SESSIONS (
 	id bigint auto_increment primary key,
 	user_id bigint not null references USERS(id),
 	token varchar(255) not null,
-	until timestamp not null
+	expiration_date timestamp not null
 );
 
 CREATE TABLE POST_REACTIONS(

@@ -26,5 +26,5 @@ public class Session {
     @NotNull
     private String token;
     @NotNull
-    private LocalDateTime until;
+    private LocalDateTime expirationDate;
 }

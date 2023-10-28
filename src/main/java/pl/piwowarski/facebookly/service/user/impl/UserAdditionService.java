@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.piwowarski.facebookly.exception.ThisUserAlreadyExistsOnUserFriendsListException;
 import pl.piwowarski.facebookly.exception.TryingToAddYourselfAsAFriendException;
+import pl.piwowarski.facebookly.exception.UserWithSuchEmailAlreadyExistsException;
 import pl.piwowarski.facebookly.model.dto.AddUserDto;
 import pl.piwowarski.facebookly.model.dto.UserDto;
 import pl.piwowarski.facebookly.model.entity.User;
@@ -27,6 +28,9 @@ public class UserAdditionService implements UserService {
     private final PasswordValidator passwordValidator;
 
     public UserDto addUser(AddUserDto addUserDto) {
+        if(userRepository.findByEmail(addUserDto.getEmail()).isPresent()){
+            throw new UserWithSuchEmailAlreadyExistsException();
+        }
         passwordValidator.validate(addUserDto.getPassword());
         User user = addUserDtoToUserMapper.map(addUserDto);
         User savedUser = userRepository.save(user);

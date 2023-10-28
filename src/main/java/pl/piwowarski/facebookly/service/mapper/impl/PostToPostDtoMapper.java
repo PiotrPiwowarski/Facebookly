@@ -14,7 +14,7 @@ public class PostToPostDtoMapper implements Mapper<Post, PostDto> {
                 .builder()
                 .id(post.getId())
                 .content(post.getContent())
-                .picture(post.getPicture())
+                .picture(post.getImage())
                 .created(post.getCreated())
                 .userId(post.getUser().getId())
                 .build();

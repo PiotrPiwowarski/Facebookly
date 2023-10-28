@@ -31,6 +31,14 @@ public class UserGetService implements UserService {
                 .orElseThrow(NoUserWithSuchIdException::new);
     }
 
+    public List<UserDto> getUsersByUserName(String firstName, String lastName) {
+        return userRepository
+                .findAllByFirstNameAndLastName(firstName, lastName)
+                .stream()
+                .map(userToUserDtoMapper::map)
+                .toList();
+    }
+
     public User getUserByEmail(String email){
         return userRepository
                 .findByEmail(email)

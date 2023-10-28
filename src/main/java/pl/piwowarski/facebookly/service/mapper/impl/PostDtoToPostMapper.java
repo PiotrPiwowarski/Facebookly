@@ -20,7 +20,7 @@ public class PostDtoToPostMapper implements Mapper<PostDto, Post> {
         return Post
                 .builder()
                 .content(postDto.getContent())
-                .picture(pictureManager.fromPathToBytesArray(postDto.getPicturePath()))
+                .image(pictureManager.fromPathToBytesArray(postDto.getPicturePath()))
                 .created(postDto.getCreated())
                 .user(userGetService.getUserById(postDto.getUserId()))
                 .build();

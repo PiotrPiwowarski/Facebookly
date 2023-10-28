@@ -32,6 +32,15 @@ public class UserGetController {
     }
 
     @GetMapping
+    public ResponseEntity<List<UserDto>> getUsersByName(@RequestParam String firstName,
+                                                       @RequestParam String lastName,
+                                                       @RequestBody SessionDto sessionDto){
+        final Set<Role> authorizedRoles = Set.of(USER, ADMIN);
+        authenticationService.authorizeAndAuthenticate(sessionDto, authorizedRoles);
+        return ResponseEntity.ok(userGetService.getUsersByUserName(firstName, lastName));
+    }
+
+    @GetMapping("all")
     public ResponseEntity<List<UserDto>> getAllUsers(@RequestBody SessionDto sessionDto){
         final Set<Role> authorizedRoles = Set.of(USER, ADMIN);
         authenticationService.authorizeAndAuthenticate(sessionDto, authorizedRoles);

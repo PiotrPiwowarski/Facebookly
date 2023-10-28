@@ -107,6 +107,11 @@ public class ApiExceptionHandler {
         return new ResponseEntity<>(thisUserAlreadyExistsOnUserFriendsListException.getMessage1(), HttpStatus.CONFLICT);
     }
 
+    @ExceptionHandler(UserWithSuchEmailAlreadyExistsException.class)
+    public ResponseEntity<String> handle(UserWithSuchEmailAlreadyExistsException userWithSuchEmailAlreadyExistsException){
+        return new ResponseEntity<>(userWithSuchEmailAlreadyExistsException.getMessage1(), HttpStatus.CONFLICT);
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<String> handle(Exception exception){
         return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);

@@ -22,7 +22,7 @@ public class Post {
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
     private String content;
-    private byte[] picture;
+    private byte[] image;
     @NotNull
     private LocalDateTime created;
     @ManyToOne(fetch = EAGER)

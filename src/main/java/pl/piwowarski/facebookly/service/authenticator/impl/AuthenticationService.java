@@ -18,7 +18,6 @@ import pl.piwowarski.facebookly.service.mapper.impl.SessionToSessionDtoMapper;
 import pl.piwowarski.facebookly.service.user.impl.UserGetService;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -102,13 +101,13 @@ public class AuthenticationService implements AuthService {
         Session session = sessionRepository
                 .findByToken(token)
                 .orElseThrow(UserNotLoggedInException::new);
-        if(session.getUntil().isBefore(LocalDateTime.now())){
+        if(session.getExpirationDate().isBefore(LocalDateTime.now())){
             logout(sessionToSessionDtoMapper.map(session));
             throw new ExpiredSessionException();
         }
         if(!userId.equals(session.getUser().getId())){
             throw new UserNotLoggedInException();
         }
-        session.setUntil(LocalDateTime.now().plusMinutes(expirationTime));
+        session.setExpirationDate(LocalDateTime.now().plusMinutes(expirationTime));
     }
 }

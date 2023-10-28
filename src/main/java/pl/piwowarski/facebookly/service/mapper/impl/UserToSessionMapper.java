@@ -21,7 +21,7 @@ public class UserToSessionMapper implements Mapper<User, Session> {
                 .builder()
                 .user(user)
                 .token(UUID.randomUUID().toString().replace("-", ""))
-                .until(LocalDateTime.now().plusMinutes(expirationTime))
+                .expirationDate(LocalDateTime.now().plusMinutes(expirationTime))
                 .build();
     }
 }
