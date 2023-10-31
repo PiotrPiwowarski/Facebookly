@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import pl.piwowarski.facebookly.model.dto.UserDto;
+import pl.piwowarski.facebookly.model.dto.user.UserDto;
 import pl.piwowarski.facebookly.model.enums.Role;
 import pl.piwowarski.facebookly.service.authenticator.impl.AuthenticationService;
 import pl.piwowarski.facebookly.service.user.impl.UserUpdateService;

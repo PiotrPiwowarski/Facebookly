@@ -5,7 +5,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import pl.piwowarski.facebookly.exception.NoPostWithSuchIdException;
-import pl.piwowarski.facebookly.model.dto.PostDto;
+import pl.piwowarski.facebookly.model.dto.post.PostDto;
 import pl.piwowarski.facebookly.model.entity.Post;
 import pl.piwowarski.facebookly.repository.PostRepository;
 import pl.piwowarski.facebookly.service.mapper.impl.PostToPostDtoMapper;

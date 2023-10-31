@@ -4,7 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import pl.piwowarski.facebookly.model.dto.PostDto;
+import pl.piwowarski.facebookly.model.dto.post.AddPostDto;
+import pl.piwowarski.facebookly.model.dto.post.PostDto;
 import pl.piwowarski.facebookly.model.enums.Role;
 import pl.piwowarski.facebookly.service.authenticator.impl.AuthenticationService;
 import pl.piwowarski.facebookly.service.post.impl.PostAdditionService;
@@ -24,7 +25,7 @@ public class PostAdditionController {
     private final AuthenticationService authenticationService;
 
     @PostMapping
-    public ResponseEntity<Void> addPost(@RequestBody PostDto postDto){
+    public ResponseEntity<Void> addPost(@RequestBody AddPostDto postDto){
         final Set<Role> authorizedRoles = Set.of(USER, ADMIN);
         authenticationService.authorizeAndAuthenticate(postDto.getToken(), postDto.getUserId(), authorizedRoles);
         PostDto post = postAdditionService.addPost(postDto);

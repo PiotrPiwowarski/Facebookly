@@ -3,7 +3,7 @@ package pl.piwowarski.facebookly.service.user.impl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import pl.piwowarski.facebookly.model.dto.UserDto;
+import pl.piwowarski.facebookly.model.dto.user.UserDto;
 import pl.piwowarski.facebookly.model.entity.User;
 import pl.piwowarski.facebookly.service.mapper.impl.UserToUserDtoMapper;
 import pl.piwowarski.facebookly.service.user.UserService;

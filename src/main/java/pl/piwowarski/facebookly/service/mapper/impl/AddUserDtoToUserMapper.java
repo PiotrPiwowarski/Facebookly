@@ -2,7 +2,7 @@ package pl.piwowarski.facebookly.service.mapper.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import pl.piwowarski.facebookly.model.dto.AddUserDto;
+import pl.piwowarski.facebookly.model.dto.user.AddUserDto;
 import pl.piwowarski.facebookly.model.entity.User;
 import pl.piwowarski.facebookly.service.manager.impl.PasswordManager;
 import pl.piwowarski.facebookly.service.mapper.Mapper;

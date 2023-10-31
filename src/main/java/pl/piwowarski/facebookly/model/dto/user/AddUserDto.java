@@ -1,4 +1,4 @@
-package pl.piwowarski.facebookly.model.dto;
+package pl.piwowarski.facebookly.model.dto.user;
 
 import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.Email;

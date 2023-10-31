@@ -5,7 +5,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.piwowarski.facebookly.exception.AuthorizationException;
 import pl.piwowarski.facebookly.exception.CommentContentIsNullException;
-import pl.piwowarski.facebookly.model.dto.CommentDto;
+import pl.piwowarski.facebookly.model.dto.comment.AddCommentDto;
+import pl.piwowarski.facebookly.model.dto.comment.CommentDto;
+import pl.piwowarski.facebookly.model.dto.comment.UpdateCommentDto;
 import pl.piwowarski.facebookly.model.entity.Comment;
 import pl.piwowarski.facebookly.service.comment.CommentService;
 import pl.piwowarski.facebookly.service.mapper.impl.CommentToCommentDtoMapper;
@@ -18,15 +20,15 @@ public class CommentUpdateService implements CommentService {
     private final CommentGetService commentGetService;
 
     @Transactional
-    public CommentDto updateComment(CommentDto commentDto) {
-        Comment comment = commentGetService.getCommentById(commentDto.getId());
-        if(!commentDto.getUserId().equals(comment.getUser().getId())){
+    public CommentDto updateComment(UpdateCommentDto updateCommentDto) {
+        Comment comment = commentGetService.getCommentById(updateCommentDto.getId());
+        if(!updateCommentDto.getUserId().equals(comment.getUser().getId())){
             throw new AuthorizationException();
         }
-        if(commentDto.getContent() == null){
+        if(updateCommentDto.getContent() == null){
             throw new CommentContentIsNullException();
         }
-        comment.setContent(commentDto.getContent());
+        comment.setContent(updateCommentDto.getContent());
         return commentToCommentDtoMapper.map(comment);
     }
 }

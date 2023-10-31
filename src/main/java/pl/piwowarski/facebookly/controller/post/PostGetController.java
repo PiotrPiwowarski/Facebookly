@@ -3,7 +3,7 @@ package pl.piwowarski.facebookly.controller.post;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pl.piwowarski.facebookly.model.dto.PostDto;
+import pl.piwowarski.facebookly.model.dto.post.PostDto;
 import pl.piwowarski.facebookly.model.dto.SessionDto;
 import pl.piwowarski.facebookly.model.enums.Role;
 import pl.piwowarski.facebookly.service.authenticator.impl.AuthenticationService;

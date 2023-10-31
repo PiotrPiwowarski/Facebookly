@@ -6,7 +6,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import pl.piwowarski.facebookly.model.dto.CommentDto;
+import pl.piwowarski.facebookly.model.dto.comment.AddCommentDto;
+import pl.piwowarski.facebookly.model.dto.comment.CommentDto;
+import pl.piwowarski.facebookly.model.dto.comment.UpdateCommentDto;
 import pl.piwowarski.facebookly.model.enums.Role;
 import pl.piwowarski.facebookly.service.authenticator.impl.AuthenticationService;
 import pl.piwowarski.facebookly.service.comment.impl.CommentUpdateService;
@@ -25,10 +27,10 @@ public class CommentUpdateController {
     private final AuthenticationService authenticationService;
 
     @PutMapping
-    public ResponseEntity<CommentDto> updateComment(@RequestBody CommentDto commentDto){
+    public ResponseEntity<CommentDto> updateComment(@RequestBody UpdateCommentDto updateCommentDto){
         final Set<Role> authorizedRoles = Set.of(USER, ADMIN);
-        authenticationService.authorizeAndAuthenticate(commentDto.getToken(), commentDto.getUserId(), authorizedRoles);
-        CommentDto comment = commentUpdateService.updateComment(commentDto);
+        authenticationService.authorizeAndAuthenticate(updateCommentDto.getToken(), updateCommentDto.getUserId(), authorizedRoles);
+        CommentDto comment = commentUpdateService.updateComment(updateCommentDto);
         return ResponseEntity.ok(comment);
     }
 }

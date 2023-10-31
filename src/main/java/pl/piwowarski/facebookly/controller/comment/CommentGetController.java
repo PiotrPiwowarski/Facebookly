@@ -3,7 +3,7 @@ package pl.piwowarski.facebookly.controller.comment;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pl.piwowarski.facebookly.model.dto.CommentDto;
+import pl.piwowarski.facebookly.model.dto.comment.CommentDto;
 import pl.piwowarski.facebookly.model.dto.SessionDto;
 import pl.piwowarski.facebookly.model.enums.Role;
 import pl.piwowarski.facebookly.service.authenticator.impl.AuthenticationService;

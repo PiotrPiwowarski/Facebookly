@@ -1,8 +1,10 @@
-package pl.piwowarski.facebookly.model.dto;
+package pl.piwowarski.facebookly.model.dto.post;
 
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Null;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
@@ -10,12 +12,9 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class PostDto {
-    @Null
-    private Long id;
+public class AddPostDto {
     private String content;
     private String picturePath;
-    private byte[] picture;
     @NotNull
     private LocalDateTime created;
     @NotNull

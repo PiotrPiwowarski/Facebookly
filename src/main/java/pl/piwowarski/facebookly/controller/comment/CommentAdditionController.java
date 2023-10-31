@@ -4,8 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import pl.piwowarski.facebookly.model.dto.CommentDto;
-import pl.piwowarski.facebookly.model.dto.SessionDto;
+import pl.piwowarski.facebookly.model.dto.comment.AddCommentDto;
+import pl.piwowarski.facebookly.model.dto.comment.CommentDto;
 import pl.piwowarski.facebookly.model.enums.Role;
 import pl.piwowarski.facebookly.service.authenticator.impl.AuthenticationService;
 import pl.piwowarski.facebookly.service.comment.impl.CommentAdditionService;
@@ -25,10 +25,10 @@ public class CommentAdditionController {
     private final AuthenticationService authenticationService;
 
     @PostMapping
-    public ResponseEntity<Void> addComment(@RequestBody CommentDto commentDto){
+    public ResponseEntity<Void> addComment(@RequestBody AddCommentDto addCommentDto){
         final Set<Role> authorizedRoles = Set.of(USER, ADMIN);
-        authenticationService.authorizeAndAuthenticate(commentDto.getToken(),commentDto.getUserId(), authorizedRoles);
-        CommentDto comment = commentAdditionService.addComment(commentDto);
+        authenticationService.authorizeAndAuthenticate(addCommentDto.getToken(),addCommentDto.getUserId(), authorizedRoles);
+        CommentDto comment = commentAdditionService.addComment(addCommentDto);
         URI uri = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("comments" + comment.getId())

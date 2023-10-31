@@ -2,7 +2,8 @@ package pl.piwowarski.facebookly.service.comment.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import pl.piwowarski.facebookly.model.dto.CommentDto;
+import pl.piwowarski.facebookly.model.dto.comment.AddCommentDto;
+import pl.piwowarski.facebookly.model.dto.comment.CommentDto;
 import pl.piwowarski.facebookly.model.entity.Comment;
 import pl.piwowarski.facebookly.repository.CommentRepository;
 import pl.piwowarski.facebookly.service.comment.CommentService;
@@ -17,8 +18,8 @@ public class CommentAdditionService implements CommentService {
     private final CommentToCommentDtoMapper commentToCommentDtoMapper;
     private final CommentRepository commentRepository;
 
-    public CommentDto addComment(CommentDto commentDto) {
-        Comment comment = commentDtoToCommentMapper.map(commentDto);
+    public CommentDto addComment(AddCommentDto addCommentDto) {
+        Comment comment = commentDtoToCommentMapper.map(addCommentDto);
         Comment savedComment = commentRepository.save(comment);
         return commentToCommentDtoMapper.map(savedComment);
     }

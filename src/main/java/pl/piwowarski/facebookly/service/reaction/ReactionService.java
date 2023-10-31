@@ -1,6 +1,5 @@
 package pl.piwowarski.facebookly.service.reaction;
 
-import pl.piwowarski.facebookly.model.dto.UserDto;
 import pl.piwowarski.facebookly.model.dto.UserReactionDto;
 import pl.piwowarski.facebookly.model.enums.Reaction;
 
