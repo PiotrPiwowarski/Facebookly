@@ -116,6 +116,7 @@
     </dependencies>
 
     <build>
+        <finalName>facebookly-1.0</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
