@@ -48,10 +48,19 @@ public class PostReactionServiceService implements ReactionService {
     @Override
     public List<UserReactionDto> getAllReactions(Long postId, Reaction reaction) {
         return postReactionRepository
-                .findAll()
+                .findByPostId(postId)
                 .stream()
-                .filter(commentReaction -> commentReaction.getPost().getId().equals(postId))
                 .filter(postReaction -> postReaction.getReaction().equals(reaction))
+                .map(PostReaction::getUser)
+                .map(userToUserReactionDtoMapper::map)
+                .toList();
+    }
+
+    @Override
+    public List<UserReactionDto> getAllReactions(Long postId){
+        return postReactionRepository
+                .findByPostId(postId)
+                .stream()
                 .map(PostReaction::getUser)
                 .map(userToUserReactionDtoMapper::map)
                 .toList();

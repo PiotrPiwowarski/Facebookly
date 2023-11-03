@@ -5,12 +5,12 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class UserNotLoggedInException extends RuntimeException {
+public class WrongImageFormatException extends RuntimeException{
 
-    private static final String MESSAGE = "Access denied. User isn't logged in.";
+    private static final String MESSAGE = "Application does not supported given format.";
     private final String message;
 
-    public UserNotLoggedInException(){
+    public WrongImageFormatException(){
         this.message = MESSAGE;
     }
 }

@@ -1,5 +1,6 @@
 package pl.piwowarski.facebookly.controller.user;
 
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +22,8 @@ public class UserRemovalController {
     private final UserRemovalService userRemovalService;
     private final AuthenticationService authenticationService;
 
+    @Operation(summary = "Usunięcie siebie samego.",
+            description = "Wymagane dane: id użytkownika, rola, token. Zwracane dane: brak.")
     @DeleteMapping
     public ResponseEntity<Void> deleteUser(@RequestBody SessionDto sessionDto){
         final Set<Role> authorizedRoles = Set.of(USER, ADMIN);
@@ -29,6 +32,8 @@ public class UserRemovalController {
         return ResponseEntity.noContent().build();
     }
 
+    @Operation(summary = "Usunięcie użytkownika (tylko administrator).",
+            description = "Wymagane dane: id użytkownika, id administratora, rola, token. Zwracane dane: brak.")
     @DeleteMapping("/{userId}")
     public ResponseEntity<Void> deleteAnotherUser(@PathVariable Long userId,
                                                   @RequestBody SessionDto sessionDto){
@@ -38,6 +43,8 @@ public class UserRemovalController {
         return ResponseEntity.noContent().build();
     }
 
+    @Operation(summary = "Usunięcie użytkownika ze znajomych.",
+            description = "Wymagane dane: id użytkownika, id użytkownika, rola, token. Zwracane dane: brak.")
     @DeleteMapping("friends/{friendId}")
     public ResponseEntity<Void> deleteFriend(@PathVariable Long friendId,
                                              @RequestBody SessionDto sessionDto){

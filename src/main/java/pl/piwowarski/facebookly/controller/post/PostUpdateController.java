@@ -1,5 +1,6 @@
 package pl.piwowarski.facebookly.controller.post;
 
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +23,9 @@ public class PostUpdateController {
     private final PostUpdateService postUpdateService;
     private final AuthenticationService authenticationService;
 
+    @Operation(summary = "Aktualizacja posta.",
+            description = "Opcjonalne dane: kontent, ścieżka do obrazka. Wymagane dane: id posta, id użytkownika, token. " +
+                    "Zwracane dane: Post.")
     @PutMapping("/{postId}")
     public ResponseEntity<PostDto> updatePost(@PathVariable Long postId,
                                               @RequestBody AddPostDto postDto){

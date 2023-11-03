@@ -1,5 +1,6 @@
 package pl.piwowarski.facebookly.controller.authentication;
 
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,15 +20,19 @@ import static pl.piwowarski.facebookly.model.enums.Role.USER;
 @RestController
 @RequestMapping("/authentication")
 @RequiredArgsConstructor
-public class AuthenticateController {
+public class AuthenticationController {
 
     private final AuthenticationService authenticationService;
 
+    @Operation(summary = "Zalogowanie użytkownika.",
+            description = "Wymagane dane: email oraz hasło. Zwracane dane: id użytkownika, rola, token.")
     @PostMapping("/login")
     public ResponseEntity<SessionDto> login(@RequestBody CredentialsDto credentialsDto){
         return ResponseEntity.ok(authenticationService.login(credentialsDto));
     }
 
+    @Operation(summary = "Wylogowanie użytkownika.",
+            description = "Wymagane dane: id użytkownika, rola, token. Zwracane dane: brak.")
     @PostMapping("/logout")
     public ResponseEntity<Void> logout(@RequestBody SessionDto sessionDto){
         final Set<Role> authorizedRoles = Set.of(USER, ADMIN);

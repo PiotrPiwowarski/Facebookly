@@ -1,13 +1,16 @@
 package pl.piwowarski.facebookly.exception;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 
-@NoArgsConstructor
 @Getter
+@AllArgsConstructor
 public class WrongEmailException extends RuntimeException {
 
-    @Value("${facebookly.exception.WrongEmailException.message-1}")
-    private String message1;
+    private static final String MESSAGE = "No users with given email.";
+    private final String message;
+
+    public WrongEmailException(){
+        this.message = MESSAGE;
+    }
 }

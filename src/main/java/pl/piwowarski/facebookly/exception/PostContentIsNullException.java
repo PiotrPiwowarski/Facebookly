@@ -1,13 +1,16 @@
 package pl.piwowarski.facebookly.exception;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 
-@NoArgsConstructor
 @Getter
+@AllArgsConstructor
 public class PostContentIsNullException extends RuntimeException{
 
-    @Value("${facebookly.exception.PostContentIsNullException.message-1}")
-    private String message1;
+    private static final String MESSAGE = "Cannot update post, content is null.";
+    private final String message;
+
+    public PostContentIsNullException(){
+        this.message = MESSAGE;
+    }
 }

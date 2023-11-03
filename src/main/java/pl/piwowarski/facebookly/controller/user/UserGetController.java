@@ -1,5 +1,6 @@
 package pl.piwowarski.facebookly.controller.user;
 
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,14 +24,19 @@ public class UserGetController {
     private final UserGetService userGetService;
     private final AuthenticationService authenticationService;
 
-    @GetMapping("/{id}")
-    public ResponseEntity<UserDto> getUser(@PathVariable Long id,
+    @Operation(summary = "Pobieranie użytkownika po id.",
+            description = "Wymagane dane: id użytkownika, id użytkownika, rola, token. Zwracane dane: użytkownik.")
+    @GetMapping("/{userId}")
+    public ResponseEntity<UserDto> getUser(@PathVariable Long userId,
                                            @RequestBody SessionDto sessionDto){
         final Set<Role> authorizedRoles = Set.of(ADMIN);
         authenticationService.authorizeAndAuthenticate(sessionDto, authorizedRoles);
-        return ResponseEntity.ok(userGetService.getUserDtoById(id));
+        return ResponseEntity.ok(userGetService.getUserDtoById(userId));
     }
 
+    @Operation(summary = "Pobieranie użytkownika po imieniu.",
+            description = "Wymagane dane: imię, nazwisko, id użytkownika, rola, token. " +
+                    "Zwracane dane: lista użytkowników.")
     @GetMapping
     public ResponseEntity<List<UserDto>> getUsersByName(@RequestParam String firstName,
                                                        @RequestParam String lastName,
@@ -40,6 +46,8 @@ public class UserGetController {
         return ResponseEntity.ok(userGetService.getUsersByUserName(firstName, lastName));
     }
 
+    @Operation(summary = "Pobieranie wszystkich użytkowników.",
+            description = "Wymagane dane: id użytkownika, rola, token. Zwracane dane: lista użytkowników.")
     @GetMapping("all")
     public ResponseEntity<List<UserDto>> getAllUsers(@RequestBody SessionDto sessionDto){
         final Set<Role> authorizedRoles = Set.of(USER, ADMIN);
@@ -47,6 +55,9 @@ public class UserGetController {
         return ResponseEntity.ok(userGetService.getAllUsers());
     }
 
+    @Operation(summary = "Pobieranie strony użytkowników.",
+            description = "Wymagane dane: numer strony, rozmiar strony, id użytkownika, rola, token. " +
+                    "Zwracane dane: strona użytkowników.")
     @GetMapping("/paged")
     public ResponseEntity<List<UserDto>> getPagedUsers(@RequestParam Integer pageNumber,
                                                        @RequestParam Integer pageSize,
@@ -56,6 +67,8 @@ public class UserGetController {
         return ResponseEntity.ok(userGetService.getPagedUsers(pageNumber, pageSize));
     }
 
+    @Operation(summary = "Pobieranie wszystkich znajomych użytkownika.",
+            description = "Wymagane dane: id użytkownika, id użytkownika, rola, token. Zwracane dane: lista użytkowników.")
     @GetMapping("{userId}/friends")
     public ResponseEntity<List<UserDto>> getUserFriends(@PathVariable Long userId,
                                                         @RequestBody SessionDto sessionDto){
@@ -64,6 +77,9 @@ public class UserGetController {
         return ResponseEntity.ok(userGetService.getUserFriends(userId));
     }
 
+    @Operation(summary = "Pobieranie strony użytkowników.",
+            description = "Wymagane dane: numer strony, rozmiar strony, id użytkownika, rola, token. " +
+                    "Zwracane dane: strona użytkowników.")
     @GetMapping("{userId}/friends/paged")
     public ResponseEntity<List<UserDto>> getPagedUserFriends(@PathVariable Long userId,
                                                         @RequestParam Integer pageNumber,

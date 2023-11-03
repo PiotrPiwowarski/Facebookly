@@ -1,5 +1,6 @@
 package pl.piwowarski.facebookly.controller.post;
 
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +25,9 @@ public class PostAdditionController {
     private final PostAdditionService postAdditionService;
     private final AuthenticationService authenticationService;
 
+    @Operation(summary = "Dodanie posta.",
+            description = "Opcjonalne dane: kontent, ścieżka do obrazka. Wymagane dane: id użytkownika, token. " +
+                    "Zwracane dane: brak.")
     @PostMapping
     public ResponseEntity<Void> addPost(@RequestBody AddPostDto postDto){
         final Set<Role> authorizedRoles = Set.of(USER, ADMIN);

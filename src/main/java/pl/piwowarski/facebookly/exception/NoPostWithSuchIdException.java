@@ -1,13 +1,16 @@
 package pl.piwowarski.facebookly.exception;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 
-@NoArgsConstructor
 @Getter
+@AllArgsConstructor
 public class NoPostWithSuchIdException extends RuntimeException{
 
-    @Value("${facebookly.exception.NoPostWithSuchIdException.message-1}")
-    private String message1;
+    private static final String MESSAGE = "No posts with the given id.";
+    private final String message;
+
+    public NoPostWithSuchIdException(){
+        this.message = MESSAGE;
+    }
 }

@@ -1,5 +1,6 @@
 package pl.piwowarski.facebookly.controller.comment;
 
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,21 +24,25 @@ public class CommentGetController {
     private final CommentGetService commentGetService;
     private final AuthenticationService authenticationService;
 
-    @GetMapping
-    public ResponseEntity<List<CommentDto>> getAllPostComments(@RequestParam Long postId,
+    @Operation(summary = "Pobranie wszystkich komentarzy posta.",
+            description = "Wymagane dane: id posta, id użytkownika, role, token. Dane zwracane: lista komentarzy.")
+    @GetMapping("/{postId}")
+    public ResponseEntity<List<CommentDto>> getAllPostComments(@PathVariable Long postId,
                                                            @RequestBody SessionDto sessionDto){
         final Set<Role> authorizedRoles = Set.of(USER, ADMIN);
         authenticationService.authorizeAndAuthenticate(sessionDto, authorizedRoles);
         return ResponseEntity.ok(commentGetService.getAllCommentsByPostId(postId));
     }
 
-    @GetMapping("/paged")
-    public ResponseEntity<List<CommentDto>> getPagedPostComments(@RequestParam Long postId,
-                                                           @RequestParam Integer offset,
+    @Operation(summary = "Pobranie postronicowanych komentarzy posta.",
+            description = "Wymagane dane: id posta, id użytkownika, role, token. Dane zwracane: strona komentarzy.")
+    @GetMapping("/{postId}/paged")
+    public ResponseEntity<List<CommentDto>> getPagedPostComments(@PathVariable Long postId,
+                                                           @RequestParam Integer pageNumber,
                                                            @RequestParam Integer pageSize,
                                                            @RequestBody SessionDto sessionDto){
         final Set<Role> authorizedRoles = Set.of(USER, ADMIN);
         authenticationService.authorizeAndAuthenticate(sessionDto, authorizedRoles);
-        return ResponseEntity.ok(commentGetService.getAllPagedCommentsByPostId(postId, offset, pageSize));
+        return ResponseEntity.ok(commentGetService.getAllPagedCommentsByPostId(postId, pageNumber, pageSize));
     }
 }

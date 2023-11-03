@@ -16,8 +16,6 @@ public class AddPostDto {
     private String content;
     private String picturePath;
     @NotNull
-    private LocalDateTime created;
-    @NotNull
     private Long userId;
     @NotNull
     private String token;

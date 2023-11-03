@@ -1,5 +1,6 @@
 package pl.piwowarski.facebookly.controller.user;
 
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -24,6 +25,9 @@ public class UserUpdateController {
     private final UserUpdateService userUpdateService;
     private final AuthenticationService authenticationService;
 
+    @Operation(summary = "Aktualizacja użytkownika.",
+            description = "Opcjonalne dane: imię, nazwisko, płeć, email, hasło. " +
+                    "Wymagane dane: id użytkownika, token. Zwracane dane: użytkownik.")
     @PutMapping
     public ResponseEntity<UserDto> updateUser(@RequestBody UserDto userDto){
         final Set<Role> authorizedRoles = Set.of(USER, ADMIN);

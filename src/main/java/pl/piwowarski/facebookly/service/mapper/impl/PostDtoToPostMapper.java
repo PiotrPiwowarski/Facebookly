@@ -9,6 +9,8 @@ import pl.piwowarski.facebookly.service.manager.impl.PictureManager;
 import pl.piwowarski.facebookly.service.mapper.Mapper;
 import pl.piwowarski.facebookly.service.user.impl.UserGetService;
 
+import java.time.LocalDateTime;
+
 @Service
 @RequiredArgsConstructor
 public class PostDtoToPostMapper implements Mapper<AddPostDto, Post> {
@@ -22,7 +24,7 @@ public class PostDtoToPostMapper implements Mapper<AddPostDto, Post> {
                 .builder()
                 .content(addPostDto.getContent())
                 .image(pictureManager.fromPathToBytesArray(addPostDto.getPicturePath()))
-                .created(addPostDto.getCreated())
+                .created(LocalDateTime.now())
                 .user(userGetService.getUserById(addPostDto.getUserId()))
                 .build();
     }

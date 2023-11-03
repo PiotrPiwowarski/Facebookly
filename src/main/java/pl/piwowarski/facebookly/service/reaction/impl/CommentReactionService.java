@@ -47,10 +47,19 @@ public class CommentReactionService implements ReactionService {
     @Override
     public List<UserReactionDto> getAllReactions(Long commentId, Reaction reaction) {
         return commentReactionRepository
-                .findAll()
+                .findByCommentId(commentId)
                 .stream()
-                .filter(commentReaction -> commentReaction.getComment().getId().equals(commentId))
                 .filter(commentReaction -> commentReaction.getReaction().equals(reaction))
+                .map(CommentReaction::getUser)
+                .map(userToUserReactionDtoMapper::map)
+                .toList();
+    }
+
+    @Override
+    public List<UserReactionDto> getAllReactions(Long commentId) {
+        return commentReactionRepository
+                .findByCommentId(commentId)
+                .stream()
                 .map(CommentReaction::getUser)
                 .map(userToUserReactionDtoMapper::map)
                 .toList();

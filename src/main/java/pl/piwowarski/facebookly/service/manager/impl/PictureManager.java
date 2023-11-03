@@ -2,8 +2,8 @@ package pl.piwowarski.facebookly.service.manager.impl;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import pl.piwowarski.facebookly.exception.PictureSavingProcessException;
-import pl.piwowarski.facebookly.exception.WrongPictureFormatException;
+import pl.piwowarski.facebookly.exception.ImageSavingProcessException;
+import pl.piwowarski.facebookly.exception.WrongImageFormatException;
 import pl.piwowarski.facebookly.service.manager.Manager;
 
 import javax.imageio.ImageIO;
@@ -22,7 +22,7 @@ public class PictureManager implements Manager {
         }
         String formatRegex = ".*." + format;
         if(!imagePath.matches(formatRegex)){
-            throw new WrongPictureFormatException();
+            throw new WrongImageFormatException();
         }
         try{
             BufferedImage bImage = ImageIO.read(new File(imagePath));
@@ -30,7 +30,7 @@ public class PictureManager implements Manager {
             ImageIO.write(bImage, format, bos);
             return bos.toByteArray();
         }catch(Exception e){
-            throw new PictureSavingProcessException();
+            throw new ImageSavingProcessException();
         }
     }
 }

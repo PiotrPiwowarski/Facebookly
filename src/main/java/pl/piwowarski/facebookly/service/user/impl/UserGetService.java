@@ -3,6 +3,7 @@ package pl.piwowarski.facebookly.service.user.impl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import pl.piwowarski.facebookly.exception.NoUserWithSuchEmailException;
 import pl.piwowarski.facebookly.exception.NoUserWithSuchIdException;
 import pl.piwowarski.facebookly.model.dto.user.UserDto;
 import pl.piwowarski.facebookly.model.entity.User;
@@ -41,7 +42,8 @@ public class UserGetService implements UserService {
     public User getUserByEmail(String email){
         return userRepository
                 .findByEmail(email)
-                .orElseThrow();
+                .orElseThrow(() -> new NoUserWithSuchEmailException("Niema użytkownika o podanym id"));
+                /*.orElseThrow(NoUserWithSuchEmailException::new);*/
     }
 
     public List<UserDto> getAllUsers() {

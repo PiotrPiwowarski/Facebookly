@@ -1,13 +1,16 @@
 package pl.piwowarski.facebookly.exception;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 
-@NoArgsConstructor
 @Getter
+@AllArgsConstructor
 public class CommentContentIsNullException extends RuntimeException{
 
-    @Value("${facebookly.exception.CommentContentIsNullException.message-1}")
-    private String message1;
+    private static final String MESSAGE = "You cannot update comment, content is null.";
+    private final String message;
+
+    public CommentContentIsNullException(){
+        this.message = MESSAGE;
+    }
 }

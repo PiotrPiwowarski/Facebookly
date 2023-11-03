@@ -5,12 +5,12 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class UserNotLoggedInException extends RuntimeException {
+public class NoUserWithSuchEmailException extends RuntimeException{
 
-    private static final String MESSAGE = "Access denied. User isn't logged in.";
+    private static final String MESSAGE = "No users with the given email.";
     private final String message;
 
-    public UserNotLoggedInException(){
+    public NoUserWithSuchEmailException(){
         this.message = MESSAGE;
     }
 }

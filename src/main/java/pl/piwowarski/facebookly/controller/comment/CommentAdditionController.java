@@ -1,5 +1,6 @@
 package pl.piwowarski.facebookly.controller.comment;
 
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +25,8 @@ public class CommentAdditionController {
     private final CommentAdditionService commentAdditionService;
     private final AuthenticationService authenticationService;
 
+    @Operation(summary = "Dodanie komentarza",
+            description = "Wymagane dane: content, id użytkownika, id posta, token. Zwracane dane: brak.")
     @PostMapping
     public ResponseEntity<Void> addComment(@RequestBody AddCommentDto addCommentDto){
         final Set<Role> authorizedRoles = Set.of(USER, ADMIN);

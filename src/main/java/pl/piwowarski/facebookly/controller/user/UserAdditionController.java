@@ -1,5 +1,6 @@
 package pl.piwowarski.facebookly.controller.user;
 
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +26,8 @@ public class UserAdditionController {
     private final UserAdditionService userAdditionService;
     private final AuthenticationService authenticationService;
 
+    @Operation(summary = "Dodawanie użytkownika.",
+            description = "Wymagane dane: imię, nazwisko, płeć, email, hasło. Zwracane dane: brak.")
     @PostMapping
     public ResponseEntity<Void> addUser(@RequestBody AddUserDto addUserDto){
         UserDto user = userAdditionService.addUser(addUserDto);
@@ -36,6 +39,8 @@ public class UserAdditionController {
         return ResponseEntity.created(uri).build();
     }
 
+    @Operation(summary = "Dodawanie użytkownika do znajomych.",
+            description = "Wymagane dane: id użytkownika, rola, token. Zwracane dane: brak.")
     @PostMapping("/friends/{friendId}")
     public ResponseEntity<Void> addFriend(@RequestBody SessionDto sessionDto,
                                           @PathVariable Long friendId){

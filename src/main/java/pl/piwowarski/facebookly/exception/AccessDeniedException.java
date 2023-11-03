@@ -1,13 +1,16 @@
 package pl.piwowarski.facebookly.exception;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 
-@NoArgsConstructor
 @Getter
+@AllArgsConstructor
 public class AccessDeniedException extends RuntimeException{
 
-    @Value("${facebookly.exception.AccessDeniedException.message-1}")
-    private String message1;
+    private static final String MESSAGE = "Lack of permission to perform the operation - access denied.";
+    private final String message;
+
+    public AccessDeniedException(){
+        this.message =MESSAGE;
+    }
 }
