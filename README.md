@@ -50,7 +50,7 @@ volumes:
 
 You can change some of environment variables, for example MYSQL_ROOT_PASSWORD
 You can also switch mode between 'dev' and 'prod' using SPRING_PROFILE_ACTIVE, default 'prod' mode
-'prod' mode is using MySQL database and 'dev' mode H2 built in database with example set of data which you can change in [data](facebookly/src/main/resources/data.sql) file
+'prod' mode is using MySQL database and 'dev' mode H2 built in database with example set of data which you can change in [data](/src/main/resources/data.sql) file
 
 
 # Quickstart
