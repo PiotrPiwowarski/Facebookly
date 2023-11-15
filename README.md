@@ -52,7 +52,7 @@ You can change some of environment variables, for example MYSQL_ROOT_PASSWORD
 
 # Quickstart
 
-Docker - go to directory with Docker Compose file and then use the command below:
+Go to directory with Docker Compose file and then use the command below:
 ```
 docker compose up
 ```
