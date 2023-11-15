@@ -3,6 +3,7 @@ package pl.piwowarski.facebookly.service.post.impl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import pl.piwowarski.facebookly.exception.AuthorizationException;
 import pl.piwowarski.facebookly.exception.PostContentIsNullException;
 import pl.piwowarski.facebookly.model.dto.post.AddPostDto;
 import pl.piwowarski.facebookly.model.dto.post.PostDto;
@@ -18,8 +19,11 @@ public class PostUpdateService implements PostService {
     private final PostToPostDtoMapper postToPostDtoMapper;
 
     @Transactional
-    public PostDto updatePost(Long postId, AddPostDto postDto) {
+    public PostDto updatePost(Long postId, Long userId, AddPostDto postDto) {
         Post post = postGetService.getPostById(postId);
+        if(!userId.equals(post.getUser().getId())){
+            throw new AuthorizationException();
+        }
         if(post.getContent() == null){
             throw new PostContentIsNullException();
         }

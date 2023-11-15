@@ -17,7 +17,9 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 
 @Table(name = "users")
 @Entity
-@Data
+@Getter
+@Setter
+@EqualsAndHashCode
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -41,11 +43,11 @@ public class User {
     private List<Post> posts;
     @ManyToMany(fetch = LAZY, cascade = REMOVE)
     @JoinTable(
-            name = "user_friends",
+            name = "followed_users",
             joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "friend_id")
+            inverseJoinColumns = @JoinColumn(name = "followed_user_id")
     )
-    private List<User> friends;
+    private List<User> followedUsers;
     @Enumerated(STRING)
     private Role role;
     private Boolean logged;

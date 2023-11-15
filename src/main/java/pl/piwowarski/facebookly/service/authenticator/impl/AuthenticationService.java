@@ -11,6 +11,7 @@ import pl.piwowarski.facebookly.model.entity.Session;
 import pl.piwowarski.facebookly.model.entity.User;
 import pl.piwowarski.facebookly.model.enums.Role;
 import pl.piwowarski.facebookly.repository.SessionRepository;
+import pl.piwowarski.facebookly.repository.UserRepository;
 import pl.piwowarski.facebookly.service.authenticator.AuthService;
 import pl.piwowarski.facebookly.service.manager.impl.PasswordManager;
 import pl.piwowarski.facebookly.service.mapper.impl.CredentialsDtoToSessionMapper;
@@ -29,6 +30,7 @@ public class AuthenticationService implements AuthService {
     private final CredentialsDtoToSessionMapper credentialsDtoToSessionMapper;
     private final SessionToSessionDtoMapper sessionToSessionDtoMapper;
     private final UserGetService userGetService;
+    private final UserRepository userRepository;
     private final PasswordManager passwordManager;
     @Value("${facebookly.token.expirationTime}")
     private Integer expirationTime;
@@ -51,17 +53,10 @@ public class AuthenticationService implements AuthService {
         User user = userGetService.getUserById(sessionDto.getUserId());
         user.setLogged(false);
         String token = sessionDto.getToken();
-        Session session = sessionRepository
-                .findByToken(token)
-                .orElseThrow(NoActiveSessionForGivenTokenException::new);
+        Session session = findSession(token);
         sessionRepository.delete(session);
     }
 
-    public Session saveSession(Session session){
-        return sessionRepository.save(session);
-    }
-
-    @Transactional
     public void authorizeAndAuthenticate(SessionDto sessionDto, Set<Role> authorizedRoles){
         User user = userGetService.getUserById(sessionDto.getUserId());
         if(!user.getLogged()) {
@@ -74,7 +69,6 @@ public class AuthenticationService implements AuthService {
         checkSession(sessionDto.getToken(), sessionDto.getUserId());
     }
 
-    @Transactional
     public void authorizeAndAuthenticate(String token, Long userId, Set<Role> authorizedRoles){
         User user = userGetService.getUserById(userId);
         if(!user.getLogged()) {
@@ -90,24 +84,30 @@ public class AuthenticationService implements AuthService {
         }
     }
 
-    @Transactional
     public void checkSession(String token, Long userId){
-        if(userId == null){
-            throw new UserIdIsNullException();
-        }
-        if(token == null){
-            throw new TokenIsNullException();
-        }
-        Session session = sessionRepository
-                .findByToken(token)
-                .orElseThrow(UserNotLoggedInException::new);
-        if(session.getExpirationDate().isBefore(LocalDateTime.now())){
-            logout(sessionToSessionDtoMapper.map(session));
-            throw new ExpiredSessionException();
-        }
-        if(!userId.equals(session.getUser().getId())){
+        Session session = findSession(token);
+        User user = userGetService.getUserById(userId);
+        if(!session.getUser().getId().equals(user.getId())){
             throw new UserNotLoggedInException();
         }
+        if(session.getExpirationDate().isBefore(LocalDateTime.now())){
+            user.setLogged(false);
+            userRepository.save(user);
+            deleteSession(sessionToSessionDtoMapper.map(session));
+            throw new ExpiredSessionException();
+        }
         session.setExpirationDate(LocalDateTime.now().plusMinutes(expirationTime));
+    }
+
+    private void deleteSession(SessionDto sessionDto){
+        String token = sessionDto.getToken();
+        Session session = findSession(token);
+        sessionRepository.delete(session);
+    }
+
+    private Session findSession(String token){
+        return sessionRepository
+                .findByToken(token)
+                .orElseThrow(UserNotLoggedInException::new);
     }
 }

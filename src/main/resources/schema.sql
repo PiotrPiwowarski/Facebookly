@@ -25,10 +25,10 @@ CREATE TABLE COMMENTS (
     post_id bigint not null references POSTS(id)
 );
 
-CREATE TABLE USER_FRIENDS (
+CREATE TABLE FOLLOWED_USERS (
     id bigint auto_increment primary key,
     user_id bigint not null references USERS(id),
-    friend_id bigint not null references USERS(id)
+    followed_user_id bigint not null references USERS(id)
 );
 
 CREATE TABLE SESSIONS (

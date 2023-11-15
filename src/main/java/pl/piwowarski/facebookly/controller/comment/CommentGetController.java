@@ -28,7 +28,7 @@ public class CommentGetController {
             description = "Wymagane dane: id posta, id użytkownika, role, token. Dane zwracane: lista komentarzy.")
     @GetMapping("/{postId}")
     public ResponseEntity<List<CommentDto>> getAllPostComments(@PathVariable Long postId,
-                                                           @RequestBody SessionDto sessionDto){
+                                                               @RequestBody SessionDto sessionDto){
         final Set<Role> authorizedRoles = Set.of(USER, ADMIN);
         authenticationService.authorizeAndAuthenticate(sessionDto, authorizedRoles);
         return ResponseEntity.ok(commentGetService.getAllCommentsByPostId(postId));
@@ -38,9 +38,9 @@ public class CommentGetController {
             description = "Wymagane dane: id posta, id użytkownika, role, token. Dane zwracane: strona komentarzy.")
     @GetMapping("/{postId}/paged")
     public ResponseEntity<List<CommentDto>> getPagedPostComments(@PathVariable Long postId,
-                                                           @RequestParam Integer pageNumber,
-                                                           @RequestParam Integer pageSize,
-                                                           @RequestBody SessionDto sessionDto){
+                                                           		@RequestParam Integer pageNumber,
+                                                           		@RequestParam Integer pageSize,
+                                                           		@RequestBody SessionDto sessionDto){
         final Set<Role> authorizedRoles = Set.of(USER, ADMIN);
         authenticationService.authorizeAndAuthenticate(sessionDto, authorizedRoles);
         return ResponseEntity.ok(commentGetService.getAllPagedCommentsByPostId(postId, pageNumber, pageSize));

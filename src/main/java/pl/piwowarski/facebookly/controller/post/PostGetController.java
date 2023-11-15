@@ -73,4 +73,24 @@ public class PostGetController {
         authenticationService.authorizeAndAuthenticate(sessionDto, authorizedRoles);
         return ResponseEntity.ok(postGetService.getPagedUserPosts(sessionDto.getUserId(), pageNumber, pageSize));
     }
+
+    @Operation(summary = "Pobranie wszystkich postów obserwowanych użytkowników.",
+            description = "Wymagane dane: id użytkownika, rola, token. Zwracane dane: lista postów.")
+    @GetMapping("/followed")
+    public ResponseEntity<List<PostDto>> getAllFollowedUsersPosts(@RequestBody SessionDto sessionDto){
+        final Set<Role> authorizedRoles = Set.of(USER, ADMIN);
+        authenticationService.authorizeAndAuthenticate(sessionDto, authorizedRoles);
+        return ResponseEntity.ok(postGetService.getFollowersPosts(sessionDto.getUserId()));
+    }
+
+    @Operation(summary = "Pobranie strony postów obserwowanych użytkowników.",
+            description = "Wymagane dane: numer strony, rozmiar strony id użytkownika, rola, token. Zwracane dane: strona postów.")
+    @GetMapping("/followed/paged")
+    public ResponseEntity<List<PostDto>> getPagedFollowedUsersPosts(@RequestParam Integer pageNumber,
+                                                                    @RequestParam Integer pageSize,
+                                                                    @RequestBody SessionDto sessionDto){
+        final Set<Role> authorizedRoles = Set.of(USER, ADMIN);
+        authenticationService.authorizeAndAuthenticate(sessionDto, authorizedRoles);
+        return ResponseEntity.ok(postGetService.getPagedFollowersPosts(sessionDto.getUserId(), pageNumber, pageSize));
+    }
 }

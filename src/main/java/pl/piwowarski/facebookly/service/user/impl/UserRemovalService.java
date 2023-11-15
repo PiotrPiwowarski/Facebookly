@@ -29,7 +29,7 @@ public class UserRemovalService implements UserService {
         User user = userGetService.getUserById(id);
         commentRemovalService.deleteCommentsByUserId(id);
         postRemovalService.deletePostByUserId(id);
-        user.getFriends().forEach(u -> deleteFriend(u.getId(), user.getId()));
+        user.getFollowedUsers().forEach(u -> deleteFriend(u.getId(), user.getId()));
         authenticationService.logout(sessionDto);
         userRepository.deleteById(id);
     }
@@ -43,10 +43,10 @@ public class UserRemovalService implements UserService {
     private void deleteFromFriends(Long userId, Long friendId){
         User user = userGetService.getUserById(userId);
         List<User> userFriends = user
-                .getFriends()
+                .getFollowedUsers()
                 .stream()
                 .filter(friend -> !friend.getId().equals(friendId))
                 .toList();
-        user.setFriends(userFriends);
+        user.setFollowedUsers(userFriends);
     }
 }

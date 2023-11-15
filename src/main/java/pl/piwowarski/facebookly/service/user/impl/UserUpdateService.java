@@ -3,9 +3,10 @@ package pl.piwowarski.facebookly.service.user.impl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import pl.piwowarski.facebookly.model.dto.user.GetUserDto;
 import pl.piwowarski.facebookly.model.dto.user.UserDto;
 import pl.piwowarski.facebookly.model.entity.User;
-import pl.piwowarski.facebookly.service.mapper.impl.UserToUserDtoMapper;
+import pl.piwowarski.facebookly.service.mapper.impl.UserToGetUserDtoMapper;
 import pl.piwowarski.facebookly.service.user.UserService;
 
 @Service
@@ -13,10 +14,10 @@ import pl.piwowarski.facebookly.service.user.UserService;
 public class UserUpdateService implements UserService {
 
     private final UserGetService userGetService;
-    private final UserToUserDtoMapper userToUserDtoMapper;
+    private final UserToGetUserDtoMapper userToGetUserDtoMapper;
 
     @Transactional
-    public UserDto updateUser(UserDto userDto){
+    public GetUserDto updateUser(UserDto userDto){
         User user = userGetService.getUserById(userDto.getId());
         if(userDto.getFirstName() != null){
             user.setFirstName(userDto.getFirstName());
@@ -33,6 +34,6 @@ public class UserUpdateService implements UserService {
         if(userDto.getPassword() != null){
             user.setPassword(userDto.getPassword());
         }
-        return userToUserDtoMapper.map(user);
+        return userToGetUserDtoMapper.map(user);
     }
 }

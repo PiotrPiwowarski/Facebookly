@@ -5,10 +5,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import pl.piwowarski.facebookly.exception.NoUserWithSuchEmailException;
 import pl.piwowarski.facebookly.exception.NoUserWithSuchIdException;
-import pl.piwowarski.facebookly.model.dto.user.UserDto;
+import pl.piwowarski.facebookly.model.dto.user.GetUserDto;
 import pl.piwowarski.facebookly.model.entity.User;
 import pl.piwowarski.facebookly.repository.UserRepository;
-import pl.piwowarski.facebookly.service.mapper.impl.UserToUserDtoMapper;
+import pl.piwowarski.facebookly.service.mapper.impl.UserToGetUserDtoMapper;
 import pl.piwowarski.facebookly.service.user.UserService;
 
 import java.util.List;
@@ -18,11 +18,11 @@ import java.util.List;
 public class UserGetService implements UserService {
 
     private final UserRepository userRepository;
-    private final UserToUserDtoMapper userToUserDtoMapper;
+    private final UserToGetUserDtoMapper userToGetUserDtoMapper;
 
-    public UserDto getUserDtoById(Long userId){
+    public GetUserDto getUserDtoById(Long userId){
         User foundUser = getUserById(userId);
-        return userToUserDtoMapper.map(foundUser);
+        return userToGetUserDtoMapper.map(foundUser);
     }
 
     public User getUserById(Long userId){
@@ -31,50 +31,48 @@ public class UserGetService implements UserService {
                 .orElseThrow(NoUserWithSuchIdException::new);
     }
 
-    public List<UserDto> getUsersByUserName(String firstName, String lastName) {
+    public List<GetUserDto> getUsersByUserName(String firstName, String lastName) {
         return userRepository
                 .findAllByFirstNameAndLastName(firstName, lastName)
                 .stream()
-                .map(userToUserDtoMapper::map)
+                .map(userToGetUserDtoMapper::map)
                 .toList();
     }
 
     public User getUserByEmail(String email){
         return userRepository
                 .findByEmail(email)
-                .orElseThrow(() -> new NoUserWithSuchEmailException("Niema użytkownika o podanym id"));
-                /*.orElseThrow(NoUserWithSuchEmailException::new);*/
+                .orElseThrow(NoUserWithSuchEmailException::new);
     }
 
-    public List<UserDto> getAllUsers() {
+    public List<GetUserDto> getAllUsers() {
         return userRepository
                 .findAll()
                 .stream()
-                .map(userToUserDtoMapper::map)
+                .map(userToGetUserDtoMapper::map)
                 .toList();
     }
 
-    public List<UserDto> getPagedUsers(Integer pageNumber, Integer pageSize){
+    public List<GetUserDto> getPagedUsers(Integer pageNumber, Integer pageSize){
         return userRepository
                 .findAll(PageRequest.of(pageNumber, pageSize))
-                .stream().map(userToUserDtoMapper::map)
+                .stream().map(userToGetUserDtoMapper::map)
                 .toList();
     }
 
-    public List<UserDto> getUserFriends(Long userId) {
-        User user = getUserById(userId);
-        return user
-                .getFriends()
-                .stream()
-                .map(userToUserDtoMapper::map)
-                .toList();
-    }
-
-    public List<UserDto> getPagedUserFriends(Long userId, Integer pageNumber, Integer pageSize) {
+    public List<GetUserDto> getFollowedUsers(Long userId) {
         return userRepository
-                .findFriendsById(userId, PageRequest.of(pageNumber, pageSize))
+                .findFollowedUsersByUserId(userId)
                 .stream()
-                .map(userToUserDtoMapper::map)
+                .map(userToGetUserDtoMapper::map)
+                .toList();
+    }
+
+    public List<GetUserDto> getPagedFollowedUsers(Long userId, Integer pageNumber, Integer pageSize) {
+        return userRepository
+                .findPagedFollowedUsersByUserId(userId, PageRequest.of(pageNumber, pageSize))
+                .stream()
+                .map(userToGetUserDtoMapper::map)
                 .toList();
     }
 }

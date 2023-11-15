@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import pl.piwowarski.facebookly.model.dto.user.GetUserDto;
 import pl.piwowarski.facebookly.model.dto.user.UserDto;
 import pl.piwowarski.facebookly.model.enums.Role;
 import pl.piwowarski.facebookly.service.authenticator.impl.AuthenticationService;
@@ -29,10 +30,10 @@ public class UserUpdateController {
             description = "Opcjonalne dane: imię, nazwisko, płeć, email, hasło. " +
                     "Wymagane dane: id użytkownika, token. Zwracane dane: użytkownik.")
     @PutMapping
-    public ResponseEntity<UserDto> updateUser(@RequestBody UserDto userDto){
+    public ResponseEntity<GetUserDto> updateUser(@RequestBody UserDto userDto){
         final Set<Role> authorizedRoles = Set.of(USER, ADMIN);
         authenticationService.authorizeAndAuthenticate(userDto.getToken(), userDto.getId(), authorizedRoles);
-        UserDto user = userUpdateService.updateUser(userDto);
+        GetUserDto user = userUpdateService.updateUser(userDto);
         return ResponseEntity.ok(user);
     }
 }

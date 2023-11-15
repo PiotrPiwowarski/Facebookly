@@ -1,4 +1,4 @@
-FROM openjdk:17
-ARG JAR_FILE=target/*.jar
-COPY ./target/facebookly-1.0.jar app.jar
-ENTRYPOINT ["java", "-jar", "/app.jar"]
+FROM openjdk:17-jdk
+COPY target/facebookly.jar .
+EXPOSE 8080
+ENTRYPOINT ["java", "-jar", "/facebookly.jar"]

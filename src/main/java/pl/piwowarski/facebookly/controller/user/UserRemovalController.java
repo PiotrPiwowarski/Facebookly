@@ -46,8 +46,8 @@ public class UserRemovalController {
     @Operation(summary = "Usunięcie użytkownika ze znajomych.",
             description = "Wymagane dane: id użytkownika, id użytkownika, rola, token. Zwracane dane: brak.")
     @DeleteMapping("friends/{friendId}")
-    public ResponseEntity<Void> deleteFriend(@PathVariable Long friendId,
-                                             @RequestBody SessionDto sessionDto){
+    public ResponseEntity<Void> deleteFollowedUser(@PathVariable Long friendId,
+                                                   @RequestBody SessionDto sessionDto){
         final Set<Role> authorizedRoles = Set.of(USER, ADMIN);
         authenticationService.authorizeAndAuthenticate(sessionDto, authorizedRoles);
         userRemovalService.deleteFriend(sessionDto.getUserId(), friendId);

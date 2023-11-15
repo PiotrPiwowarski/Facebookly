@@ -31,7 +31,7 @@ public class PostUpdateController {
                                               @RequestBody AddPostDto postDto){
         final Set<Role> authorizedRoles = Set.of(USER, ADMIN);
         authenticationService.authorizeAndAuthenticate(postDto.getToken(), postDto.getUserId(), authorizedRoles);
-        PostDto post = postUpdateService.updatePost(postId, postDto);
+        PostDto post = postUpdateService.updatePost(postId, postDto.getUserId(), postDto);
         return ResponseEntity.ok(post);
     }
 }

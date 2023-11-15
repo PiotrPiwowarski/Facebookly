@@ -40,7 +40,7 @@ public class CommentRemovalController {
                                                       @RequestBody SessionDto sessionDto){
         final Set<Role> authorizedRoles = Set.of(ADMIN);
         authenticationService.authorizeAndAuthenticate(sessionDto, authorizedRoles);
-        commentRemovalService.deleteAllPostComments(postId, sessionDto.getUserId(), sessionDto.getRole());
+        commentRemovalService.deleteAllPostComments(postId, sessionDto.getRole());
         return ResponseEntity.noContent().build();
     }
 }
