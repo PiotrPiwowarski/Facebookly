@@ -61,32 +61,26 @@ public class CommentReactionController {
     }
 
     @Operation(summary = "Pobranie wszystkich like danego komentarza.",
-            description = "Wymagane dane: id posta, id użytkownika, rola, token. Zwracane dane: lista like.")
-    @GetMapping("/{postId}/likes")
-    public ResponseEntity<List<UserReactionDto>> getAllCommentLikes(@PathVariable Long postId,
-                                                                    @RequestBody SessionDto sessionDto){
-        final Set<Role> authorizedRoles = Set.of(USER, ADMIN);
-        authenticationService.authorizeAndAuthenticate(sessionDto, authorizedRoles);
-        return new ResponseEntity<>(commentReactionService.getAllReactions(postId, LIKE), HttpStatus.OK);
+            description = "Wymagane dane: id komentarza. Zwracane dane: lista like.")
+    @GetMapping("/{commentId}/likes")
+    public ResponseEntity<List<UserReactionDto>> getAllCommentLikes(@PathVariable Long commentId){
+        return new ResponseEntity<>(commentReactionService.getAllReactions(commentId, LIKE), HttpStatus.OK);
     }
 
     @Operation(summary = "Pobranie wszystkich dislike danego komentarza",
-            description = "Dane do wprowadzenia: id posta, id użytkownika, rola, token. Dane zwracane: lista dislike.")
-    @GetMapping("/{postId}/dislikes")
-    public ResponseEntity<List<UserReactionDto>> getAllCommentDislikes(@PathVariable Long postId,
-                                                               @RequestBody SessionDto sessionDto) {
-        final Set<Role> authorizedRoles = Set.of(USER, ADMIN);
-        authenticationService.authorizeAndAuthenticate(sessionDto, authorizedRoles);
-        return new ResponseEntity<>(commentReactionService.getAllReactions(postId, DISLIKE), HttpStatus.OK);
+            description = "Dane do wprowadzenia: id komentarza. Dane zwracane: lista dislike.")
+    @GetMapping("/{commentId}/dislikes")
+    public ResponseEntity<List<UserReactionDto>> getAllCommentDislikes(@PathVariable Long commentId) {
+        return new ResponseEntity<>(commentReactionService.getAllReactions(commentId, DISLIKE), HttpStatus.OK);
     }
 
     @Operation(summary = "Pobranie wszystkich dislike danego komentarza",
-            description = "Dane do wprowadzenia: id posta, id użytkownika, rola, token. Dane zwracane: lista reakcji.")
-    @GetMapping("/{postId}/reactions")
-    public ResponseEntity<List<UserReactionDto>> getAllCommentReactions(@PathVariable Long postId,
+            description = "Dane do wprowadzenia: id komentarza. Dane zwracane: lista reakcji.")
+    @GetMapping("/{commentId}/reactions")
+    public ResponseEntity<List<UserReactionDto>> getAllCommentReactions(@PathVariable Long commentId,
                                                                        @RequestBody SessionDto sessionDto) {
         final Set<Role> authorizedRoles = Set.of(USER, ADMIN);
         authenticationService.authorizeAndAuthenticate(sessionDto, authorizedRoles);
-        return new ResponseEntity<>(commentReactionService.getAllReactions(postId, DISLIKE), HttpStatus.OK);
+        return new ResponseEntity<>(commentReactionService.getAllReactions(commentId), HttpStatus.OK);
     }
 }

@@ -61,32 +61,23 @@ public class PostReactionController {
     }
 
     @Operation(summary = "Pobranie wszystkich like posta.",
-            description = "Wymagane dane: id posta, id użytkownika, rola, token. Zwracane dane: lista like.")
+            description = "Wymagane dane: id posta. Zwracane dane: lista like.")
     @GetMapping("/{postId}/likes")
-    public ResponseEntity<List<UserReactionDto>> getAllPostLikes(@PathVariable Long postId,
-                                                                 @RequestBody SessionDto sessionDto){
-        final Set<Role> authorizedRoles = Set.of(USER, ADMIN);
-        authenticationService.authorizeAndAuthenticate(sessionDto, authorizedRoles);
+    public ResponseEntity<List<UserReactionDto>> getAllPostLikes(@PathVariable Long postId){
         return new ResponseEntity<>(postReactionService.getAllReactions(postId, LIKE), HttpStatus.OK);
     }
 
     @Operation(summary = "Pobranie wszystkich dislike posta.",
-            description = "Wymagane dane: id posta, id użytkownika, rola, token. Zwracane dane: lista dislike.")
+            description = "Wymagane dane: id posta. Zwracane dane: lista dislike.")
     @GetMapping("/{postId}/dislikes")
-    public ResponseEntity<List<UserReactionDto>> getAllPostDislikes(@PathVariable Long postId,
-                                                                  @RequestBody SessionDto sessionDto){
-        final Set<Role> authorizedRoles = Set.of(USER, ADMIN);
-        authenticationService.authorizeAndAuthenticate(sessionDto, authorizedRoles);
+    public ResponseEntity<List<UserReactionDto>> getAllPostDislikes(@PathVariable Long postId){
         return new ResponseEntity<>(postReactionService.getAllReactions(postId, DISLIKE), HttpStatus.OK);
     }
 
-    @Operation(summary = "Pobranie wszystkich dislike posta.",
-            description = "Wymagane dane: id posta, id użytkownika, rola, token. Zwracane dane: lista reakcji.")
+    @Operation(summary = "Pobranie wszystkich reakcji posta.",
+            description = "Wymagane dane: id posta. Zwracane dane: lista reakcji.")
     @GetMapping("/{postId}/reactions")
-    public ResponseEntity<List<UserReactionDto>> getAllPostReactions(@PathVariable Long postId,
-                                                                    @RequestBody SessionDto sessionDto){
-        final Set<Role> authorizedRoles = Set.of(USER, ADMIN);
-        authenticationService.authorizeAndAuthenticate(sessionDto, authorizedRoles);
-        return new ResponseEntity<>(postReactionService.getAllReactions(postId, DISLIKE), HttpStatus.OK);
+    public ResponseEntity<List<UserReactionDto>> getAllPostReactions(@PathVariable Long postId){
+        return new ResponseEntity<>(postReactionService.getAllReactions(postId), HttpStatus.OK);
     }
 }
