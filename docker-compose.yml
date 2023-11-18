@@ -8,8 +8,8 @@ services:
       - "3309:3306"
     networks:
       - facebookly-network
-    volumes:
-      - facebookly-data
+        volumes:
+      - facebookly-data:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: facebookly
