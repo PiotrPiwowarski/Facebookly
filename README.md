@@ -9,7 +9,7 @@ https://hub.docker.com/r/piotrpiw/facebookly-api
 
 # Docker Compose File
 
-[docker compose file](/)
+[docker compose file](/docker-compose.yml)
 
 You can change some of environment variables, for example MYSQL_ROOT_PASSWORD
 
