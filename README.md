@@ -32,4 +32,4 @@ Uruchom aplikację i przejdź pod poniższy adres:
 localhost:8080/swagger-ui.html
 ```
 
-zmiana środowiska na dev w pliku application,properties
+zmiana środowiska na dev w pliku Facebookly/src/main/resources/application.properties
