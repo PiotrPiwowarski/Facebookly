@@ -31,3 +31,5 @@ Uruchom aplikację i przejdź pod poniższy adres:
 ```
 localhost:8080/swagger-ui.html
 ```
+
+zmiana środowiska na dev w pliku application,properties
