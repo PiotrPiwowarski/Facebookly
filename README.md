@@ -33,3 +33,4 @@ localhost:8080/swagger-ui.html
 ```
 
 zmiana środowiska na dev w pliku Facebookly/src/main/resources/application.properties
+przebudowa aplikacji: mvn clean install
