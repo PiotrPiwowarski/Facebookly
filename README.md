@@ -15,9 +15,10 @@ https://hub.docker.com/r/piotrpiw/facebookly-api
 Pobierz to repozytorium na swoją maszynę za pomocą poniższej komendy: 
 
 ```
+git clone https://github.com/PiotrPiwowarski/Facebookly.git
 ```
 
-Przejdź do katalogu głównego projektu i użyj poniższej komendy,: 
+Przejdź do katalogu głównego projektu i użyj poniższej komendy: 
 
 ```
 docker compose up
