@@ -1,33 +1,32 @@
-# Facebookly
+# Facebookly 
 
-This is a social networking API written in Java/Spring Boot
+Api portalu społecznościowego.  
 
-# Docker Image
+Piotr Piwowarski 42036 
+
+# Obraz dockera 
+
 ```
 https://hub.docker.com/r/piotrpiw/facebookly-api
 ```
 
-# Docker Compose File
+# Uruchomienie aplikacji 
 
-[docker compose file](/docker-compose.yml)
+Pobierz to repozytorium na swoją maszynę za pomocą poniższej komendy: 
 
-You can change some of environment variables, for example MYSQL_ROOT_PASSWORD
+```
+```
 
-You can also switch mode between 'dev' and 'prod' using SPRING_PROFILE_ACTIVE, default 'prod' mode
+Przejdź do katalogu głównego projektu i użyj poniższej komendy,: 
 
-'prod' mode is using MySQL database and 'dev' mode H2 built in database with example set of data which you can change in [data](/src/main/resources/data.sql) file
-
-
-# Quickstart
-
-Go to directory with Docker Compose file and then use the command below:
 ```
 docker compose up
 ```
 
-# API Documentation
+# Dokumentacja api 
 
-Run application and go to:
+Uruchom aplikację i przejdź pod poniższy adres: 
+
 ```
-/swagger-ui.html
+localhost:8080/swagger-ui.html
 ```
