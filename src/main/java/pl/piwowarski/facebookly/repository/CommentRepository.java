@@ -7,10 +7,12 @@ import org.springframework.stereotype.Repository;
 import pl.piwowarski.facebookly.model.entity.Comment;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface CommentRepository extends JpaRepository<Comment, Long> {
+
     Page<Comment> findAllByPostId(Long postId, PageRequest pageRequest);
     List<Comment> findAllByPostId(Long postId);
-    List<Comment> findAllByUserId(Long userId);
+    Optional<Comment> findByIdAndUserId(long commentId, long userId);
 }

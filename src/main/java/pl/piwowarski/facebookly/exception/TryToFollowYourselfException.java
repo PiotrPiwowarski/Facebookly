@@ -5,12 +5,12 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class NoCommentWithSuchIdException extends RuntimeException {
+public class TryToFollowYourselfException extends RuntimeException {
 
-    private static final String MESSAGE = "No comments with the given id.";
+    private static final String MESSAGE = "You cannot follow yourself.";
     private final String message;
 
-    public NoCommentWithSuchIdException() {
+    public TryToFollowYourselfException(){
         this.message = MESSAGE;
     }
 }

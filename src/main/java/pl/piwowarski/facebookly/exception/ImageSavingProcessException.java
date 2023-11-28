@@ -7,7 +7,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public class ImageSavingProcessException extends RuntimeException{
 
-    private static final String MESSAGE = "Image saving error, check if the provided address is correct.";
+    private static final String MESSAGE = "Image saving error, check if the provided path is correct.";
     private final String message;
 
     public ImageSavingProcessException(){

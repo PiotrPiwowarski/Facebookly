@@ -15,8 +15,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     Optional<User> findByEmail(String email);
     List<User> findAllByFirstNameAndLastName(String firstName, String lastName);
-    @Query("SELECT u.followedUsers FROM User u WHERE u.id = :userId")
-    Page<User> findPagedFollowedUsersByUserId(Long userId, Pageable pageable);
-    @Query("SELECT u.followedUsers FROM User u WHERE u.id = :userId")
-    List<User> findFollowedUsersByUserId(Long userId);
+    @Query("SELECT u.followedUsers FROM User u WHERE u = :user")
+    Page<User> findPagedFollowedUsersByUser(User user, Pageable pageable);
+    @Query("SELECT u.followedUsers FROM User u WHERE u = :user")
+    List<User> findFollowedUsersByUser(User user);
 }

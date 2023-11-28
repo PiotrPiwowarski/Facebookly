@@ -1,4 +1,4 @@
-package pl.piwowarski.facebookly.model.dto.post;
+package pl.piwowarski.facebookly.model.dto.reaction;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,9 +9,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AddPostDto {
+public class AddCommentReactionDto {
 
-    private String content;
-    private String picturePath;
+    private long commentId;
     private long userId;
 }

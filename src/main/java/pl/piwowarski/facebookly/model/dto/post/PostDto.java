@@ -10,12 +10,12 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PostDto {
-    @NotNull
-    private Long id;
+
+    private long id;
     private String content;
-    private byte[] picture;
+    private byte[] image;
     @NotNull
     private LocalDateTime created;
     @NotNull
-    private Long userId;
+    private long userId;
 }

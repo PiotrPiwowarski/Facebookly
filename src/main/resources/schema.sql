@@ -5,8 +5,7 @@ CREATE TABLE USERS (
 	gender ENUM('MALE', 'FEMALE') not null,
 	email varchar(255) not null,
 	password varchar(255) not null,
-	role enum('ADMIN', 'USER') not null,
-    logged boolean not null default false
+	role enum('ADMIN', 'USER') not null
 );
 
 CREATE TABLE POSTS (
@@ -29,13 +28,6 @@ CREATE TABLE FOLLOWED_USERS (
     id bigint auto_increment primary key,
     user_id bigint not null references USERS(id),
     followed_user_id bigint not null references USERS(id)
-);
-
-CREATE TABLE SESSIONS (
-	id bigint auto_increment primary key,
-	user_id bigint not null references USERS(id),
-	token varchar(255) not null,
-	expiration_date timestamp not null
 );
 
 CREATE TABLE POST_REACTIONS(

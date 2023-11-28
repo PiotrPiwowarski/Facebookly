@@ -5,12 +5,12 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class NoCommentWithSuchIdException extends RuntimeException {
+public class FollowedUserException extends RuntimeException{
 
-    private static final String MESSAGE = "No comments with the given id.";
+    private static final String MESSAGE = "This user already exist as your friend.";
     private final String message;
 
-    public NoCommentWithSuchIdException() {
+    public FollowedUserException(){
         this.message = MESSAGE;
     }
 }

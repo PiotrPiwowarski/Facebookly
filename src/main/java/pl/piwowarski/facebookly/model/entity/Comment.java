@@ -25,9 +25,11 @@ public class Comment {
     @NotNull
     private LocalDateTime created;
     @ManyToOne
-    private Post post;
-    @ManyToOne
+    @JoinColumn(name = "user_id")
     private User user;
-    @OneToMany(mappedBy = "comment", cascade = REMOVE)
+    @ManyToOne
+    @JoinColumn(name = "post_id")
+    private Post post;
+    @OneToMany(mappedBy = "comment", cascade = REMOVE, orphanRemoval = true)
     private List<CommentReaction> reactions;
 }

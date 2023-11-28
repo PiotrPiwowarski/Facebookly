@@ -2,42 +2,30 @@ package pl.piwowarski.facebookly.controller.authentication;
 
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import pl.piwowarski.facebookly.model.dto.CredentialsDto;
-import pl.piwowarski.facebookly.model.dto.SessionDto;
-import pl.piwowarski.facebookly.model.enums.Role;
-import pl.piwowarski.facebookly.service.authenticator.impl.AuthenticationService;
-
-import java.util.Set;
-
-import static pl.piwowarski.facebookly.model.enums.Role.ADMIN;
-import static pl.piwowarski.facebookly.model.enums.Role.USER;
+import pl.piwowarski.facebookly.model.dto.authentication.UsernamePasswordDto;
 
 @RestController
 @RequestMapping("/authentication")
 @RequiredArgsConstructor
 public class AuthenticationController {
 
-    private final AuthenticationService authenticationService;
-
     @Operation(summary = "Zalogowanie użytkownika.",
             description = "Wymagane dane: email oraz hasło. Zwracane dane: id użytkownika, rola, token.")
     @PostMapping("/login")
-    public ResponseEntity<SessionDto> login(@RequestBody CredentialsDto credentialsDto){
-        return ResponseEntity.ok(authenticationService.login(credentialsDto));
+    public ResponseEntity<String> login(@RequestBody UsernamePasswordDto usernamePasswordDto){
+        return new ResponseEntity<>("Jesteś zalogowany", HttpStatus.OK);
     }
 
-    @Operation(summary = "Wylogowanie użytkownika.",
-            description = "Wymagane dane: id użytkownika, rola, token. Zwracane dane: brak.")
+    @Operation(summary = "Zalogowanie użytkownika.",
+            description = "Wymagane dane: email oraz hasło. Zwracane dane: id użytkownika, rola, token.")
     @PostMapping("/logout")
-    public ResponseEntity<Void> logout(@RequestBody SessionDto sessionDto){
-        final Set<Role> authorizedRoles = Set.of(USER, ADMIN);
-        authenticationService.authorizeAndAuthenticate(sessionDto, authorizedRoles);
-        authenticationService.logout(sessionDto);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<String> logout(){
+        return new ResponseEntity<>("Jesteś wylogowany", HttpStatus.OK);
     }
 }

@@ -10,6 +10,6 @@ import java.util.Optional;
 @Repository
 public interface PostReactionRepository extends JpaRepository<PostReaction, Long> {
 
-    Optional<PostReaction> findByPostIdAndUserId(Long postId, Long userId);
     List<PostReaction> findByPostId(Long postId);
+    Optional<PostReaction> findByPostIdAndUserId(long postId, long userId);
 }

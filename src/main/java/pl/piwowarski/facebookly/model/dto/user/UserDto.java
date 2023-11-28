@@ -9,7 +9,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import pl.piwowarski.facebookly.model.enums.Gender;
 
-
 import static jakarta.persistence.EnumType.STRING;
 
 @Data
@@ -17,15 +16,15 @@ import static jakarta.persistence.EnumType.STRING;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserDto {
+
     @NotNull
     private Long id;
+    @NotNull
     private String firstName;
+    @NotNull
     private String lastName;
     @Enumerated(STRING)
     private Gender gender;
     @Email
     private String email;
-    private String password;
-    @NotNull
-    private String token;
 }

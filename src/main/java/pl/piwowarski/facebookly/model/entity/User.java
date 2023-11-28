@@ -39,7 +39,7 @@ public class User {
     private String email;
     @NotNull
     private String password;
-    @OneToMany(mappedBy = "user", fetch = LAZY, cascade = REMOVE)
+    @OneToMany(mappedBy = "user", cascade = REMOVE, orphanRemoval = true)
     private List<Post> posts;
     @ManyToMany(fetch = LAZY, cascade = REMOVE)
     @JoinTable(
@@ -48,7 +48,8 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "followed_user_id")
     )
     private List<User> followedUsers;
+    @OneToMany(mappedBy = "user", cascade = REMOVE, orphanRemoval = true)
+    private List<Comment> comments;
     @Enumerated(STRING)
     private Role role;
-    private Boolean logged;
 }

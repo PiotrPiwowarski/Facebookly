@@ -8,7 +8,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import static jakarta.persistence.CascadeType.*;
-import static jakarta.persistence.FetchType.EAGER;
 import static jakarta.persistence.GenerationType.IDENTITY;
 
 @Table(name = "posts")
@@ -25,10 +24,11 @@ public class Post {
     private byte[] image;
     @NotNull
     private LocalDateTime created;
-    @ManyToOne(fetch = EAGER)
+    @ManyToOne
+    @JoinColumn(name = "user_id")
     private User user;
-    @OneToMany(mappedBy = "post", cascade = REMOVE)
+    @OneToMany(mappedBy = "post", cascade = REMOVE, orphanRemoval = true)
     private List<Comment> comments;
-    @OneToMany(mappedBy = "post", cascade = REMOVE)
+    @OneToMany(mappedBy = "post", cascade = REMOVE, orphanRemoval = true)
     private List<PostReaction> reactions;
 }

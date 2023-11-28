@@ -1,5 +1,6 @@
-package pl.piwowarski.facebookly.model.dto.comment;
+package pl.piwowarski.facebookly.model.dto.authentication;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,9 +11,11 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AddCommentDto {
+public class UsernamePasswordDto {
+
+    @Email
     @NotNull
-    private String content;
-    private long userId;
-    private long postId;
+    private String email;
+    @NotNull
+    private String password;
 }

@@ -10,106 +10,65 @@ import pl.piwowarski.facebookly.exception.*;
 @ControllerAdvice
 public class ApiExceptionHandler {
 
-    @ExceptionHandler(NoPostWithSuchIdException.class)
-    public ResponseEntity<String> handle(NoPostWithSuchIdException noPostWithSuchIdException){
-        return new ResponseEntity<>(noPostWithSuchIdException.getMessage(), HttpStatus.NOT_FOUND);
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<String> handle(AccessDeniedException exception){
+        return new ResponseEntity<>(exception.getMessage(), HttpStatus.UNAUTHORIZED);
     }
 
-    @ExceptionHandler(NoUserWithSuchIdException.class)
-    public ResponseEntity<String> handle(NoUserWithSuchIdException noUserWithSuchIdException){
-        return new ResponseEntity<>(noUserWithSuchIdException.getMessage(), HttpStatus.NOT_FOUND);
-    }
-
-    @ExceptionHandler(NoCommentWithSuchIdException.class)
-    public ResponseEntity<String> handle(NoCommentWithSuchIdException noCommentWithSuchIdException){
-        return new ResponseEntity<>(noCommentWithSuchIdException.getMessage(), HttpStatus.NOT_FOUND);
-    }
-
-    @ExceptionHandler(CommentContentIsNullException.class)
-    public ResponseEntity<String> handle(CommentContentIsNullException commentIdIsNull){
-        return new ResponseEntity<>(commentIdIsNull.getMessage(), HttpStatus.BAD_REQUEST);
-    }
-
-    @ExceptionHandler(PostContentIsNullException.class)
-    public ResponseEntity<String> handle(PostContentIsNullException postContentIsNullException){
-        return new ResponseEntity<>(postContentIsNullException.getMessage(), HttpStatus.BAD_REQUEST);
-    }
-
-    @ExceptionHandler(TryingToAddYourselfAsAFriendException.class)
-    public ResponseEntity<String> handle(TryingToAddYourselfAsAFriendException tryingToAddYourselfAsAFriendException){
-        return new ResponseEntity<>(tryingToAddYourselfAsAFriendException.getMessage(), HttpStatus.BAD_REQUEST);
-    }
-
-    @ExceptionHandler(ConstraintViolationException.class)
-    public ResponseEntity<String> handle(ConstraintViolationException constraintViolationException){
-        return new ResponseEntity<>(constraintViolationException.getConstraintViolations().toString(),
-                HttpStatus.BAD_REQUEST);
+    @ExceptionHandler(FollowedUserException.class)
+    public ResponseEntity<String> handle(FollowedUserException exception){
+        return new ResponseEntity<>(exception.getMessage(), HttpStatus.CONFLICT);
     }
 
     @ExceptionHandler(ImageSavingProcessException.class)
-    public ResponseEntity<String> handle(ImageSavingProcessException imageSavingProcessException){
-        return new ResponseEntity<>(imageSavingProcessException.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+    public ResponseEntity<String> handle(ImageSavingProcessException exception){
+        return new ResponseEntity<>(exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @ExceptionHandler(WrongEmailException.class)
-    public ResponseEntity<String> handle(WrongEmailException wrongEmailException){
-        return new ResponseEntity<>(wrongEmailException.getMessage(), HttpStatus.UNAUTHORIZED);
+    @ExceptionHandler(NoCommentWithSuchIdException.class)
+    public ResponseEntity<String> handle(NoCommentWithSuchIdException exception){
+        return new ResponseEntity<>(exception.getMessage(), HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(WrongPasswordException.class)
-    public ResponseEntity<String> handle(WrongPasswordException wrongPasswordException){
-        return new ResponseEntity<>(wrongPasswordException.getMessage(), HttpStatus.UNAUTHORIZED);
+    @ExceptionHandler(NoPostWithSuchIdException.class)
+    public ResponseEntity<String> handle(NoPostWithSuchIdException exception){
+        return new ResponseEntity<>(exception.getMessage(), HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(ExpiredSessionException.class)
-    public ResponseEntity<String> handle(ExpiredSessionException expiredSessionException){
-        return new ResponseEntity<>(expiredSessionException.getMessage(), HttpStatus.NOT_FOUND);
+    @ExceptionHandler(NoUserWithSuchIdException.class)
+    public ResponseEntity<String> handle(NoUserWithSuchIdException exception){
+        return new ResponseEntity<>(exception.getMessage(), HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(UserNotLoggedInException.class)
-    public ResponseEntity<String> handle(UserNotLoggedInException userNotLoggedInException){
-        return new ResponseEntity<>(userNotLoggedInException.getMessage(), HttpStatus.UNAUTHORIZED);
+    @ExceptionHandler(PasswordWrongLengthException.class)
+    public ResponseEntity<String> handle(PasswordWrongLengthException exception){
+        return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(TokenIsNullException.class)
-    public ResponseEntity<String> handle(TokenIsNullException tokenIsNullException){
-        return new ResponseEntity<>(tokenIsNullException.getMessage(), HttpStatus.UNAUTHORIZED);
+    @ExceptionHandler(PasswordWrongSyntaxException.class)
+    public ResponseEntity<String> handle(PasswordWrongSyntaxException exception){
+        return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(UserIdIsNullException.class)
-    public ResponseEntity<String> handle(UserIdIsNullException userIsNullException){
-        return new ResponseEntity<>(userIsNullException.getMessage(), HttpStatus.UNAUTHORIZED);
-    }
-
-    @ExceptionHandler(AccessDeniedException.class)
-    public ResponseEntity<String> handle(AccessDeniedException accessDeniedException){
-        return new ResponseEntity<>(accessDeniedException.getMessage(), HttpStatus.UNAUTHORIZED);
-    }
-
-    @ExceptionHandler(AuthorizationException.class)
-    public ResponseEntity<String> handle(AuthorizationException authorizationException){
-        return new ResponseEntity<>(authorizationException.getMessage(), HttpStatus.UNAUTHORIZED);
-    }
-
-    @ExceptionHandler(RolesConflictException.class)
-    public ResponseEntity<String> handle(RolesConflictException rolesConflictException){
-        return new ResponseEntity<>(rolesConflictException.getMessage(), HttpStatus.BAD_REQUEST);
-    }
-
-    @ExceptionHandler(ThisUserAlreadyExistsOnUserFriendsListException.class)
-    public ResponseEntity<String> handle(
-            ThisUserAlreadyExistsOnUserFriendsListException thisUserAlreadyExistsOnUserFriendsListException){
-        return new ResponseEntity<>(thisUserAlreadyExistsOnUserFriendsListException.getMessage(), HttpStatus.CONFLICT);
+    @ExceptionHandler(TryToFollowYourselfException.class)
+    public ResponseEntity<String> handle(TryToFollowYourselfException exception){
+        return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(UserWithSuchEmailAlreadyExistsException.class)
-    public ResponseEntity<String> handle(UserWithSuchEmailAlreadyExistsException userWithSuchEmailAlreadyExistsException){
-        return new ResponseEntity<>(userWithSuchEmailAlreadyExistsException.getMessage(), HttpStatus.CONFLICT);
+    public ResponseEntity<String> handle(UserWithSuchEmailAlreadyExistsException exception){
+        return new ResponseEntity<>(exception.getMessage(), HttpStatus.CONFLICT);
     }
 
-    @ExceptionHandler(NoUserWithSuchEmailException.class)
-    public ResponseEntity<String> handle(NoUserWithSuchEmailException noUserWithSuchEmailException){
-        return new ResponseEntity<>(noUserWithSuchEmailException.getMessage(), HttpStatus.NOT_FOUND);
+    @ExceptionHandler(WrongImageFormatException.class)
+    public ResponseEntity<String> handle(WrongImageFormatException exception){
+        return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<String> handle(ConstraintViolationException exception){
+        return new ResponseEntity<>(exception.getConstraintViolations().toString(),
+                HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(Exception.class)

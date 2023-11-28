@@ -11,14 +11,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UpdateCommentDto {
-    @NotNull
-    private Long id;
+
     @NotNull
     private String content;
-    @NotNull
-    private Long userId;
-    @NotNull
-    private Long postId;
-    @NotNull
-    private String token;
+    private long userId;
 }
