@@ -12,7 +12,7 @@ import java.util.Optional;
 @Repository
 public interface CommentRepository extends JpaRepository<Comment, Long> {
 
-    Page<Comment> findAllByPostId(Long postId, PageRequest pageRequest);
+    Page<Comment> findPagedByPostId(Long postId, PageRequest pageRequest);
     List<Comment> findAllByPostId(Long postId);
     Optional<Comment> findByIdAndUserId(long commentId, long userId);
 }

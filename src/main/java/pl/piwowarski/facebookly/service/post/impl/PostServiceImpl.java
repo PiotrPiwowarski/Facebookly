@@ -78,7 +78,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public List<PostDto> getPagedUserPosts(long userId, int pageNumber, int pageSize) {
-        List<Post> posts = postRepository.findAllByUserId(userId, PageRequest.of(pageNumber, pageSize));
+        List<Post> posts = postRepository.findPagedByUserId(userId, PageRequest.of(pageNumber, pageSize));
         return posts.stream()
                 .map(PostMapper::toDto)
                 .toList();
@@ -108,7 +108,7 @@ public class PostServiceImpl implements PostService {
                 .map(PostMapper::toDto)
                 .toList();
     }
-    //TODO: sprawić, żeby ta metoda zaczęła działać
+
     @Override
     public void deleteAllUserPosts(long userId) {
         postRepository.deleteAllByUserId(userId);
@@ -118,7 +118,7 @@ public class PostServiceImpl implements PostService {
     public void deletePost(long postId, long userId) {
         Post post = postRepository
                 .findById(postId)
-                .orElseThrow(NoCommentWithSuchIdException::new);
+                .orElseThrow(NoPostWithSuchIdException::new);
         if(!post.getUser().getId().equals(userId)){
             throw new AccessDeniedException();
         }
@@ -143,7 +143,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public void addPostReaction(long postId, long userId, Reaction reaction) {
-        Optional<PostReaction> postReactionOptional = postRepository.findPostReactionByPostIdAndUserId(postId, userId);
+        Optional<PostReaction> postReactionOptional = postReactionRepository.findByPostIdAndUserId(postId, userId);
         postReactionOptional.ifPresent(postReactionRepository::delete);
         PostDto postDto = getPostDto(postId);
         PostReaction postReaction = PostReaction.builder()

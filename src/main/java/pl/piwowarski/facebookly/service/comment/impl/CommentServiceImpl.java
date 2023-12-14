@@ -63,7 +63,7 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public List<CommentDto> getPagePostComments(long postId, int pageNumber, int pageSize) {
         return commentRepository
-                .findAllByPostId(postId, PageRequest.of(pageNumber, pageSize))
+                .findPagedByPostId(postId, PageRequest.of(pageNumber, pageSize))
                 .stream()
                 .map(CommentMapper::toDto)
                 .sorted(Comparator
