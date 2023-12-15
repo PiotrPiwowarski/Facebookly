@@ -5,6 +5,7 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
+import org.springframework.beans.factory.annotation.Value;
 import pl.piwowarski.facebookly.model.enums.Gender;
 import pl.piwowarski.facebookly.model.enums.Role;
 
@@ -39,6 +40,7 @@ public class User {
     private String email;
     @NotNull
     private String password;
+    private boolean logged = false;
     @OneToMany(mappedBy = "user", cascade = REMOVE, orphanRemoval = true)
     private List<Post> posts;
     @ManyToMany(fetch = LAZY, cascade = REMOVE)

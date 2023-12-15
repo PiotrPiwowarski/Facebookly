@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.piwowarski.facebookly.exception.*;
 import pl.piwowarski.facebookly.mapper.UserMapper;
+import pl.piwowarski.facebookly.model.dto.authentication.LoginDataDto;
 import pl.piwowarski.facebookly.model.dto.user.AddUserDto;
 import pl.piwowarski.facebookly.model.dto.user.UserDto;
 import pl.piwowarski.facebookly.model.dto.user.UpdateUserDto;
@@ -25,6 +26,31 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final PasswordValidator passwordValidator;
     private final PasswordEncoder passwordEncoder;
+
+    @Override
+    public void checkLoginStatus(long id) {
+        User user = getUser(id);
+        if(!user.isLogged()) {
+            throw new UserNotLoggedInException();
+        }
+    }
+
+    @Override
+    public void login(LoginDataDto loginDataDto) {
+        User user = getUserByEmail(loginDataDto.getEmail());
+        if(!passwordEncoder.matches(loginDataDto.getPassword(), user.getPassword())) {
+            throw new WrongPasswordException();
+        }
+        user.setLogged(true);
+        userRepository.save(user);
+    }
+
+    @Override
+    public void logout(long id) {
+        User user = getUser(id);
+        user.setLogged(false);
+        userRepository.save(user);
+    }
 
     @Override
     public UserDto addUser(AddUserDto addUserDto) {
@@ -62,6 +88,11 @@ public class UserServiceImpl implements UserService {
     public User getUser(long userId) {
         return userRepository.findById(userId)
                 .orElseThrow(NoUserWithSuchIdException::new);
+    }
+
+    @Override
+    public User getUserByEmail(String email) {
+        return userRepository.findByEmail(email).orElseThrow(NoUserWithSuchEmailException::new);
     }
 
     @Override

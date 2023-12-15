@@ -11,6 +11,7 @@ import pl.piwowarski.facebookly.model.dto.reaction.UserReactionDto;
 import pl.piwowarski.facebookly.model.dto.post.AddPostDto;
 import pl.piwowarski.facebookly.model.dto.post.PostDto;
 import pl.piwowarski.facebookly.service.post.PostService;
+import pl.piwowarski.facebookly.service.user.UserService;
 
 import java.util.List;
 
@@ -23,11 +24,14 @@ import static pl.piwowarski.facebookly.model.enums.Reaction.LIKE;
 public class PostController {
 
     private final PostService postService;
+    private final UserService userService;
+
 
     @Operation(summary = "Dodanie posta.",
             description = "Wymagane dane: id użytkownika. Zwracane dane: id posta.")
     @PostMapping
     public ResponseEntity<Long> addPost(@RequestBody AddPostDto postDto) {
+        userService.checkLoginStatus(postDto.getUserId());
         PostDto post = postService.addPost(postDto);
         return new ResponseEntity<>(post.getId(), HttpStatus.CREATED);
     }
@@ -79,6 +83,7 @@ public class PostController {
             description = "Wymagane dane: id użytkownika. Zwracane dane: lista postów.")
     @GetMapping("/user/{userId}/followed")
     public ResponseEntity<List<PostDto>> getAllFollowedUsersPosts(@PathVariable long userId) {
+        userService.checkLoginStatus(userId);
         List<PostDto> followersPosts = postService.getFollowedUsersPosts(userId);
         return new ResponseEntity<>(followersPosts, HttpStatus.OK);
     }
@@ -89,6 +94,7 @@ public class PostController {
     public ResponseEntity<List<PostDto>> getPagedFollowedUsersPosts(@PathVariable long userId,
             														@RequestParam int pageNumber,
                                                                     @RequestParam int pageSize) {
+        userService.checkLoginStatus(userId);
         List<PostDto> pagedFollowersPosts = postService.getPagedFollowedUsersPosts(userId, pageNumber, pageSize);
         return new ResponseEntity<>(pagedFollowersPosts, HttpStatus.OK);
     }
@@ -97,6 +103,7 @@ public class PostController {
             description = "Wymagane dane: id użytkownika. Zwracane dane: brak.")
     @DeleteMapping("/{userId}/all")
     public ResponseEntity<Void> deleteAllUserPosts(@PathVariable long userId) {
+        userService.checkLoginStatus(userId);
         postService.deleteAllUserPosts(userId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
@@ -106,6 +113,7 @@ public class PostController {
     @DeleteMapping("/{postId}/user/{userId}")
     public ResponseEntity<Void> deleteUserPost(@PathVariable long postId,
                                                @PathVariable long userId) {
+        userService.checkLoginStatus(userId);
         postService.deletePost(postId, userId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
@@ -116,6 +124,7 @@ public class PostController {
     @PutMapping("/{postId}")
     public ResponseEntity<PostDto> updatePost(@PathVariable long postId,
                                               @RequestBody UpdatePostDto updatePostDto) {
+        userService.checkLoginStatus(updatePostDto.getUserId());
         PostDto postDto = postService.updatePost(postId, updatePostDto);
         return new ResponseEntity<>(postDto, HttpStatus.OK);
     }
@@ -124,6 +133,7 @@ public class PostController {
             description = "Wymagane dane: id posta, id użytkownika. Zwracane dane: brak.")
     @PostMapping("/like")
     public ResponseEntity<Void> addLike(@RequestBody AddPostReactionDto dto) {
+        userService.checkLoginStatus(dto.getUserId());
         postService.addPostReaction(dto.getPostId(), dto.getUserId(), LIKE);
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -132,6 +142,7 @@ public class PostController {
             description = "Wymagane dane: id posta, id użytkownika. Zwracane dane: brak.")
     @PostMapping("/dislike")
     public ResponseEntity<Void> addDislike(@RequestBody AddPostReactionDto dto) {
+        userService.checkLoginStatus(dto.getUserId());
         postService.addPostReaction(dto.getPostId(), dto.getUserId(), DISLIKE);
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -165,6 +176,7 @@ public class PostController {
     @DeleteMapping("{postId}/user/{userId}/reactions")
     public ResponseEntity<Void> deleteReaction(@PathVariable long postId,
                                                @PathVariable long userId) {
+        userService.checkLoginStatus(userId);
         postService.deletePostReaction(postId, userId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

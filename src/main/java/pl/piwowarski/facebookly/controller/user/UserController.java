@@ -32,6 +32,7 @@ public class UserController {
     @PostMapping("/{userId}/followedUser/{followedUserId}")
     public ResponseEntity<Void> addFollowedUser(@PathVariable long userId,
                                                 @PathVariable long followedUserId) {
+        userService.checkLoginStatus(userId);
         userService.addFollowedUser(userId, followedUserId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
@@ -74,6 +75,7 @@ public class UserController {
             description = "Wymagane dane: id użytkownika. Zwracane dane: lista użytkowników.")
     @GetMapping("{userId}/followedUsers")
     public ResponseEntity<List<UserDto>> getFollowedUsers(@PathVariable long userId) {
+        userService.checkLoginStatus(userId);
         List<UserDto> followedUsers = userService.getFollowedUsers(userId);
         return new ResponseEntity<>(followedUsers, HttpStatus.OK);
     }
@@ -84,6 +86,7 @@ public class UserController {
     public ResponseEntity<List<UserDto>> getPagedFollowedUsers(@PathVariable long userId,
                                                                @RequestParam int pageNumber,
                                                                @RequestParam int pageSize) {
+        userService.checkLoginStatus(userId);
         List<UserDto> pagedFollowedUsers = userService.getPagedFollowedUsers(userId, pageNumber, pageSize);
         return new ResponseEntity<>(pagedFollowedUsers, HttpStatus.OK);
     }
@@ -92,6 +95,7 @@ public class UserController {
             description = "Wymagane dane: id użytkownika. Zwracane dane: brak.")
     @DeleteMapping("/{userId}")
     public ResponseEntity<Void> deleteUser(@PathVariable long userId) {
+        userService.checkLoginStatus(userId);
         userService.deleteUser(userId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
@@ -101,6 +105,7 @@ public class UserController {
     @DeleteMapping("{userId}/followedUsers/{followedUserId}")
     public ResponseEntity<Void> deleteFollowedUser(@PathVariable long userId,
                                                    @PathVariable long followedUserId) {
+        userService.checkLoginStatus(userId);
         userService.deleteFollowedUser(userId, followedUserId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
@@ -110,6 +115,7 @@ public class UserController {
     @PutMapping("/{userId}")
     public ResponseEntity<UserDto> updateUser(@PathVariable long userId,
                                               @RequestBody UpdateUserDto updateUserDto) {
+        userService.checkLoginStatus(userId);
         UserDto userDto = userService.updateUser(userId, updateUserDto);
         return new ResponseEntity<>(userDto, HttpStatus.OK);
     }

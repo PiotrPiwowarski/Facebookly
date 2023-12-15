@@ -1,5 +1,6 @@
 package pl.piwowarski.facebookly.service.user;
 
+import pl.piwowarski.facebookly.model.dto.authentication.LoginDataDto;
 import pl.piwowarski.facebookly.model.dto.user.AddUserDto;
 import pl.piwowarski.facebookly.model.dto.user.UserDto;
 import pl.piwowarski.facebookly.model.dto.user.UpdateUserDto;
@@ -9,10 +10,14 @@ import java.util.List;
 
 public interface UserService {
 
+    void login(LoginDataDto loginDataDto);
+    void logout(long id);
+    void checkLoginStatus(long id);
     UserDto addUser(AddUserDto addUserDto);
     void addFollowedUser(long userId, long friendId);
     UserDto getUserDto(long userId);
     User getUser(long userId);
+    User getUserByEmail(String email);
     List<UserDto> getUsersByUserName(String firstName, String lastName);
     List<UserDto> getAllUsers();
     List<UserDto> getPagedUsers(int pageNumber, int pageSize);

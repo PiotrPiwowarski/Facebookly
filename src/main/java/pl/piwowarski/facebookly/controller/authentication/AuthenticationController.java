@@ -4,28 +4,30 @@ import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import pl.piwowarski.facebookly.model.dto.authentication.UsernamePasswordDto;
+import org.springframework.web.bind.annotation.*;
+import pl.piwowarski.facebookly.model.dto.authentication.LoginDataDto;
+import pl.piwowarski.facebookly.service.user.UserService;
 
 @RestController
 @RequestMapping("/authentication")
 @RequiredArgsConstructor
 public class AuthenticationController {
 
-    @Operation(summary = "Zalogowanie użytkownika.",
-            description = "Wymagane dane: email oraz hasło. Zwracane dane: id użytkownika, rola, token.")
+    private final UserService userService;
+
+    @Operation(summary = "Logowanie użytkownika.",
+            description = "Wymagane dane: email oraz hasło. Zwracane dane: napis.")
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody UsernamePasswordDto usernamePasswordDto){
-        return new ResponseEntity<>("Jesteś zalogowany", HttpStatus.OK);
+    public ResponseEntity<String> login(@RequestBody LoginDataDto loginDataDto){
+        userService.login(loginDataDto);
+        return new ResponseEntity<>("Zostałeś pomyślnie zalogowany", HttpStatus.OK);
     }
 
-    @Operation(summary = "Zalogowanie użytkownika.",
-            description = "Wymagane dane: email oraz hasło. Zwracane dane: id użytkownika, rola, token.")
-    @PostMapping("/logout")
-    public ResponseEntity<String> logout(){
-        return new ResponseEntity<>("Jesteś wylogowany", HttpStatus.OK);
+    @Operation(summary = "Wylogowanie użytkownika.",
+            description = "Wymagane dane: brak. Zwracane dane: Napis.")
+    @PostMapping("/{userId}/logout")
+    public ResponseEntity<String> logout(@PathVariable long userId){
+        userService.logout(userId);
+        return new ResponseEntity<>("Zostałeś pomyślnie wylogowany", HttpStatus.OK);
     }
 }

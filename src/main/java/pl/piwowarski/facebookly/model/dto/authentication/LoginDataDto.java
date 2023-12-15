@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UsernamePasswordDto {
+public class LoginDataDto {
 
     @Email
     @NotNull

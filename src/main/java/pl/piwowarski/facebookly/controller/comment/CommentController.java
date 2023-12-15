@@ -11,6 +11,7 @@ import pl.piwowarski.facebookly.model.dto.comment.AddCommentDto;
 import pl.piwowarski.facebookly.model.dto.comment.CommentDto;
 import pl.piwowarski.facebookly.model.dto.comment.UpdateCommentDto;
 import pl.piwowarski.facebookly.service.comment.CommentService;
+import pl.piwowarski.facebookly.service.user.UserService;
 
 import java.util.List;
 
@@ -23,11 +24,13 @@ import static pl.piwowarski.facebookly.model.enums.Reaction.LIKE;
 public class CommentController {
 
     private final CommentService commentService;
+    private final UserService userService;
 
     @Operation(summary = "Dodanie komentarza",
             description = "Wymagane dane: content, id użytkownika, id posta. Zwracane dane: id komentarza.")
     @PostMapping
     public ResponseEntity<Long> addComment(@RequestBody AddCommentDto addCommentDto) {
+        userService.checkLoginStatus(addCommentDto.getUserId());
         CommentDto commentDto = commentService.addComment(addCommentDto);
         return new ResponseEntity<>(commentDto.getId(), HttpStatus.CREATED);
     }
@@ -63,6 +66,7 @@ public class CommentController {
     @DeleteMapping("/{commentId}/user/{userId}")
     public ResponseEntity<Void> deleteComment(@PathVariable long commentId,
                                               @PathVariable long userId) {
+        userService.checkLoginStatus(userId);
         commentService.deleteComment(commentId, userId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
@@ -72,6 +76,7 @@ public class CommentController {
     @DeleteMapping("/post/{postId}/user/{userId}")
     public ResponseEntity<Void> deleteAllPostComments(@PathVariable long postId,
                                                       @PathVariable long userId) {
+        userService.checkLoginStatus(userId);
         commentService.deletePostComments(postId, userId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
@@ -81,6 +86,7 @@ public class CommentController {
     @PutMapping("/{commentId}")
     public ResponseEntity<CommentDto> updateComment(@PathVariable long commentId,
                                                     @RequestBody UpdateCommentDto updateCommentDto) {
+        userService.checkLoginStatus(updateCommentDto.getUserId());
         CommentDto commentDto = commentService.updateComment(commentId, updateCommentDto);
         return new ResponseEntity<>(commentDto, HttpStatus.OK);
     }
@@ -89,6 +95,7 @@ public class CommentController {
             description = "Wymagane dane: id komentarza, id użytkownika. Zwracane dane: id reakcji.")
     @PostMapping("/like")
     public ResponseEntity<Void> addLike(@RequestBody AddCommentReactionDto dto) {
+        userService.checkLoginStatus(dto.getUserId());
         commentService.addCommentReaction(dto.getCommentId(), dto.getUserId(), LIKE);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
@@ -97,6 +104,7 @@ public class CommentController {
             description = "Wymagane dane: id komentarza, id użytkownika. Zwracane dane: id reakcji.")
     @PostMapping("/dislike")
     public ResponseEntity<Void> addDislike(@RequestBody AddCommentReactionDto dto) {
+        userService.checkLoginStatus(dto.getUserId());
         commentService.addCommentReaction(dto.getCommentId(), dto.getUserId(), DISLIKE);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
@@ -130,6 +138,7 @@ public class CommentController {
     @DeleteMapping("{commentId}/user/{userId}/reactions")
     public ResponseEntity<Void> deleteReaction(@PathVariable long commentId,
                                                @PathVariable long userId) {
+        userService.checkLoginStatus(userId);
         commentService.deleteCommentReaction(commentId, userId);
         return ResponseEntity.ok().build();
     }

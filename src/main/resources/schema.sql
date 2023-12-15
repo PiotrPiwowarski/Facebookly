@@ -5,6 +5,7 @@ CREATE TABLE USERS (
 	gender ENUM('MALE', 'FEMALE') not null,
 	email varchar(255) not null,
 	password varchar(255) not null,
+	logged boolean default false,
 	role enum('ADMIN', 'USER') not null
 );
 
