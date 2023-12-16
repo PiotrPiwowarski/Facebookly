@@ -2,39 +2,39 @@ version: "3.0"
 services:
 
   database:
-    container_name: facebookly-database
+    container_name: facebookly-db
     image: mysql:8.0.33
     ports:
       - "3309:3306"
     networks:
-      - facebookly-network
+      - facebookly-net
     volumes:
-      - facebookly-data:/var/lib/mysql
+      - facebookly-dt:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: facebookly
 
   api:
     container_name: facebookly-api
-    image: piotrpiw/facebookly-api:1.0
+    image: piotrpiw/facebookly-api:2.0
     ports:
       - "8080:8080"
     networks:
-      - facebookly-network
+      - facebookly-net
     restart: always
     depends_on:
       - database
     environment:
-      MYSQL_HOST: facebookly-database
+      MYSQL_HOST: facebookly-db
       MYSQL_PASSWORD: root
       MYSQL_USERNAME: root
       MYSQL_PORT: 3306
       MYSQL_DATABASE: facebookly
 
 networks:
-  facebookly-network:
+  facebookly-net:
     driver: bridge
 
 volumes:
-  facebookly-data:
+  facebookly-dt:
 

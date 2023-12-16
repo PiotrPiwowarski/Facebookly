@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface UserService {
 
-    void login(LoginDataDto loginDataDto);
+    long login(LoginDataDto loginDataDto);
     void logout(long id);
     void checkLoginStatus(long id);
     UserDto addUser(AddUserDto addUserDto);

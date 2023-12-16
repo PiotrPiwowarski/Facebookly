@@ -36,13 +36,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void login(LoginDataDto loginDataDto) {
+    public long login(LoginDataDto loginDataDto) {
         User user = getUserByEmail(loginDataDto.getEmail());
         if(!passwordEncoder.matches(loginDataDto.getPassword(), user.getPassword())) {
             throw new WrongPasswordException();
         }
         user.setLogged(true);
         userRepository.save(user);
+        return user.getId();
     }
 
     @Override
