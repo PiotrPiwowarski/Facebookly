@@ -11,6 +11,7 @@ services:
     volumes:
       - "./src/main/resources/schema.sql:/docker-entrypoint-initdb.d/1.sql"
       - "./src/main/resources/data.sql:/docker-entrypoint-initdb.d/2.sql"
+      - facebookly-data:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: facebookly
