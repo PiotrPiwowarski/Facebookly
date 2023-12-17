@@ -9,8 +9,8 @@ services:
     networks:
       - facebookly-net
     volumes:
-      - "./scripts/schema.sql:/docker-entrypoint-initdb.d/1.sql"
-      - "./scripts/data.sql:/docker-entrypoint-initdb.d/2.sql"
+      - "./src/main/resources/schema.sql:/docker-entrypoint-initdb.d/1.sql"
+      - "./src/main/resources/data.sql:/docker-entrypoint-initdb.d/2.sql"
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: facebookly
