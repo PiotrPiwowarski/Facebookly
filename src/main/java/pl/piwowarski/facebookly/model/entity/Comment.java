@@ -10,7 +10,7 @@ import java.util.List;
 import static jakarta.persistence.CascadeType.REMOVE;
 import static jakarta.persistence.GenerationType.IDENTITY;
 
-@Table(name = "comments")
+@Table(name = "COMMENTS")
 @Entity
 @Data
 @Builder

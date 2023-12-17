@@ -5,7 +5,6 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
-import org.springframework.beans.factory.annotation.Value;
 import pl.piwowarski.facebookly.model.enums.Gender;
 import pl.piwowarski.facebookly.model.enums.Role;
 
@@ -16,7 +15,7 @@ import static jakarta.persistence.EnumType.STRING;
 import static jakarta.persistence.FetchType.LAZY;
 import static jakarta.persistence.GenerationType.IDENTITY;
 
-@Table(name = "users")
+@Table(name = "USERS")
 @Entity
 @Getter
 @Setter
