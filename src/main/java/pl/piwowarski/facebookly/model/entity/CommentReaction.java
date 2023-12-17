@@ -10,7 +10,7 @@ import pl.piwowarski.facebookly.model.enums.Reaction;
 import static jakarta.persistence.EnumType.STRING;
 import static jakarta.persistence.GenerationType.IDENTITY;
 
-@Table(name = "COMMENT_REACTIONS")
+@Table(name = "comment_reactions")
 @Entity
 @Data
 @Builder

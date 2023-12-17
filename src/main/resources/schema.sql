@@ -1,4 +1,4 @@
-CREATE TABLE USERS (
+CREATE TABLE users (
 	id bigint auto_increment primary key,
 	first_name varchar(255) not null,
 	last_name varchar(255) not null,
@@ -9,38 +9,38 @@ CREATE TABLE USERS (
 	role enum('ADMIN', 'USER') not null
 );
 
-CREATE TABLE POSTS (
+CREATE TABLE posts (
     id bigint auto_increment primary key,
     content varchar(600),
     image BLOB,
     created timestamp not null,
-    user_id bigint not null references USERS(id)
+    user_id bigint not null references users(id)
 );
 
-CREATE TABLE COMMENTS (
+CREATE TABLE comments (
     id bigint auto_increment primary key,
     content varchar(600) not null,
     created timestamp not null,
-    user_id bigint not null references USERS(id),
-    post_id bigint not null references POSTS(id)
+    user_id bigint not null references users(id),
+    post_id bigint not null references posts(id)
 );
 
-CREATE TABLE FOLLOWED_USERS (
+CREATE TABLE followed_users (
     id bigint auto_increment primary key,
-    user_id bigint not null references USERS(id),
-    followed_user_id bigint not null references USERS(id)
+    user_id bigint not null references users(id),
+    followed_user_id bigint not null references users(id)
 );
 
-CREATE TABLE POST_REACTIONS(
+CREATE TABLE post_reactions(
     id bigint auto_increment primary key,
-    user_id bigint references USERS(id),
-    post_id bigint references POSTS(id),
+    user_id bigint references users(id),
+    post_id bigint references posts(id),
     reaction enum('LIKE', 'DISLIKE') not null
 );
 
-CREATE TABLE COMMENT_REACTIONS(
+CREATE TABLE comment_reactions(
     id bigint auto_increment primary key,
-    user_id bigint references USERS(id),
-    comment_id bigint references COMMENTS(id),
+    user_id bigint references users(id),
+    comment_id bigint references comments(id),
     reaction enum('LIKE', 'DISLIKE') not null
 );

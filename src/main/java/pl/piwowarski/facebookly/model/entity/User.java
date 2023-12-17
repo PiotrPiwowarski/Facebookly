@@ -15,7 +15,7 @@ import static jakarta.persistence.EnumType.STRING;
 import static jakarta.persistence.FetchType.LAZY;
 import static jakarta.persistence.GenerationType.IDENTITY;
 
-@Table(name = "USERS")
+@Table(name = "users")
 @Entity
 @Getter
 @Setter
