@@ -9,14 +9,14 @@ services:
     networks:
       - facebookly-net
     volumes:
-      - facebookly-dt:/var/lib/mysql
+      - facebookly-data:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: facebookly
 
   api:
     container_name: facebookly-api
-    image: piotrpiw/facebookly-api:2.0
+    image: piotrpiw/facebookly-api:4.0
     ports:
       - "8080:8080"
     networks:
@@ -36,5 +36,5 @@ networks:
     driver: bridge
 
 volumes:
-  facebookly-dt:
+  facebookly-data:
 
