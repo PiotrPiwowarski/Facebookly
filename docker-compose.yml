@@ -17,6 +17,7 @@ services:
   api:
     container_name: facebookly-api
     image: piotrpiw/facebookly-api:4.0
+    build: .
     ports:
       - "8080:8080"
     networks:
