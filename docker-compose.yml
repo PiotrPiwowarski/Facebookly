@@ -9,7 +9,9 @@ services:
     networks:
       - facebookly-net
     volumes:
-      - facebookly-data:/var/lib/mysql
+      - "./scripts/schema.sql:/docker-entrypoint-initdb.d/1.sql"
+      - "./scripts/data.sql:/docker-entrypoint-initdb.d/2.sql"
+      - facebookly-data
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: facebookly
