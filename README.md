@@ -29,9 +29,6 @@ docker compose up
 Uruchom aplikację i przejdź pod poniższy adres: 
 
 ```
-localhost:8080/swagger-ui.html
+localhost:8080/api-documentation
 ```
 
-zmiana środowiska na dev w pliku Facebookly/src/main/resources/application.properties 
-
-przebudowa aplikacji: mvn clean install
