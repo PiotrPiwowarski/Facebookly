@@ -18,6 +18,7 @@ import java.util.List;
 import static pl.piwowarski.facebookly.model.enums.Reaction.DISLIKE;
 import static pl.piwowarski.facebookly.model.enums.Reaction.LIKE;
 
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("posts")
