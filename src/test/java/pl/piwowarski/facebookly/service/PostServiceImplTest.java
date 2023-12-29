@@ -18,7 +18,6 @@ import pl.piwowarski.facebookly.model.dto.user.UserDto;
 import pl.piwowarski.facebookly.model.entity.Post;
 import pl.piwowarski.facebookly.model.entity.PostReaction;
 import pl.piwowarski.facebookly.model.entity.User;
-import pl.piwowarski.facebookly.model.enums.Reaction;
 import pl.piwowarski.facebookly.repository.PostReactionRepository;
 import pl.piwowarski.facebookly.repository.PostRepository;
 import pl.piwowarski.facebookly.repository.UserRepository;

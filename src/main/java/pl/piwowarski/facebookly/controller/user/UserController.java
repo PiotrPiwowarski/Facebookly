@@ -12,7 +12,6 @@ import pl.piwowarski.facebookly.service.user.UserService;
 
 import java.util.List;
 
-@CrossOrigin
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("users")

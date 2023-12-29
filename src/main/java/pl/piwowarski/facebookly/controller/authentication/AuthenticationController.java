@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 import pl.piwowarski.facebookly.model.dto.authentication.LoginDataDto;
 import pl.piwowarski.facebookly.service.user.UserService;
 
-@CrossOrigin
 @RestController
 @RequestMapping("/authentication")
 @RequiredArgsConstructor

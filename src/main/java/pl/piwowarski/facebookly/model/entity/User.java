@@ -17,9 +17,7 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 
 @Table(name = "users")
 @Entity
-@Getter
-@Setter
-@EqualsAndHashCode
+@Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
