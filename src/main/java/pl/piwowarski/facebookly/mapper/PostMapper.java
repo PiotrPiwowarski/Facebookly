@@ -19,7 +19,7 @@ public class PostMapper {
                                 UserService userService) {
         return Post.builder()
                 .content(addPostDto.getContent())
-                .image(imageManager.fromPathToBytesArray(addPostDto.getPicturePath()))
+                .image(imageManager.fromPathToBytesArray(addPostDto.getImagePath()))
                 .created(LocalDateTime.now())
                 .user(userService.getUser(addPostDto.getUserId()))
                 .build();

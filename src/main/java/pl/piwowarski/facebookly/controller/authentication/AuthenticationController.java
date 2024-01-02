@@ -17,18 +17,18 @@ public class AuthenticationController {
     private final UserService userService;
 
     @Operation(summary = "Logowanie użytkownika.",
-            description = "Wymagane dane: email oraz hasło. Zwracane dane: napis.")
+            description = "Wymagane dane: email oraz hasło. Zwracane dane: id użytkownika.")
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody LoginDataDto loginDataDto){
+    public ResponseEntity<Long> login(@RequestBody LoginDataDto loginDataDto){
         long userId = userService.login(loginDataDto);
-        return new ResponseEntity<>(userId + " został pomyślnie zalogowany", HttpStatus.OK);
+        return new ResponseEntity<>(userId, HttpStatus.OK);
     }
 
     @Operation(summary = "Wylogowanie użytkownika.",
-            description = "Wymagane dane: brak. Zwracane dane: Napis.")
-    @PostMapping("/{userId}/logout")
-    public ResponseEntity<String> logout(@PathVariable long userId){
+            description = "Wymagane dane: brak. Zwracane dane: id użytkownika.")
+    @PutMapping("/{userId}/logout")
+    public ResponseEntity<Long> logout(@PathVariable long userId){
         userService.logout(userId);
-        return new ResponseEntity<>(userId + " został pomyślnie wylogowany", HttpStatus.OK);
+        return new ResponseEntity<>(userId, HttpStatus.OK);
     }
 }

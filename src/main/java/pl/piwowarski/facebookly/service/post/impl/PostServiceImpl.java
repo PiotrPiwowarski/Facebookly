@@ -10,6 +10,7 @@ import pl.piwowarski.facebookly.exception.NoPostWithSuchIdException;
 import pl.piwowarski.facebookly.manager.ImageManager;
 import pl.piwowarski.facebookly.mapper.PostMapper;
 import pl.piwowarski.facebookly.mapper.UserReactionMapper;
+import pl.piwowarski.facebookly.model.dto.comment.CommentDto;
 import pl.piwowarski.facebookly.model.dto.post.AddPostDto;
 import pl.piwowarski.facebookly.model.dto.post.PostDto;
 import pl.piwowarski.facebookly.model.dto.post.UpdatePostDto;
@@ -57,6 +58,9 @@ public class PostServiceImpl implements PostService {
         List<Post> posts = postRepository.findAll();
         return posts.stream()
                 .map(PostMapper::toDto)
+                .sorted(Comparator
+                        .comparing(PostDto::getCreated)
+                        .reversed())
                 .toList();
     }
 
@@ -65,6 +69,9 @@ public class PostServiceImpl implements PostService {
         Page<Post> posts = postRepository.findAll(PageRequest.of(pageNumber, pageSize));
         return posts.stream()
                 .map(PostMapper::toDto)
+                .sorted(Comparator
+                        .comparing(PostDto::getCreated)
+                        .reversed())
                 .toList();
     }
 

@@ -8,6 +8,7 @@ import pl.piwowarski.facebookly.exception.WrongImageFormatException;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.util.Objects;
 
 @Service
 public class ImageManager {
@@ -16,7 +17,7 @@ public class ImageManager {
     private String format;
 
     public byte[] fromPathToBytesArray(String imagePath) {
-        if(imagePath == null){
+        if(imagePath.equals("")){
             return null;
         }
         String formatRegex = ".*." + format;

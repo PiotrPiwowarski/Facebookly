@@ -12,6 +12,6 @@ import lombok.NoArgsConstructor;
 public class AddPostDto {
 
     private String content;
-    private String picturePath;
+    private String imagePath;
     private long userId;
 }
