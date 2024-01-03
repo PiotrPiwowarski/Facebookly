@@ -47,7 +47,7 @@ public class PostController {
 
     @Operation(summary = "Pobranie wszystkich postów.",
             description = "Wymagane dane: brak. Zwracane dane: lista postów.")
-    @GetMapping
+    @GetMapping("/all")
     public ResponseEntity<List<PostDto>> getAllPosts(){
         List<PostDto> allPosts = postService.getAllPosts();
         return new ResponseEntity<>(allPosts, HttpStatus.OK);

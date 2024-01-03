@@ -46,7 +46,7 @@ public class CommentController {
 
     @Operation(summary = "Pobranie wszystkich komentarzy posta.",
             description = "Wymagane dane: id posta. Dane zwracane: lista komentarzy.")
-    @GetMapping("post/{postId}/all")
+    @GetMapping("/post/{postId}/all")
     public ResponseEntity<List<CommentDto>> getAllPostComments(@PathVariable long postId) {
         List<CommentDto> allPostComments = commentService.getAllPostComments(postId);
         return new ResponseEntity<>(allPostComments, HttpStatus.OK);
@@ -54,7 +54,7 @@ public class CommentController {
 
     @Operation(summary = "Pobranie postronicowanych komentarzy posta.",
             description = "Wymagane dane: id posta. Dane zwracane: strona komentarzy.")
-    @GetMapping("post/{postId}/paged")
+    @GetMapping("/post/{postId}/paged")
     public ResponseEntity<List<CommentDto>> getPagedPostComments(@PathVariable long postId,
                                                                 @RequestParam int pageNumber,
                                                                 @RequestParam int pageSize) {
