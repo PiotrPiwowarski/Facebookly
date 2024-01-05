@@ -174,7 +174,7 @@ public class PostController {
 
     @Operation(summary = "Usunięcie reakcji posta.",
             description = "Wymagane dane: id posta. Zwracane dane: brak.")
-    @DeleteMapping("{postId}/user/{userId}/reactions")
+    @DeleteMapping("/{postId}/user/{userId}/reactions")
     public ResponseEntity<Void> deleteReaction(@PathVariable long postId,
                                                @PathVariable long userId) {
         userService.checkLoginStatus(userId);

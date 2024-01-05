@@ -55,8 +55,7 @@ public class CommentServiceImpl implements CommentService {
                 .stream()
                 .map(CommentMapper::toDto)
                 .sorted(Comparator
-                        .comparing(CommentDto::getCreated)
-                        .reversed())
+                        .comparing(CommentDto::getCreated))
                 .toList();
     }
 
@@ -67,8 +66,7 @@ public class CommentServiceImpl implements CommentService {
                 .stream()
                 .map(CommentMapper::toDto)
                 .sorted(Comparator
-                        .comparing(CommentDto::getCreated)
-                        .reversed())
+                        .comparing(CommentDto::getCreated))
                 .toList();
     }
 

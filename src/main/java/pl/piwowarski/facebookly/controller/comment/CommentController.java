@@ -136,7 +136,7 @@ public class CommentController {
 
     @Operation(summary = "Usunięcie reakcji na dany komentarz.",
             description = "Wymagane dane: id komentarza, id użytkownika. Zwracane dane: brak.")
-    @DeleteMapping("{commentId}/user/{userId}/reactions")
+    @DeleteMapping("/{commentId}/user/{userId}/reactions")
     public ResponseEntity<Void> deleteReaction(@PathVariable long commentId,
                                                @PathVariable long userId) {
         userService.checkLoginStatus(userId);
