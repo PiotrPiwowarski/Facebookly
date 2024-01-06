@@ -5,12 +5,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import pl.piwowarski.facebookly.exception.AccessDeniedException;
-import pl.piwowarski.facebookly.exception.NoCommentWithSuchIdException;
 import pl.piwowarski.facebookly.exception.NoPostWithSuchIdException;
 import pl.piwowarski.facebookly.manager.ImageManager;
 import pl.piwowarski.facebookly.mapper.PostMapper;
 import pl.piwowarski.facebookly.mapper.UserReactionMapper;
-import pl.piwowarski.facebookly.model.dto.comment.CommentDto;
 import pl.piwowarski.facebookly.model.dto.post.AddPostDto;
 import pl.piwowarski.facebookly.model.dto.post.PostDto;
 import pl.piwowarski.facebookly.model.dto.post.UpdatePostDto;
@@ -170,6 +168,11 @@ public class PostServiceImpl implements PostService {
                 .map(postReaction -> UserReactionMapper
                         .toDto(postReaction.getUser(), postReaction.getReaction()))
                 .toList();
+    }
+
+    @Override
+    public int getReactionCount(long postId, Reaction reaction) {
+		return getAllPostReactions(postId, reaction).size();
     }
 
     @Override

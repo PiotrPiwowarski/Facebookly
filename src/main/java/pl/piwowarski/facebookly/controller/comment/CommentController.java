@@ -118,12 +118,28 @@ public class CommentController {
         return new ResponseEntity<>(allCommentLikes, HttpStatus.OK);
     }
 
+    @Operation(summary = "Pobranie liczby like'ów posta.",
+            description = "Wymagane dane: id posta. Zwracane dane: ilość like'ów.")
+    @GetMapping("/{commentId}/likesCount")
+    public ResponseEntity<Integer> getCommentLikesCount(@PathVariable long commentId) {
+        int likesCount = commentService.getReactionCount(commentId, LIKE);
+        return new ResponseEntity<>(likesCount, HttpStatus.OK);
+    }
+
     @Operation(summary = "Pobranie wszystkich dislike danego komentarza",
             description = "Dane do wprowadzenia: id komentarza. Dane zwracane: lista dislike.")
     @GetMapping("/{commentId}/dislikes")
     public ResponseEntity<List<UserReactionDto>> getAllCommentDislikes(@PathVariable long commentId) {
         List<UserReactionDto> allCommentDislikes = commentService.getAllCommentReactions(commentId, DISLIKE);
         return new ResponseEntity<>(allCommentDislikes, HttpStatus.OK);
+    }
+
+    @Operation(summary = "Pobranie liczby dislike'ów posta.",
+            description = "Wymagane dane: id posta. Zwracane dane: ilość dislike'ów.")
+    @GetMapping("/{commentId}/dislikesCount")
+    public ResponseEntity<Integer> getCommentDislikesCount(@PathVariable long commentId) {
+        int likesCount = commentService.getReactionCount(commentId, DISLIKE);
+        return new ResponseEntity<>(likesCount, HttpStatus.OK);
     }
 
     @Operation(summary = "Pobranie wszystkich dislike danego komentarza",

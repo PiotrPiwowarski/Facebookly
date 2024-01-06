@@ -19,6 +19,7 @@ public interface CommentService {
     CommentDto updateComment(long commentId, UpdateCommentDto updateCommentDto);
     void addCommentReaction(long commentId, long userId, Reaction reaction);
     List<UserReactionDto> getAllCommentReactions(long commentId, Reaction reaction);
+    int getReactionCount(long postId, Reaction reaction);
     List<UserReactionDto> getAllCommentReactions(long commentId);
     void deleteCommentReaction(long commentId, long userId);
 }

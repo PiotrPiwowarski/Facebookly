@@ -126,6 +126,11 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
+    public int getReactionCount(long commentId, Reaction reaction) {
+        return getAllCommentReactions(commentId, reaction).size();
+    }
+
+    @Override
     public List<UserReactionDto> getAllCommentReactions(long commentId) {
         return commentReactionRepository
                 .findByCommentId(commentId)

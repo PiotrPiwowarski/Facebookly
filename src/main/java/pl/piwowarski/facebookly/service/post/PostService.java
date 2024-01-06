@@ -25,6 +25,7 @@ public interface PostService {
     PostDto updatePost(long postId, UpdatePostDto updatePostDto);
     void addPostReaction(long postId, long userId, Reaction reaction);
     List<UserReactionDto> getAllPostReactions(long postId, Reaction reaction);
+    int getReactionCount(long postId, Reaction reaction);
     List<UserReactionDto> getAllPostReactions(long postId);
     void deletePostReaction(long postId, long userId);
 }

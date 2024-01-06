@@ -156,12 +156,28 @@ public class PostController {
         return new ResponseEntity<>(allPostLikes, HttpStatus.OK);
     }
 
+    @Operation(summary = "Pobranie liczby like'ów posta.",
+            description = "Wymagane dane: id posta. Zwracane dane: ilość like'ów.")
+    @GetMapping("/{postId}/likesCount")
+    public ResponseEntity<Integer> getPostLikesCount(@PathVariable long postId) {
+        int likesCount = postService.getReactionCount(postId, LIKE);
+        return new ResponseEntity<>(likesCount, HttpStatus.OK);
+    }
+
     @Operation(summary = "Pobranie wszystkich dislike posta.",
             description = "Wymagane dane: id posta. Zwracane dane: lista dislike.")
     @GetMapping("/{postId}/dislikes")
     public ResponseEntity<List<UserReactionDto>> getAllPostDislikes(@PathVariable long postId) {
         List<UserReactionDto> allPostDislikes = postService.getAllPostReactions(postId, DISLIKE);
         return new ResponseEntity<>(allPostDislikes, HttpStatus.OK);
+    }
+
+    @Operation(summary = "Pobranie liczby dislike'ów posta.",
+            description = "Wymagane dane: id posta. Zwracane dane: ilość dislike'ów.")
+    @GetMapping("/{postId}/dislikesCount")
+    public ResponseEntity<Integer> getPostDislikesCount(@PathVariable long postId) {
+        int likesCount = postService.getReactionCount(postId, DISLIKE);
+        return new ResponseEntity<>(likesCount, HttpStatus.OK);
     }
 
     @Operation(summary = "Pobranie wszystkich reakcji posta.",
