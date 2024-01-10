@@ -1,6 +1,7 @@
 package pl.piwowarski.facebookly.service.comment;
 
 import pl.piwowarski.facebookly.model.dto.comment.AddCommentDto;
+import pl.piwowarski.facebookly.model.dto.comment.CommentDataDto;
 import pl.piwowarski.facebookly.model.dto.comment.CommentDto;
 import pl.piwowarski.facebookly.model.dto.comment.UpdateCommentDto;
 import pl.piwowarski.facebookly.model.dto.reaction.UserReactionDto;
@@ -13,6 +14,7 @@ public interface CommentService {
     CommentDto addComment(AddCommentDto addCommentDto);
     CommentDto getComment(long commentId);
     List<CommentDto> getAllPostComments(long postId);
+    List<CommentDataDto> getAllPostCommentsWithData(long postId);
     List<CommentDto> getPagePostComments(long postId, int pageNumber, int pageSize);
     void deleteComment(long commentId, long userId);
     void deletePostComments(long postId, long userId);

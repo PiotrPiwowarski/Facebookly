@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pl.piwowarski.facebookly.model.dto.post.PostDataDto;
 import pl.piwowarski.facebookly.model.dto.post.UpdatePostDto;
 import pl.piwowarski.facebookly.model.dto.reaction.AddPostReactionDto;
 import pl.piwowarski.facebookly.model.dto.reaction.UserReactionDto;
@@ -50,6 +51,14 @@ public class PostController {
     @GetMapping("/all")
     public ResponseEntity<List<PostDto>> getAllPosts(){
         List<PostDto> allPosts = postService.getAllPosts();
+        return new ResponseEntity<>(allPosts, HttpStatus.OK);
+    }
+
+    @Operation(summary = "Pobranie wszystkich postów wraz z wymaganymi danymi.",
+            description = "Wymagane dane: brak. Zwracane dane: lista postów.")
+    @GetMapping("/allWithData")
+    public ResponseEntity<List<PostDataDto>> getAllPostsWithData(){
+        List<PostDataDto> allPosts = postService.getAllPostsWithData();
         return new ResponseEntity<>(allPosts, HttpStatus.OK);
     }
 

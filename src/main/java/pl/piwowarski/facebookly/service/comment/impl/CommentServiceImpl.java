@@ -8,8 +8,10 @@ import pl.piwowarski.facebookly.exception.NoCommentWithSuchIdException;
 import pl.piwowarski.facebookly.mapper.CommentMapper;
 import pl.piwowarski.facebookly.mapper.UserReactionMapper;
 import pl.piwowarski.facebookly.model.dto.comment.AddCommentDto;
+import pl.piwowarski.facebookly.model.dto.comment.CommentDataDto;
 import pl.piwowarski.facebookly.model.dto.comment.CommentDto;
 import pl.piwowarski.facebookly.model.dto.comment.UpdateCommentDto;
+import pl.piwowarski.facebookly.model.dto.post.PostDataDto;
 import pl.piwowarski.facebookly.model.dto.reaction.UserReactionDto;
 import pl.piwowarski.facebookly.model.entity.Comment;
 import pl.piwowarski.facebookly.model.entity.CommentReaction;
@@ -20,7 +22,9 @@ import pl.piwowarski.facebookly.service.comment.CommentService;
 import pl.piwowarski.facebookly.service.post.PostService;
 import pl.piwowarski.facebookly.service.user.UserService;
 
+import java.sql.Timestamp;
 import java.util.Comparator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -57,6 +61,27 @@ public class CommentServiceImpl implements CommentService {
                 .sorted(Comparator
                         .comparing(CommentDto::getCreated))
                 .toList();
+    }
+
+    @Override
+    public List<CommentDataDto> getAllPostCommentsWithData(long postId) {
+        List<Object[]> results = commentRepository.findAllPostCommentsData(postId);
+        List<CommentDataDto> commentsWithData = new LinkedList<>();
+        for(var r: results) {
+            CommentDataDto commentDataDto = CommentDataDto.builder()
+                    .postId((long) r[0])
+                    .commentId((long) r[1])
+                    .content((String) r[2])
+                    .created(((Timestamp)r[3]).toLocalDateTime())
+                    .userId((long) r[4])
+                    .firstName((String) r[5])
+                    .lastName((String) r[6])
+                    .likes((long) r[7])
+                    .dislikes((long) r[8])
+                    .build();
+            commentsWithData.add(commentDataDto);
+        }
+        return commentsWithData;
     }
 
     @Override

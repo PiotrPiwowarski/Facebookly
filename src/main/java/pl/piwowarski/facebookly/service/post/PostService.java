@@ -1,6 +1,7 @@
 package pl.piwowarski.facebookly.service.post;
 
 import pl.piwowarski.facebookly.model.dto.post.AddPostDto;
+import pl.piwowarski.facebookly.model.dto.post.PostDataDto;
 import pl.piwowarski.facebookly.model.dto.post.PostDto;
 import pl.piwowarski.facebookly.model.dto.post.UpdatePostDto;
 import pl.piwowarski.facebookly.model.dto.reaction.UserReactionDto;
@@ -15,6 +16,7 @@ public interface PostService {
     PostDto getPostDto(long postId);
     Post getPost(long postId);
     List<PostDto> getAllPosts();
+    List<PostDataDto> getAllPostsWithData();
     List<PostDto> getPagedPosts(int pageNumber, Integer pageSize);
     List<PostDto> getAllUserPosts(long userId);
     List<PostDto> getPagedUserPosts(long userId, int pageNumber, int pageSize);

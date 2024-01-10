@@ -10,6 +10,7 @@ import pl.piwowarski.facebookly.manager.ImageManager;
 import pl.piwowarski.facebookly.mapper.PostMapper;
 import pl.piwowarski.facebookly.mapper.UserReactionMapper;
 import pl.piwowarski.facebookly.model.dto.post.AddPostDto;
+import pl.piwowarski.facebookly.model.dto.post.PostDataDto;
 import pl.piwowarski.facebookly.model.dto.post.PostDto;
 import pl.piwowarski.facebookly.model.dto.post.UpdatePostDto;
 import pl.piwowarski.facebookly.model.dto.user.UserDto;
@@ -22,6 +23,8 @@ import pl.piwowarski.facebookly.repository.PostRepository;
 import pl.piwowarski.facebookly.service.post.PostService;
 import pl.piwowarski.facebookly.service.user.UserService;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
@@ -60,6 +63,27 @@ public class PostServiceImpl implements PostService {
                         .comparing(PostDto::getCreated)
                         .reversed())
                 .toList();
+    }
+
+    @Override
+    public List<PostDataDto> getAllPostsWithData() {
+        List<Object[]> results = postRepository.findAllPostsData();
+        List<PostDataDto> postsWithData = new LinkedList<>();
+        for(var r: results) {
+            PostDataDto postDataDto = PostDataDto.builder()
+                    .postId((long) r[0])
+                    .content((String) r[1])
+                    .image((byte[]) r[2])
+                    .created(((Timestamp)r[3]).toLocalDateTime())
+                    .userId((long) r[4])
+                    .firstName((String) r[5])
+                    .lastName((String) r[6])
+                    .likes((long) r[7])
+                    .dislikes((long) r[8])
+                    .build();
+            postsWithData.add(postDataDto);
+        }
+        return postsWithData;
     }
 
     @Override

@@ -5,6 +5,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pl.piwowarski.facebookly.model.dto.comment.CommentDataDto;
+import pl.piwowarski.facebookly.model.dto.post.PostDataDto;
 import pl.piwowarski.facebookly.model.dto.reaction.AddCommentReactionDto;
 import pl.piwowarski.facebookly.model.dto.reaction.UserReactionDto;
 import pl.piwowarski.facebookly.model.dto.comment.AddCommentDto;
@@ -49,6 +51,14 @@ public class CommentController {
     @GetMapping("/post/{postId}/all")
     public ResponseEntity<List<CommentDto>> getAllPostComments(@PathVariable long postId) {
         List<CommentDto> allPostComments = commentService.getAllPostComments(postId);
+        return new ResponseEntity<>(allPostComments, HttpStatus.OK);
+    }
+
+    @Operation(summary = "Pobranie wszystkich komentarzy wraz z wymaganymi danymi.",
+            description = "Wymagane dane: id posta. Zwracane dane: lista komentarzy.")
+    @GetMapping("/post/{postId}/allWithData")
+    public ResponseEntity<List<CommentDataDto>> getAllPostCommentsWithData(@PathVariable long postId){
+        List<CommentDataDto> allPostComments = commentService.getAllPostCommentsWithData(postId);
         return new ResponseEntity<>(allPostComments, HttpStatus.OK);
     }
 
