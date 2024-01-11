@@ -18,7 +18,7 @@ public class AuthenticationController {
 
     @Operation(summary = "Logowanie użytkownika.",
             description = "Wymagane dane: email oraz hasło. Zwracane dane: id użytkownika.")
-    @PostMapping("/login")
+    @PutMapping("/login")
     public ResponseEntity<Long> login(@RequestBody LoginDataDto loginDataDto){
         long userId = userService.login(loginDataDto);
         return new ResponseEntity<>(userId, HttpStatus.OK);

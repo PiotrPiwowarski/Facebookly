@@ -23,6 +23,8 @@ import pl.piwowarski.facebookly.repository.PostRepository;
 import pl.piwowarski.facebookly.service.post.PostService;
 import pl.piwowarski.facebookly.service.user.UserService;
 
+import java.sql.Blob;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -72,8 +74,8 @@ public class PostServiceImpl implements PostService {
         for(var r: results) {
             PostDataDto postDataDto = PostDataDto.builder()
                     .postId((long) r[0])
-                    .content((String) r[1])
-                    .image((byte[]) r[2])
+                    .content(r[1] != null ? (String) r[1] :null)
+                    .image(r[2] != null ? castToBytesArray((Blob) r[2]) : null)
                     .created(((Timestamp)r[3]).toLocalDateTime())
                     .userId((long) r[4])
                     .firstName((String) r[5])
@@ -83,7 +85,19 @@ public class PostServiceImpl implements PostService {
                     .build();
             postsWithData.add(postDataDto);
         }
-        return postsWithData;
+        return postsWithData.stream()
+                .sorted(Comparator
+                        .comparing(PostDataDto::getCreated)
+                        .reversed())
+                .toList();
+    }
+
+    private byte[] castToBytesArray(Blob blob) {
+        try {
+            return blob.getBytes(0, (int)blob.length());
+        } catch(SQLException e) {
+            throw new IllegalStateException(e.getMessage());
+        }
     }
 
     @Override

@@ -11,7 +11,6 @@ import pl.piwowarski.facebookly.model.dto.comment.AddCommentDto;
 import pl.piwowarski.facebookly.model.dto.comment.CommentDataDto;
 import pl.piwowarski.facebookly.model.dto.comment.CommentDto;
 import pl.piwowarski.facebookly.model.dto.comment.UpdateCommentDto;
-import pl.piwowarski.facebookly.model.dto.post.PostDataDto;
 import pl.piwowarski.facebookly.model.dto.reaction.UserReactionDto;
 import pl.piwowarski.facebookly.model.entity.Comment;
 import pl.piwowarski.facebookly.model.entity.CommentReaction;
@@ -81,7 +80,11 @@ public class CommentServiceImpl implements CommentService {
                     .build();
             commentsWithData.add(commentDataDto);
         }
-        return commentsWithData;
+        return commentsWithData.stream()
+                .sorted(Comparator
+                        .comparing(CommentDataDto::getCreated)
+                        .reversed())
+                .toList();
     }
 
     @Override
