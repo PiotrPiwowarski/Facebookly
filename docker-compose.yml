@@ -32,6 +32,17 @@ services:
       MYSQL_PORT: 3306
       MYSQL_DATABASE: facebookly
 
+  frontend:
+    container_name: facebookly-frontend
+    image: piotrpiw/facebookly-frontend:1.0
+    ports:
+      - "3000:3000"
+    networks:
+      - facebookly-net
+    restart: always
+    depends_on:
+      - api
+
 networks:
   facebookly-net:
     driver: bridge
