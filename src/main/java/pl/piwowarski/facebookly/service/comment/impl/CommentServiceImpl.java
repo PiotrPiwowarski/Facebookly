@@ -82,8 +82,7 @@ public class CommentServiceImpl implements CommentService {
         }
         return commentsWithData.stream()
                 .sorted(Comparator
-                        .comparing(CommentDataDto::getCreated)
-                        .reversed())
+                        .comparing(CommentDataDto::getCreated))
                 .toList();
     }
 
