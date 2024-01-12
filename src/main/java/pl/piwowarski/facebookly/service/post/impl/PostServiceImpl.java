@@ -187,7 +187,14 @@ public class PostServiceImpl implements PostService {
     @Override
     public void addPostReaction(long postId, long userId, Reaction reaction) {
         Optional<PostReaction> postReactionOptional = postReactionRepository.findByPostIdAndUserId(postId, userId);
-        postReactionOptional.ifPresent(postReactionRepository::delete);
+        if(postReactionOptional.isPresent()) {
+            if(postReactionOptional.get().getReaction().equals(reaction)) {
+                postReactionOptional.ifPresent(postReactionRepository::delete);
+                return;
+            } else {
+                postReactionOptional.ifPresent(postReactionRepository::delete);
+            }
+        }
         PostDto postDto = getPostDto(postId);
         PostReaction postReaction = PostReaction.builder()
                 .user(userService.getUser(userId))

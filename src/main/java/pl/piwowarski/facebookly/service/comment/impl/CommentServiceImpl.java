@@ -132,10 +132,18 @@ public class CommentServiceImpl implements CommentService {
     public void addCommentReaction(long commentId, long userId, Reaction reaction) {
         Optional<CommentReaction> commentReactionOptional = commentReactionRepository
                 .findByCommentIdAndUserId(commentId, userId);
-        commentReactionOptional.ifPresent(commentReactionRepository::delete);
+        if(commentReactionOptional.isPresent()) {
+            if(commentReactionOptional.get().getReaction().equals(reaction)) {
+                commentReactionOptional.ifPresent(commentReactionRepository::delete);
+                return;
+            } else {
+                commentReactionOptional.ifPresent(commentReactionRepository::delete);
+            }
+        }
+        CommentDto commentDto = getComment(commentId);
         CommentReaction commentReaction = CommentReaction.builder()
                 .user(userService.getUser(userId))
-                .comment(CommentMapper.toEntity(getComment(commentId), userService, postService))
+                .comment(CommentMapper.toEntity(commentDto, userService, postService))
                 .reaction(reaction)
                 .build();
         commentReactionRepository.save(commentReaction);
