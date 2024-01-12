@@ -39,7 +39,6 @@ services:
       - "3000:3000"
     networks:
       - facebookly-net
-    restart: always
     depends_on:
       - api
 
