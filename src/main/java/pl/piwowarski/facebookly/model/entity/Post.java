@@ -21,6 +21,8 @@ public class Post {
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
     private String content;
+    @Lob
+    @Column(name = "image", columnDefinition = "LONGBLOB")
     private byte[] image;
     @NotNull
     private LocalDateTime created;
