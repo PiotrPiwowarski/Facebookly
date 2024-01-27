@@ -40,35 +40,9 @@ public class ApiExceptionHandler {
         return new ResponseEntity<>(exception.getMessage(), HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(PasswordWrongLengthException.class)
-    public ResponseEntity<String> handle(PasswordWrongLengthException exception){
-        return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
-    }
-
-    @ExceptionHandler(PasswordWrongSyntaxException.class)
-    public ResponseEntity<String> handle(PasswordWrongSyntaxException exception){
-        return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
-    }
-
-    @ExceptionHandler(TryToFollowYourselfException.class)
-    public ResponseEntity<String> handle(TryToFollowYourselfException exception){
-        return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
-    }
-
     @ExceptionHandler(UserWithSuchEmailAlreadyExistsException.class)
     public ResponseEntity<String> handle(UserWithSuchEmailAlreadyExistsException exception){
         return new ResponseEntity<>(exception.getMessage(), HttpStatus.CONFLICT);
-    }
-
-    @ExceptionHandler(WrongImageFormatException.class)
-    public ResponseEntity<String> handle(WrongImageFormatException exception){
-        return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
-    }
-
-    @ExceptionHandler(ConstraintViolationException.class)
-    public ResponseEntity<String> handle(ConstraintViolationException exception){
-        return new ResponseEntity<>(exception.getConstraintViolations().toString(),
-                HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(Exception.class)
